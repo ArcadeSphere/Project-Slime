@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Obstacle
+  - OneWayPlatform
+  - Enemy
+  - Checkpoint
+  - MusicSlider
+  - SoundSlider
+  - Projectiles
+  - Hole
+  - Thorn
+  - MovingPlatform
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Ground
+  - Spike
+  - HealthPickUp
+  - EnemyProjectiles
+  - Player
+  - Enemy
+  - Detection
+  - Obstacles
+  - OnlyCamera
+  - Collider
+  - Jumpable
+  - Hole
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
