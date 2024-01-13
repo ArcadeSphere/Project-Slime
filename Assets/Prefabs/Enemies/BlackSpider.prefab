@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2155681933698449779}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.139, y: -1.073, z: 0}
+  m_LocalPosition: {x: -0.067, y: -0.946, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2155681933718817415}
@@ -49,6 +49,7 @@ GameObject:
   - component: {fileID: 2155681933718817422}
   - component: {fileID: 2155681935035377775}
   - component: {fileID: 2851582590311403867}
+  - component: {fileID: 165573561}
   m_Layer: 11
   m_Name: BlackSpider
   m_TagString: Enemy
@@ -204,16 +205,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16c5b2602bd0c6e4e86dc781f1666956, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectorOrigin: {fileID: 2155681933718817415}
-  detectorSize: {x: 17.27, y: 4.86}
-  detectorOriginOffset: {x: 1.4, y: -1.4}
-  detectionDelay: 0.3
-  detectorLayerMask:
-    serializedVersion: 2
-    m_Bits: 1024
-  gizmoIdleColor: {r: 0, g: 1, b: 0, a: 0.4}
-  gizmoDetectedColor: {r: 1, g: 0, b: 0, a: 0.4}
-  showGizmo: 1
   attackSound: {fileID: 8300000, guid: a4b3e9714614554409c9b9e1b16c4733, type: 3}
   playerTransform: {fileID: 0}
   detectionIndicator: {fileID: 2155681935035377775}
@@ -225,7 +216,8 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  enemyController: {fileID: 8360226045559238226}
+  playerDetector: {fileID: 165573561}
+  characterFlip: {fileID: 8360226045559238226}
 --- !u!114 &8360226045559238226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,6 +301,28 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 1024
+--- !u!114 &165573561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2155681933718817423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8519639a07af6ab4b9099879ddffe631, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectorOrigin: {fileID: 2155681933718817415}
+  detectorSize: {x: 12.95, y: 3.4}
+  detectorOriginOffset: {x: 0.83, y: 0}
+  detectionDelay: 0.3
+  detectorLayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  gizmoIdleColor: {r: 0, g: 1, b: 0, a: 0.4}
+  gizmoDetectedColor: {r: 1, g: 0, b: 0, a: 0.4}
+  showGizmo: 1
 --- !u!1 &2155681934122555519
 GameObject:
   m_ObjectHideFlags: 0

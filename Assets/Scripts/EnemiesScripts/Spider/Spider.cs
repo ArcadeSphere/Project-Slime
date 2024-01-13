@@ -3,44 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class Spider : PlayerDetector
+public class Spider : MonoBehaviour
 {
     [Header("Spider Settings")]
     private Animator anim;
     private Rigidbody2D spiderRb;
-
-    [SerializeField]
-    private AudioClip attackSound;
-
-    [SerializeField]
-    private Transform playerTransform;
+    [SerializeField] private AudioClip attackSound;
+    [SerializeField] private Transform playerTransform;
 
     [Header("Spider Jump Settings")]
-    [SerializeField]
-    private DetectionIndicator detectionIndicator;
-
-    [SerializeField]
-    private float jumpForce = 10f;
-
-    [SerializeField]
-    private float jumpCooldown = 2f;
-
-    [SerializeField]
-    private float SpiderJumpDelay = 1.5f;
+    [SerializeField] private DetectionIndicator detectionIndicator;
+    [SerializeField] private float jumpForce = 10f;
+    [SerializeField] private float jumpCooldown = 2f;
+    [SerializeField] private float SpiderJumpDelay = 1.5f;
     private float nextJumpTime;
+    [SerializeField] private float damageAmount;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private LayerMask groundLayer;
 
-    [SerializeField]
-    private float damageAmount;
-
-    [SerializeField]
-    private Transform groundCheck;
-
-    [SerializeField]
-    private LayerMask groundLayer;
 
     [Header("Reference Settings")]
-    [SerializeField]
-    private EnemyController enemyController;
+    [SerializeField] private PlayerDetector playerDetector;
+    [SerializeField] private EnemyController characterFlip;
 
     private bool canJump = true; // Added variable to control jumping
 
@@ -48,7 +32,8 @@ public class Spider : PlayerDetector
     {
         anim = GetComponent<Animator>();
         spiderRb = GetComponent<Rigidbody2D>();
-        enemyController = GetComponent<EnemyController>();
+        characterFlip = GetComponent<EnemyController>();
+        playerDetector = GetComponent<PlayerDetector>();
         nextJumpTime = Time.time + SpiderJumpDelay;
     }
 
@@ -57,12 +42,12 @@ public class Spider : PlayerDetector
         RaycastHit2D hit = Physics2D.Raycast(groundCheck.position, Vector2.down, 0.5f, groundLayer);
         bool isGround = hit.collider != null;
 
-        if (PlayerDetected)
+        if (playerDetector.PlayerDetected)
         {
             canJump = true; // Player is detected, so spider can jump
             if (isGround && Time.time >= nextJumpTime && canJump)
             {
-                enemyController.FlipTowardsTarget(playerTransform.position);
+                characterFlip.FlipTowardsTarget(playerTransform.position);
                 detectionIndicator.ActivateAlert();
                 StartCoroutine(DelayedSpiderJump());
                 nextJumpTime = Time.time + jumpCooldown;
@@ -97,5 +82,12 @@ public class Spider : PlayerDetector
         {
             anim.SetTrigger("dying");
         }
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+
+        // Draw a line for the groundCheck ray cast
+        Gizmos.DrawLine(groundCheck.position, groundCheck.position + Vector3.down * 0.5f);
     }
 }
