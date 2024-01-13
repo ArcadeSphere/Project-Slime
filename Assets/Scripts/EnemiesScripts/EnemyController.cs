@@ -36,6 +36,26 @@ public class EnemyController : MonoBehaviour
         transform.localScale = scale;
     }
 
+    //Keep this version also
+    public void FlipTowards(Vector3 targetPos)
+    {
+        if (targetPos.x < transform.position.x)
+        {
+            if (isFacingRight)
+            {
+                Flip();
+            }
+        }
+        else
+        {
+            if (!isFacingRight)
+            {
+                Flip();
+            }
+        }
+    }
+
+
     public void FlipOnVelocity(Rigidbody2D enemyRb)
     {
         if (enemyRb.velocity.x < 0f)
@@ -52,4 +72,5 @@ public class EnemyController : MonoBehaviour
         }
         transform.localScale = scale;
     }
+ 
 }
