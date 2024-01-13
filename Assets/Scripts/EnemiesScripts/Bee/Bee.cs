@@ -89,7 +89,7 @@ public class Bee : MonoBehaviour
 
     private void FixedUpdate()
     {
-        enemyController.FlipTowardsTarget(playerGameObject.transform.position);
+        // enemyController.FlipTowardsTarget(playerGameObject.transform.position);
     }
 
     private void Attack()

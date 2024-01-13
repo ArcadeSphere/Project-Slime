@@ -75,14 +75,17 @@ public class EnemyPatrol : MonoBehaviour
             enemyRb.velocity = direction.normalized * moveSpeed;
         }
         else
+        {
+            enemyRb.velocity = Vector2.zero;
             StartCoroutine(PatrolEdgeDelay());
+        }
     }
 
     private IEnumerator UpdatePatrolPoints(Vector2 pointA, Vector2 pointB)
     {
         if (Vector2.Distance(pointA, pointB) < 0.1f)
         {
-            onEdge = true;
+            
             currentPoint++;
             if (currentPoint >= patrolPoints.Length)
             {
@@ -91,6 +94,7 @@ public class EnemyPatrol : MonoBehaviour
             // flip sprite if its the first and last point
             if (currentPoint <= 1 || currentPoint >= patrolPoints.Length)
             {
+                onEdge = true;
                 if (!flipDetectorAfterTurn)
                     playerDetector.FlipDetector();
                 yield return new WaitForSeconds(turnBackDelay);
