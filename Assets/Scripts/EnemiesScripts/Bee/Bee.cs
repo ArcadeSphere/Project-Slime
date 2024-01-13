@@ -2,8 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Mathematics;
 using UnityEditorInternal;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Bee : MonoBehaviour
 {
@@ -35,6 +37,8 @@ public class Bee : MonoBehaviour
     // private bool inAttackRange;
     // private float lastAttackTime = 0f;
     private bool attackFinished;
+    private int randomPoint = 0;
+    private Vector3 direction;
 
     private enum BeeState
     {
@@ -54,6 +58,7 @@ public class Bee : MonoBehaviour
     [SerializeField]
     GameObject debugText2;
     private DebugText dbt2;
+    private bool go;
 
     // debug
 
@@ -70,13 +75,6 @@ public class Bee : MonoBehaviour
 
     private void Update()
     {
-        // debug
-        dbt.FollowParent(this.gameObject, sprite, 0f);
-        dbt2.FollowParent(this.gameObject, sprite, 0.4f);
-        dbt.SetText("Current State: ", currentState.ToString());
-        dbt2.SetText("Point: ", null);
-
-        // debug
         switch (currentState)
         {
             case BeeState.Idle:
@@ -92,17 +90,15 @@ public class Bee : MonoBehaviour
         }
     }
 
-    private void Charge()
-    {
-        int randomPoint = enemyPatrol.patrolPoints.Length - 1;
-        dbt2.SetText("Point: ", randomPoint.ToString());
-        Vector3 direction =
-            enemyPatrol.patrolPoints[randomPoint].transform.position - transform.position;
-        rb.velocity = direction * enemyPatrol.moveSpeed;
-    }
-
     private void FixedUpdate()
     {
+        // debug
+        dbt.FollowParent(this.gameObject, sprite, 0f);
+        dbt2.FollowParent(this.gameObject, sprite, 0.4f);
+        dbt.SetText("Current State: ", currentState.ToString());
+        dbt2.SetText("Point: ", null);
+
+        // debug
         // enemyController.FlipTowardsTarget(playerGameObject.transform.position);
         // enemyController.RotateTowardsPlayer(playerDetector.DirectionToPlayer);
         if (currentState == BeeState.Idle)
@@ -115,6 +111,20 @@ public class Bee : MonoBehaviour
             enemyController.FlipTowardsTarget(playerGameObject.transform.position);
             return;
         }
+    }
+
+    private void LateUpdate()
+    {
+        if (go)
+            GoToRandomPatrolPoint();
+    }
+
+    private void Charge()
+    {
+        if (randomPoint == 0)
+            randomPoint = Random.Range(0, enemyPatrol.patrolPoints.Length);
+        dbt2.SetText("Point: ", randomPoint.ToString());
+        go = true;
     }
 
     private void Idle()
@@ -144,6 +154,15 @@ public class Bee : MonoBehaviour
         }
         rb.velocity = Vector2.zero;
         StartCoroutine(AttackCoroutine());
+    }
+
+    void GoToRandomPatrolPoint()
+    {
+        if (direction != null)
+            direction =
+                enemyPatrol.patrolPoints[randomPoint].transform.position - transform.position;
+        print(direction);
+        rb.velocity = direction * enemyPatrol.moveSpeed;
     }
 
     private void SetAttackFinished()
