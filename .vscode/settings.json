@@ -53,5 +53,5 @@
         "Temp/": true
     },
     "dotnet.preferCSharpExtension": true,
-    "dotnet.defaultSolution": "Project-Slime2.sln"
+    "dotnet.defaultSolution": "Project-Slime.sln"
 }
