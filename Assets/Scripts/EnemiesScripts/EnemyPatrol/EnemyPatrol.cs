@@ -14,9 +14,8 @@ public class EnemyPatrol : MonoBehaviour
     [SerializeField]
     private EnemyController enemyController;
 
-    [SerializeField]
-    private GameObject[] patrolPoints;
-    private readonly float moveSpeed = 3f;
+    public GameObject[] patrolPoints;
+    public readonly float moveSpeed = 3f;
 
     [SerializeField]
     private float turnBackDelay;
@@ -27,7 +26,7 @@ public class EnemyPatrol : MonoBehaviour
     private PlayerDetector playerDetector; // set if needed for specific animations
 
     private Rigidbody2D enemyRb;
-    private int currentPoint = 0;
+    public int currentPoint = 0;
 
     private void Start()
     {
@@ -85,7 +84,6 @@ public class EnemyPatrol : MonoBehaviour
     {
         if (Vector2.Distance(pointA, pointB) < 0.1f)
         {
-            
             currentPoint++;
             if (currentPoint >= patrolPoints.Length)
             {

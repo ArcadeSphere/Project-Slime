@@ -5,6 +5,12 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     public bool isFacingRight = true;
+
+    [SerializeField]
+    private float rotateSpeed;
+
+    [SerializeField]
+    private float rotationModifier;
     private Vector2 scale;
     private SpriteRenderer spriteRenderer;
 
@@ -55,7 +61,6 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-
     public void FlipOnVelocity(Rigidbody2D enemyRb)
     {
         if (enemyRb.velocity.x < 0f)
@@ -72,5 +77,13 @@ public class EnemyController : MonoBehaviour
         }
         transform.localScale = scale;
     }
- 
+
+    public void RotateTowardsPlayer(Vector3 directionToPlayer)
+    {
+        float angle =
+            Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg
+            - rotationModifier;
+        Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
+        transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * rotateSpeed);
+    }
 }

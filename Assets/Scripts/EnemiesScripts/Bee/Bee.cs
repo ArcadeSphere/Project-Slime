@@ -27,12 +27,6 @@ public class Bee : MonoBehaviour
     // [SerializeField]
     // private float attackCooldown = 1f;
 
-    [SerializeField]
-    private float rotateSpeed;
-
-    [SerializeField]
-    private float rotationModifier;
-
     private SpriteRenderer sprite;
     private Animator beeAnim;
     private Rigidbody2D rb;
@@ -46,7 +40,7 @@ public class Bee : MonoBehaviour
     {
         Idle,
         Attack,
-        Chase
+        Charge
     }
 
     private BeeState currentState = BeeState.Idle;
@@ -57,6 +51,10 @@ public class Bee : MonoBehaviour
     GameObject debugText;
     private DebugText dbt;
 
+    [SerializeField]
+    GameObject debugText2;
+    private DebugText dbt2;
+
     // debug
 
     private void Awake()
@@ -66,14 +64,18 @@ public class Bee : MonoBehaviour
         beeAnim = this.GetComponent<Animator>();
         // debug
         dbt = debugText.GetComponent<DebugText>();
+        dbt2 = debugText2.GetComponent<DebugText>();
         // debug
     }
 
     private void Update()
     {
         // debug
-        dbt.FollowParent(this.gameObject, sprite);
+        dbt.FollowParent(this.gameObject, sprite, 0f);
+        dbt2.FollowParent(this.gameObject, sprite, 0.4f);
         dbt.SetText("Current State: ", currentState.ToString());
+        dbt2.SetText("Point: ", null);
+
         // debug
         switch (currentState)
         {
@@ -84,28 +86,35 @@ public class Bee : MonoBehaviour
             case BeeState.Attack:
                 Attack();
                 break;
+            case BeeState.Charge:
+                Charge();
+                break;
         }
+    }
+
+    private void Charge()
+    {
+        int randomPoint = enemyPatrol.patrolPoints.Length - 1;
+        dbt2.SetText("Point: ", randomPoint.ToString());
+        Vector3 direction =
+            enemyPatrol.patrolPoints[randomPoint].transform.position - transform.position;
+        rb.velocity = direction * enemyPatrol.moveSpeed;
     }
 
     private void FixedUpdate()
     {
         // enemyController.FlipTowardsTarget(playerGameObject.transform.position);
-    }
-
-    private void Attack()
-    {
-        if (!playerDetector.PlayerDetected)
+        // enemyController.RotateTowardsPlayer(playerDetector.DirectionToPlayer);
+        if (currentState == BeeState.Idle)
         {
-            currentState = BeeState.Idle;
+            enemyController.FlipOnVelocity(rb);
             return;
         }
-        if (attackFinished)
+        if (currentState == BeeState.Attack)
         {
-            beeAnim.SetTrigger("dying");
-            DestroyEnemy();
+            enemyController.FlipTowardsTarget(playerGameObject.transform.position);
             return;
         }
-        rb.velocity = Vector2.zero;
     }
 
     private void Idle()
@@ -118,7 +127,23 @@ public class Bee : MonoBehaviour
 
         beeAnim.SetInteger("state", (int)BeeState.Idle);
         enemyPatrol.FlyEnemyPatrol();
-        enemyController.FlipOnVelocity(rb);
+    }
+
+    private void Attack()
+    {
+        if (!playerDetector.PlayerDetected)
+        {
+            currentState = BeeState.Idle;
+            return;
+        }
+        if (attackFinished)
+        {
+            beeAnim.SetTrigger("dying");
+            Destroy(this.gameObject);
+            return;
+        }
+        rb.velocity = Vector2.zero;
+        StartCoroutine(AttackCoroutine());
     }
 
     private void SetAttackFinished()
@@ -126,18 +151,19 @@ public class Bee : MonoBehaviour
         attackFinished = true;
     }
 
-    private void RotateTowardsPlayer()
+    private IEnumerator AttackCoroutine()
     {
-        float angle =
-            Mathf.Atan2(playerDetector.DirectionToPlayer.y, playerDetector.DirectionToPlayer.x)
-                * Mathf.Rad2Deg
-            - rotationModifier;
-        Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-        transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * rotateSpeed);
+        yield return new WaitForSeconds(2);
+        Vector3 lastPlayerPosition = playerGameObject.transform.position - transform.position;
+        if (playerDetector.PlayerDetected)
+            rb.velocity = lastPlayerPosition * enemyPatrol.moveSpeed * 3;
+
+        if (Vector2.Distance(playerGameObject.transform.position, transform.position) < 0.1f)
+            currentState = BeeState.Charge;
     }
 
-    private void DestroyEnemy()
+    void DestroyGameObj()
     {
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
 }

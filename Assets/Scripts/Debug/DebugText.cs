@@ -10,8 +10,7 @@ public class DebugText : MonoBehaviour
     private RectTransform rt;
 
     [HideInInspector]
-    public TextMeshPro tmp;
-    public String text;
+    private TextMeshPro tmp;
 
     private void Start()
     {
