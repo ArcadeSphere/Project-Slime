@@ -17,7 +17,8 @@ public class Bee : MonoBehaviour
     [SerializeField]
     private PlayerDetector playerDetector;
 
-    [Header("Bee Stats")]
+    // Bee variables
+    private GameObject attackPoint;
     private SpriteRenderer sprite;
     private Animator beeAnim;
     private Rigidbody2D rb;
@@ -25,6 +26,7 @@ public class Bee : MonoBehaviour
     private Vector3 direction;
     private bool isAttackFinished;
     private bool isAttacking;
+
     private BeeState currentState = BeeState.Idle;
 
     private enum BeeState
@@ -48,6 +50,8 @@ public class Bee : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         beeAnim = GetComponent<Animator>();
+        if (transform.GetChild(0).TryGetComponent<Transform>(out var attackPointTransform))
+            attackPoint = attackPointTransform.gameObject;
         // debug
         dbt = debugText.GetComponent<DebugText>();
         dbt2 = debugText2.GetComponent<DebugText>();
@@ -93,7 +97,10 @@ public class Bee : MonoBehaviour
     private void LateUpdate()
     {
         if (isAttackFinished)
+        {
+            attackPoint.SetActive(false);
             GoToRandomPatrolPoint();
+        }
     }
 
     private void Idle()
@@ -140,6 +147,7 @@ public class Bee : MonoBehaviour
         // pause bee for 1 second
         rb.velocity = Vector2.zero;
         yield return new WaitForSeconds(1);
+        attackPoint.SetActive(true);
         // then charge towards player
         Vector2 playerPosition = playerGameObject.transform.position - transform.position;
         rb.velocity = 3 * enemyPatrol.moveSpeed * playerPosition;
