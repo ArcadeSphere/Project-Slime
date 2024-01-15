@@ -36,7 +36,6 @@ public class Bee : MonoBehaviour
     // private readonly float speedMultiplier = 3f;
     // private bool inAttackRange;
     // private float lastAttackTime = 0f;
-    private bool attackFinished;
     private int randomPoint = 0;
     private Vector3 direction;
 
@@ -58,7 +57,7 @@ public class Bee : MonoBehaviour
     [SerializeField]
     GameObject debugText2;
     private DebugText dbt2;
-    private bool go;
+    private bool isAttackFinished;
 
     // debug
 
@@ -94,7 +93,7 @@ public class Bee : MonoBehaviour
     {
         // debug
         dbt.FollowParent(this.gameObject, sprite, 0f);
-        dbt2.FollowParent(this.gameObject, sprite, 0.4f);
+        dbt2.FollowParent(this.gameObject, sprite, 1.6f);
         dbt.SetText("Current State: ", currentState.ToString());
         dbt2.SetText("Point: ", null);
 
@@ -115,16 +114,8 @@ public class Bee : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (go)
+        if (isAttackFinished)
             GoToRandomPatrolPoint();
-    }
-
-    private void Charge()
-    {
-        if (randomPoint == 0)
-            randomPoint = Random.Range(0, enemyPatrol.patrolPoints.Length);
-        dbt2.SetText("Point: ", randomPoint.ToString());
-        go = true;
     }
 
     private void Idle()
@@ -146,36 +137,41 @@ public class Bee : MonoBehaviour
             currentState = BeeState.Idle;
             return;
         }
-        if (attackFinished)
-        {
-            beeAnim.SetTrigger("dying");
-            Destroy(this.gameObject);
-            return;
-        }
         rb.velocity = Vector2.zero;
         StartCoroutine(AttackCoroutine());
     }
 
-    void GoToRandomPatrolPoint()
+    private void Charge()
     {
-        if (direction != null)
-            direction =
-                enemyPatrol.patrolPoints[randomPoint].transform.position - transform.position;
-        print(direction);
-        rb.velocity = direction * enemyPatrol.moveSpeed;
+        dbt2.SetText("Point: ", randomPoint.ToString());
+        isAttackFinished = true;
     }
 
-    private void SetAttackFinished()
+    void GoToRandomPatrolPoint()
     {
-        attackFinished = true;
+        if (randomPoint == 0)
+            randomPoint = Random.Range(0, enemyPatrol.patrolPoints.Length);
+        Vector3 randomPatrolPointPosition = enemyPatrol
+            .patrolPoints[randomPoint]
+            .transform
+            .position;
+        if (direction != null)
+            direction = randomPatrolPointPosition - transform.position;
+        rb.velocity = direction * enemyPatrol.moveSpeed;
+        if (Vector2.Distance(randomPatrolPointPosition, transform.position) < 0.1f)
+        {
+            currentState = BeeState.Attack;
+            isAttackFinished = false;
+            randomPoint = 0;
+        }
     }
 
     private IEnumerator AttackCoroutine()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         Vector3 lastPlayerPosition = playerGameObject.transform.position - transform.position;
         if (playerDetector.PlayerDetected)
-            rb.velocity = lastPlayerPosition * enemyPatrol.moveSpeed * 3;
+            rb.velocity = 3 * enemyPatrol.moveSpeed * lastPlayerPosition;
 
         if (Vector2.Distance(playerGameObject.transform.position, transform.position) < 0.1f)
             currentState = BeeState.Charge;
