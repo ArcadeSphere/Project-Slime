@@ -27,6 +27,7 @@ public class GobbyAxe : MonoBehaviour
     [SerializeField] private AudioClip attackSound;
     [SerializeField] private float attackCooldown = 2f;
     private bool isCooldown = false;
+    public Transform attackRangeTransform;
 
     [Header("Goblin Patrol Settings")]
     public Transform patrolPoint1;
@@ -214,7 +215,8 @@ public class GobbyAxe : MonoBehaviour
                 // Player is close but not in attack range, continue chasing
                 anim.SetFloat("moveSpeed", 1f);
             }
-            else
+
+            if (IsPlayerInAttackRange(distanceToPlayer))
             {
                 // Player is in attack range, stop and attack
                 StopAndAttack();
@@ -309,7 +311,12 @@ public class GobbyAxe : MonoBehaviour
         Vector2 edgeDown = Vector2.down;
         Gizmos.DrawRay(edgeDetector.position, edgeDown * edgeDetectionDistance);
 
+        Gizmos.color = Color.yellow;
 
+        if (attackRangeTransform != null)
+        {
+            Gizmos.DrawWireSphere(attackRangeTransform.position, attackDetectionRange);
+        }
     }
 
 }
