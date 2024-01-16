@@ -17,7 +17,16 @@ public class Bee : MonoBehaviour
     [SerializeField]
     private PlayerDetector playerDetector;
 
-    // Bee variables
+    [Header("Bee variables")]
+    [SerializeField]
+    private float chargeSpeed = 3f;
+
+    [SerializeField]
+    private float maxChargeDelay = 1f;
+
+    [SerializeField]
+    private float minChargeDelay = 0.4f;
+    private float chargeDelay = 0f;
     private GameObject attackPoint;
     private SpriteRenderer sprite;
     private Animator beeAnim;
@@ -26,6 +35,8 @@ public class Bee : MonoBehaviour
     private Vector3 direction;
     private bool isAttackFinished;
     private bool isAttacking;
+    private Vector3 directionToLastPlayerPosition = Vector3.zero;
+    private Vector3 lastPlayerPosition = Vector3.zero;
 
     private BeeState currentState = BeeState.Idle;
 
@@ -33,7 +44,7 @@ public class Bee : MonoBehaviour
     {
         Idle,
         Attack,
-        Charge
+        Reposition
     }
 
     [Header("Debug")]
@@ -67,8 +78,8 @@ public class Bee : MonoBehaviour
             case BeeState.Attack:
                 Attack();
                 break;
-            case BeeState.Charge:
-                Charge();
+            case BeeState.Reposition:
+                Reposition();
                 break;
         }
     }
@@ -120,12 +131,15 @@ public class Bee : MonoBehaviour
         // sets isAttacking to true if player is detected
         // it allows bee to charge towards player even if player left the detector after being detected once
         if (playerDetector.PlayerDetected)
+        {
             isAttacking = true;
+        }
         if (isAttacking)
         {
             StartCoroutine(AttackCoroutine());
             return;
         }
+
         if (!playerDetector.PlayerDetected)
         {
             currentState = BeeState.Idle;
@@ -133,7 +147,7 @@ public class Bee : MonoBehaviour
         }
     }
 
-    private void Charge()
+    private void Reposition()
     {
         // debug
         dbt2.SetText("Point: ", randomPoint.ToString());
@@ -144,22 +158,31 @@ public class Bee : MonoBehaviour
 
     private IEnumerator AttackCoroutine()
     {
-        // pause bee for 1 second
+        if (chargeDelay == 0f)
+        {
+            chargeDelay = Random.Range(minChargeDelay, maxChargeDelay);
+        }
+        // pause bee for chargeDelay seconds
         rb.velocity = Vector2.zero;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(chargeDelay);
         attackPoint.SetActive(true);
         // then charge towards player
-        Vector2 playerPosition = playerGameObject.transform.position - transform.position;
-        rb.velocity = 3 * enemyPatrol.moveSpeed * playerPosition;
-        // exit case if bee is close to player
-        if (Vector2.Distance(playerGameObject.transform.position, transform.position) < 0.1f)
+        // set player's position as last player position
+        if (lastPlayerPosition == Vector3.zero)
         {
-            currentState = BeeState.Charge;
+            lastPlayerPosition = playerGameObject.transform.position;
+        }
+        directionToLastPlayerPosition = lastPlayerPosition - transform.position;
+        rb.velocity = chargeSpeed * enemyPatrol.moveSpeed * directionToLastPlayerPosition;
+        // exit case if bee is close to player
+        if (Vector2.Distance(lastPlayerPosition, transform.position) < 0.1f)
+        {
+            currentState = BeeState.Reposition;
             isAttacking = false;
         }
     }
 
-    void GoToRandomPatrolPoint()
+    private void GoToRandomPatrolPoint()
     { // set random point if it's 0
         if (randomPoint == 0)
             randomPoint = Random.Range(0, enemyPatrol.patrolPoints.Length);
@@ -178,10 +201,18 @@ public class Bee : MonoBehaviour
             currentState = BeeState.Attack;
             isAttackFinished = false;
             randomPoint = 0;
+            ResetChargeValues();
         }
     }
 
-    void DestroyGameObj()
+    private void ResetChargeValues()
+    {
+        directionToLastPlayerPosition = Vector3.zero;
+        lastPlayerPosition = Vector3.zero;
+        chargeDelay = 0f;
+    }
+
+    private void DestroyGameObj()
     {
         Destroy(gameObject);
     }
