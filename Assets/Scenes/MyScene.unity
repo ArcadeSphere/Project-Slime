@@ -15595,12 +15595,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 413647877}
     - target: {fileID: 6192842405692647033, guid: 2766d8e81073bbf4c9274b0fc0a54d50, type: 3}
+      propertyPath: chargeDelay
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6192842405692647033, guid: 2766d8e81073bbf4c9274b0fc0a54d50, type: 3}
+      propertyPath: chargeSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6192842405692647033, guid: 2766d8e81073bbf4c9274b0fc0a54d50, type: 3}
       propertyPath: characterFlip
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6192842405692647033, guid: 2766d8e81073bbf4c9274b0fc0a54d50, type: 3}
       propertyPath: attackCooldown
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6192842405692647033, guid: 2766d8e81073bbf4c9274b0fc0a54d50, type: 3}
+      propertyPath: maxChargeDelay
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 6192842405692647033, guid: 2766d8e81073bbf4c9274b0fc0a54d50, type: 3}
       propertyPath: playerGameObject
