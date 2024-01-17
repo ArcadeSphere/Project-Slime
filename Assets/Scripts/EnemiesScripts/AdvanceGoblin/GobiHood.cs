@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Serialization;
 public class GobiHood : MonoBehaviour
 {
     [Header("Reference settings")]
@@ -11,15 +11,15 @@ public class GobiHood : MonoBehaviour
 
     [Header("GobiHood settings")]
     private Animator anim;
-    private Rigidbody2D rb;
+    private bool isCooldown = false;
+
+
+    [Header("GobiHood Shooting settings")]
     [SerializeField] private float detectionDelayTimer = 0.5f;
     [SerializeField] private float shootCooldownTimer = 0.9f;
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private float projectileSpeed = 5f;
-    private bool isCooldown = false;
-
-
     private enum GobiHoodStates
     {
         Patrol,
@@ -84,7 +84,7 @@ public class GobiHood : MonoBehaviour
         {
             Rigidbody2D gobiRigidbody = GetComponent<Rigidbody2D>();
 
-            // Check if GobiHood is already facing the correct direction
+
             if ((gobiRigidbody.velocity.x > 0 && transform.localScale.x > 0) ||
                 (gobiRigidbody.velocity.x < 0 && transform.localScale.x < 0))
             {
@@ -95,6 +95,7 @@ public class GobiHood : MonoBehaviour
             gobiRigidbody.velocity = Vector2.zero;
             enemyPatrol.GroundEnemyPatrol();
             anim.SetFloat("moveSpeed", 1f);
+
         }
     }
 
@@ -137,8 +138,13 @@ public class GobiHood : MonoBehaviour
 
     public void GobiShootAtPlayer()
     {
-     
-        Vector2 shootDirection = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
+        Vector2 shootDirection = firePoint.right;
+
+        // Check if GobiHood is facing left and adjust the shootDirection accordingly
+        if (!characterFlip.isFacingRight)
+        {
+            shootDirection = -shootDirection;
+        }
 
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
         EnemyProjectiles projectileComponent = projectile.GetComponent<EnemyProjectiles>();
@@ -149,5 +155,6 @@ public class GobiHood : MonoBehaviour
             projectileComponent.SetSpeed(projectileSpeed);
         }
     }
-
 }
+
+
