@@ -15492,7 +15492,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5044920917089425219, guid: 2766d8e81073bbf4c9274b0fc0a54d50, type: 3}
       propertyPath: DetectorShape
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5044920917089425219, guid: 2766d8e81073bbf4c9274b0fc0a54d50, type: 3}
       propertyPath: detectionDelay
@@ -15500,7 +15500,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5044920917089425219, guid: 2766d8e81073bbf4c9274b0fc0a54d50, type: 3}
       propertyPath: detectorRadius
-      value: 6.34
+      value: 6.25
       objectReference: {fileID: 0}
     - target: {fileID: 5044920917089425219, guid: 2766d8e81073bbf4c9274b0fc0a54d50, type: 3}
       propertyPath: detectorSize.x
