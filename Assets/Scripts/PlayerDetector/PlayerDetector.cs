@@ -178,11 +178,10 @@ class PlayerDetectorEditor : Editor
 
     public override void OnInspectorGUI()
     {
-        var playerDetector = (PlayerDetector)target;
+        PlayerDetector playerDetector = (PlayerDetector)target;
         if (playerDetector == null)
             return;
         serializedObject.Update();
-
         ShowDetectorShape(playerDetector);
         EditorGUILayout.Space();
         ShowPhysicsOverlapParams(playerDetector);
