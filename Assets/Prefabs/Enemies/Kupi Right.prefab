@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 7125063384546372506}
   - component: {fileID: 7125063384546372504}
   - component: {fileID: 7766122640385485301}
+  - component: {fileID: 7564577851673351297}
   m_Layer: 11
   m_Name: Kupi Right
   m_TagString: Enemy
@@ -60,7 +61,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7125063384546372192}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 28.568886, y: 3.8407063, z: 11.265618}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -214,20 +215,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ffe009375f09d140ae8cd84134d4842, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectorOrigin: {fileID: 7125063384546372199}
-  detectorSize: {x: 11.2, y: 7}
-  detectorOriginOffset: {x: 5.69, y: 2}
-  detectionDelay: 0.3
-  detectorLayerMask:
-    serializedVersion: 2
-    m_Bits: 1024
-  gizmoIdleColor: {r: 0, g: 1, b: 0, a: 0.4}
-  gizmoDetectedColor: {r: 1, g: 0, b: 0, a: 0.4}
-  showGizmo: 1
   firePoint: {fileID: 2114735718803630810}
   projectilePrefab: {fileID: 79972667933630219, guid: 28183e64a58b7f24a9b320c8837174f0, type: 3}
   projectileSpeed: 9
-  spitSound: {fileID: 0}
+  spitSound: {fileID: 8300000, guid: b4102c8a8f36a6c43bc461faccf6046b, type: 3}
+  playerDetector: {fileID: 7564577851673351297}
 --- !u!50 &7766122640385485301
 Rigidbody2D:
   serializedVersion: 4
@@ -249,6 +241,27 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &7564577851673351297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7125063384546372192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8519639a07af6ab4b9099879ddffe631, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DetectorShape: 0
+  detectorOrigin: {fileID: 7125063384546372199}
+  detectorSize: {x: 8.8, y: 4.08}
+  detectorRadius: 0
+  detectorOriginOffset: {x: 4.28, y: 0}
+  detectionDelay: 0.3
+  gizmoIdleColor: {r: 0, g: 1, b: 0, a: 0.4}
+  gizmoDetectedColor: {r: 1, g: 0, b: 0, a: 0.4}
+  showGizmo: 1
 --- !u!1001 &4946816750333543989
 PrefabInstance:
   m_ObjectHideFlags: 0
