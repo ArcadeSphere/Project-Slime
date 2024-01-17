@@ -2,22 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Kupiscript : PlayerDetector
+public class Kupiscript : MonoBehaviour
 {
-
+    [Header("Kupis Settings")]
     public Transform firePoint;
     public GameObject projectilePrefab;
     private Animator anim;
     public float projectileSpeed = 5f;
-   [SerializeField] private AudioClip spitSound;
+    [SerializeField] private AudioClip spitSound;
+
+    [Header("References Settings")]
+    [SerializeField] private PlayerDetector playerDetector;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
+        playerDetector = GetComponent<PlayerDetector>();
     }
 
     private void Update()
     {
-        if (PlayerDetected)
+        if (playerDetector.PlayerDetected)
         {
             OnPlayerIsIn();
         }

@@ -111,4 +111,11 @@ public class EnemyPatrol : MonoBehaviour
             onEdge = false;
         }
     }
+
+    public void StopPatrol()
+    {
+        StopAllCoroutines(); 
+        enemyRb.velocity = Vector2.zero;
+        onEdge = false; 
+    }
 }

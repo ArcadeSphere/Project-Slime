@@ -286,14 +286,17 @@ public class GobbyAxe : MonoBehaviour
     {
         isCooldown = false;
     }
+
     private bool IsPlayerInChaseDetectionZone()
     {
+       
         Vector2 offset = characterFlip.isFacingRight ? chaseDetectorOriginOffset : new Vector2(-chaseDetectorOriginOffset.x, chaseDetectorOriginOffset.y);
         Vector2 detectionZonePosition = (Vector2)chaseDetectionZoneOrigin.position + offset;
-
         Collider2D collider = Physics2D.OverlapBox(detectionZonePosition, new Vector2(chaseDetectorSize.x, chaseDetectorSize.y), 0f, playerLayer);
+        //if ground is not detected the player also is not detected
+        bool noGroundInFront = IsNoGroundInFront();
 
-        return collider != null;
+        return collider != null && !noGroundInFront;
     }
 
 
