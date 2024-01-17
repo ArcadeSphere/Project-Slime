@@ -15487,16 +15487,32 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5044920917089425219, guid: 2766d8e81073bbf4c9274b0fc0a54d50, type: 3}
+      propertyPath: showGizmo
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5044920917089425219, guid: 2766d8e81073bbf4c9274b0fc0a54d50, type: 3}
+      propertyPath: DetectorShape
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5044920917089425219, guid: 2766d8e81073bbf4c9274b0fc0a54d50, type: 3}
       propertyPath: detectionDelay
       value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 5044920917089425219, guid: 2766d8e81073bbf4c9274b0fc0a54d50, type: 3}
+      propertyPath: detectorRadius
+      value: 6.34
+      objectReference: {fileID: 0}
+    - target: {fileID: 5044920917089425219, guid: 2766d8e81073bbf4c9274b0fc0a54d50, type: 3}
       propertyPath: detectorSize.x
-      value: 14.95
+      value: 15.23
       objectReference: {fileID: 0}
     - target: {fileID: 5044920917089425219, guid: 2766d8e81073bbf4c9274b0fc0a54d50, type: 3}
       propertyPath: detectorSize.y
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5044920917089425219, guid: 2766d8e81073bbf4c9274b0fc0a54d50, type: 3}
+      propertyPath: detectorOriginOffset.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5044920917089425219, guid: 2766d8e81073bbf4c9274b0fc0a54d50, type: 3}
       propertyPath: detectorOriginOffset.y
@@ -15504,7 +15520,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5044920917089425219, guid: 2766d8e81073bbf4c9274b0fc0a54d50, type: 3}
       propertyPath: detectorLayerMask.m_Bits
-      value: 1024
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6192842405421794030, guid: 2766d8e81073bbf4c9274b0fc0a54d50, type: 3}
       propertyPath: m_IsActive
