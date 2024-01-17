@@ -13428,6 +13428,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GobbyAdvance
       objectReference: {fileID: 0}
+    - target: {fileID: 6260551169457493491, guid: 42b6c7b777ed8624988c2f88bab86d50, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -14.93
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 42b6c7b777ed8624988c2f88bab86d50, type: 3}
 --- !u!1 &1590378678
