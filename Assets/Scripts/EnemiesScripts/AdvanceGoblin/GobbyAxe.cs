@@ -27,7 +27,7 @@ public class GobbyAxe : MonoBehaviour
     [SerializeField] private AudioClip attackSound;
     [SerializeField] private float attackCooldown = 2f;
     private bool isCooldown = false;
-    public Transform attackRangeTransform;
+    [SerializeField] private Transform attackRangeTransform;
 
     [Header("Goblin Patrol Settings")]
     public Transform patrolPoint1;
@@ -101,12 +101,11 @@ public class GobbyAxe : MonoBehaviour
 
         if (IsPlayerInChaseDetectionZone())
         {
-            Debug.Log("Player detected in Chase Detection Zone");
+       
             detectionIndicator.ActivateAlert();
         }
         else
         {
-            Debug.Log("Player not detected in Chase Detection Zone");
             detectionIndicator.DeactivateAlert();
         }
 
@@ -169,12 +168,12 @@ public class GobbyAxe : MonoBehaviour
         {
             if (IsPlayerInChaseDetectionZone())
             {
-                Debug.Log("Chasing player after Detection Delay");
+             
                 currentState = GobbyAxeState.Chase;
             }
             else
             {
-                Debug.Log("Resuming Patrol after Detection Delay");
+               
                 currentState = GobbyAxeState.Patrol;
             }
 
@@ -306,7 +305,7 @@ public class GobbyAxe : MonoBehaviour
 
         Gizmos.color = Color.blue;
 
-        // Draw gizmo for the edge detection
+     
         Gizmos.color = Color.green;
         Vector2 edgeDown = Vector2.down;
         Gizmos.DrawRay(edgeDetector.position, edgeDown * edgeDetectionDistance);
