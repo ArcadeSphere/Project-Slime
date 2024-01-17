@@ -20,6 +20,7 @@ public class GobiHood : MonoBehaviour
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private float projectileSpeed = 5f;
+    [SerializeField] private Transform projectileSpawnPoint;
     private enum GobiHoodStates
     {
         Patrol,
@@ -34,7 +35,7 @@ public class GobiHood : MonoBehaviour
         characterFlip = GetComponent<EnemyController>();
         playerDetector = GetComponent<PlayerDetector>();
         anim = GetComponent<Animator>();
-
+        projectileSpawnPoint = transform.Find("ProjectileSpawnPoint");
     }
 
     // Update is called once per frame
@@ -74,6 +75,12 @@ public class GobiHood : MonoBehaviour
                 (gobiRigidbody.velocity.x < 0 && transform.localScale.x < 0))
             {
                 characterFlip.FlipOnVelocity(gobiRigidbody);
+
+                // Flip the firePoint's local scale along with the GobiHood
+                Vector3 firePointScale = firePoint.localScale;
+                firePointScale.x = Mathf.Abs(firePointScale.x) * Mathf.Sign(transform.localScale.x);
+                firePoint.localScale = firePointScale;
+
                 playerDetector.FlipDetector();
             }
             currentStates = GobiHoodStates.Detect;
@@ -84,18 +91,22 @@ public class GobiHood : MonoBehaviour
         {
             Rigidbody2D gobiRigidbody = GetComponent<Rigidbody2D>();
 
-
             if ((gobiRigidbody.velocity.x > 0 && transform.localScale.x > 0) ||
                 (gobiRigidbody.velocity.x < 0 && transform.localScale.x < 0))
             {
                 characterFlip.FlipOnVelocity(gobiRigidbody);
+
+                // Flip the firePoint's local scale along with the GobiHood
+                Vector3 firePointScale = firePoint.localScale;
+                firePointScale.x = Mathf.Abs(firePointScale.x) * Mathf.Sign(transform.localScale.x);
+                firePoint.localScale = firePointScale;
+
                 playerDetector.FlipDetector();
             }
 
             gobiRigidbody.velocity = Vector2.zero;
             enemyPatrol.GroundEnemyPatrol();
             anim.SetFloat("moveSpeed", 1f);
-
         }
     }
 
@@ -136,13 +147,22 @@ public class GobiHood : MonoBehaviour
     }
 
 
+
     public void GobiShootAtPlayer()
     {
         Vector2 shootDirection = firePoint.right;
 
-        // Check if GobiHood is facing left and adjust the shootDirection accordingly
-        if (!characterFlip.isFacingRight)
+        // Check the current facing direction dynamically
+        bool isGobiFacingRight = characterFlip.isFacingRight;
+
+        Debug.Log($"Before FlipOnVelocity: isGobiFacingRight: {isGobiFacingRight}, transform.localScale.x: {transform.localScale.x}, firePoint.localScale.x: {firePoint.localScale.x}");
+
+        // Call FlipOnVelocity before adjusting firePoint's scale
+        characterFlip.FlipOnVelocity(GetComponent<Rigidbody2D>());
+
+        if (!isGobiFacingRight)
         {
+            // Flip the shootDirection if Gobi is not facing right
             shootDirection = -shootDirection;
         }
 
@@ -154,7 +174,13 @@ public class GobiHood : MonoBehaviour
             projectileComponent.SetDirection(shootDirection);
             projectileComponent.SetSpeed(projectileSpeed);
         }
+
+        Debug.Log($"After FlipOnVelocity: isGobiFacingRight: {isGobiFacingRight}, transform.localScale.x: {transform.localScale.x}, firePoint.localScale.x: {firePoint.localScale.x}");
     }
+
 }
+
+
+
 
 
