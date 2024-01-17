@@ -8,8 +8,8 @@ public class GobiHood : MonoBehaviour
     [SerializeField] private PlayerDetector playerDetector;
     [SerializeField] private EnemyController characterFlip;
     [SerializeField] private EnemyPatrol enemyPatrol;
-
-   private enum GobiHoodStates
+    private Animator anim;
+  private enum GobiHoodStates
     {
         Patrol,
         Detect,
@@ -22,6 +22,7 @@ public class GobiHood : MonoBehaviour
     {
         characterFlip = GetComponent<EnemyController>();
         playerDetector = GetComponent<PlayerDetector>();
+        anim = GetComponent<Animator>();
 
     }
 
@@ -52,6 +53,7 @@ public class GobiHood : MonoBehaviour
     {
         
         enemyPatrol.GroundEnemyPatrol();
+        anim.SetFloat("moveSpeed", 1f);
     }
     private void DetectionDelay()
     {
