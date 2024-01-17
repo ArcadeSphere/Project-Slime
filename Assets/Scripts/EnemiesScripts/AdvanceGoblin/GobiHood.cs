@@ -11,12 +11,13 @@ public class GobiHood : MonoBehaviour
 
     [Header("GobiHood settings")]
     private Animator anim;
+    private Rigidbody2D rb;
     [SerializeField] private float detectionDelayTimer = 0.5f;
     [SerializeField] private float shootCooldownTimer = 0.9f;
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private float projectileSpeed = 5f;
-    private bool isShooting = false;
+    private bool isCooldown = false;
 
 
     private enum GobiHoodStates
@@ -24,8 +25,7 @@ public class GobiHood : MonoBehaviour
         Patrol,
         Detect,
         Shoot,
-
-     
+        Cooldown,
     }
 
     private GobiHoodStates currentStates = GobiHoodStates.Patrol;
@@ -51,11 +51,11 @@ public class GobiHood : MonoBehaviour
                 break;
 
             case GobiHoodStates.Shoot:
-                if (!isShooting) // Only enter the Shoot state if not currently shooting
-                {
-                    Debug.Log("Entering Shoot state");
-                    ShootAttack();
-                }
+                ShootAttack();
+                break;
+
+            case GobiHoodStates.Cooldown:
+                Cooldown();
                 break;
         }
     }
@@ -64,13 +64,35 @@ public class GobiHood : MonoBehaviour
     {
         if (playerDetector.PlayerDetected)
         {
-            isShooting = false; // Reset the shooting state
+            Vector3 directionToPlayer = playerDetector.Target.transform.position - transform.position;
+            Vector2 velocity = directionToPlayer.normalized;
+            Rigidbody2D gobiRigidbody = GetComponent<Rigidbody2D>();
+            gobiRigidbody.velocity = velocity;
+
+            // Check if GobiHood is already facing the correct direction
+            if ((gobiRigidbody.velocity.x > 0 && transform.localScale.x > 0) ||
+                (gobiRigidbody.velocity.x < 0 && transform.localScale.x < 0))
+            {
+                characterFlip.FlipOnVelocity(gobiRigidbody);
+                playerDetector.FlipDetector();
+            }
             currentStates = GobiHoodStates.Detect;
-            anim.SetFloat("moveSpeed", 0f); // Stop animation when detecting the player
+            anim.SetFloat("moveSpeed", 0f);
             Debug.Log("Player detected, transitioning to Detect state");
         }
         else
         {
+            Rigidbody2D gobiRigidbody = GetComponent<Rigidbody2D>();
+
+            // Check if GobiHood is already facing the correct direction
+            if ((gobiRigidbody.velocity.x > 0 && transform.localScale.x > 0) ||
+                (gobiRigidbody.velocity.x < 0 && transform.localScale.x < 0))
+            {
+                characterFlip.FlipOnVelocity(gobiRigidbody);
+                playerDetector.FlipDetector();
+            }
+
+            gobiRigidbody.velocity = Vector2.zero;
             enemyPatrol.GroundEnemyPatrol();
             anim.SetFloat("moveSpeed", 1f);
         }
@@ -94,30 +116,25 @@ public class GobiHood : MonoBehaviour
     private void ShootAttack()
     {
         anim.SetTrigger("Shoot");
-        isShooting = true;
+        currentStates = GobiHoodStates.Cooldown;
+        isCooldown = true;
+        Invoke("EndCooldown", shootCooldownTimer);
+    }
 
-        if (shootCooldownTimer > 0f)
+    private void Cooldown()
+    {
+        if (!isCooldown)
         {
-            shootCooldownTimer -= Time.deltaTime;
-        }
-        else
-        {
-            isShooting = false; // Reset the shooting state
+            currentStates = GobiHoodStates.Patrol;
 
-            if (playerDetector.PlayerDetected)
-            {
-                // Player is still detected, continue shooting
-                shootCooldownTimer = 5f;
-                Debug.Log("Player still detected, continuing to shoot");
-            }
-            else
-            {
-                // Player is not detected, transition back to Patrol
-                currentStates = GobiHoodStates.Patrol;
-                Debug.Log("Player not detected, transitioning back to Patrol state");
-            }
         }
     }
+    private void EndCooldown()
+    {
+        isCooldown = false;
+    }
+
+
     public void GobiShootAtPlayer()
     {
      
