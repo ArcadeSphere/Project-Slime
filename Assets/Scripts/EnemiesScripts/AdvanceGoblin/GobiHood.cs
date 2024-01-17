@@ -67,44 +67,13 @@ public class GobiHood : MonoBehaviour
         {
             Vector3 directionToPlayer = playerDetector.Target.transform.position - transform.position;
             Vector2 velocity = directionToPlayer.normalized;
-            Rigidbody2D gobiRigidbody = GetComponent<Rigidbody2D>();
-            gobiRigidbody.velocity = velocity;
-
-            // Check if GobiHood is already facing the correct direction
-            if ((gobiRigidbody.velocity.x > 0 && transform.localScale.x > 0) ||
-                (gobiRigidbody.velocity.x < 0 && transform.localScale.x < 0))
-            {
-                characterFlip.FlipOnVelocity(gobiRigidbody);
-
-                // Flip the firePoint's local scale along with the GobiHood
-                Vector3 firePointScale = firePoint.localScale;
-                firePointScale.x = Mathf.Abs(firePointScale.x) * Mathf.Sign(transform.localScale.x);
-                firePoint.localScale = firePointScale;
-
-                playerDetector.FlipDetector();
-            }
             currentStates = GobiHoodStates.Detect;
             anim.SetFloat("moveSpeed", 0f);
             Debug.Log("Player detected, transitioning to Detect state");
         }
         else
         {
-            Rigidbody2D gobiRigidbody = GetComponent<Rigidbody2D>();
-
-            if ((gobiRigidbody.velocity.x > 0 && transform.localScale.x > 0) ||
-                (gobiRigidbody.velocity.x < 0 && transform.localScale.x < 0))
-            {
-                characterFlip.FlipOnVelocity(gobiRigidbody);
-
-                // Flip the firePoint's local scale along with the GobiHood
-                Vector3 firePointScale = firePoint.localScale;
-                firePointScale.x = Mathf.Abs(firePointScale.x) * Mathf.Sign(transform.localScale.x);
-                firePoint.localScale = firePointScale;
-
-                playerDetector.FlipDetector();
-            }
-
-            gobiRigidbody.velocity = Vector2.zero;
+    
             enemyPatrol.GroundEnemyPatrol();
             anim.SetFloat("moveSpeed", 1f);
         }
@@ -118,7 +87,7 @@ public class GobiHood : MonoBehaviour
         {
             detectionDelayTimer = 0.5f;
             currentStates = GobiHoodStates.Shoot;
-            Debug.Log("Detection delay over, transitioning to Shoot state");
+        
         }
 
         anim.SetFloat("moveSpeed", 0f);
@@ -175,7 +144,7 @@ public class GobiHood : MonoBehaviour
             projectileComponent.SetSpeed(projectileSpeed);
         }
 
-        Debug.Log($"After FlipOnVelocity: isGobiFacingRight: {isGobiFacingRight}, transform.localScale.x: {transform.localScale.x}, firePoint.localScale.x: {firePoint.localScale.x}");
+       
     }
 
 }
