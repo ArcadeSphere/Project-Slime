@@ -16144,6 +16144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b305ddb17005beb4abc9fd048938d3c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Anim: {fileID: 0}
   <PatrolPoints>k__BackingField:
   - {fileID: 1741508720}
   - {fileID: 1020077383}
@@ -16151,7 +16152,9 @@ MonoBehaviour:
   <MoveSpeed>k__BackingField: 2
   <FlipDetectorAfterTurn>k__BackingField: 0
   <IsFacingRight>k__BackingField: 0
-  Anim: {fileID: 0}
+  EnemyIdleBase: {fileID: 11400000, guid: 16638113008cb694cb5fb9bba27cd052, type: 2}
+  EnemyChaseBase: {fileID: 11400000, guid: bc5ae0f84747ad94ebe95106e378e12f, type: 2}
+  EnemyAttackBase: {fileID: 11400000, guid: 7ccf881b67e16a846a0e4a657a2f9bb3, type: 2}
   dt: {fileID: 1064294010}
 --- !u!1001 &5912079164800977676
 PrefabInstance:

@@ -10,26 +10,30 @@ public class EIdleState : EnemyState
     public override void EnterState()
     {
         base.EnterState();
-        enemy.Anim.SetInteger("state", 0);
+        enemy.EIdleBaseInstance.EnterStateLogic();
     }
 
     public override void ExitState()
     {
         base.ExitState();
+        enemy.EIdleBaseInstance.ExitStateLogic();
     }
 
     public override void FrameUpdate()
     {
         base.FrameUpdate();
-        if (enemy.PlayerDetector.PlayerDetected)
-        {
-            enemy.StateMachine.ChangeState(enemy.AttackState);
-        }
+        enemy.EIdleBaseInstance.FrameUpdateLogic();
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-        enemy.GroundPatrol();
+        enemy.EIdleBaseInstance.PhysicsUpdateLogic();
+    }
+
+    public override void AnimationTriggerEvent(Enemy.AnimationTriggerType triggerType)
+    {
+        base.AnimationTriggerEvent(triggerType);
+        enemy.EIdleBaseInstance.AnimationTriggerEventLogic(triggerType);
     }
 }

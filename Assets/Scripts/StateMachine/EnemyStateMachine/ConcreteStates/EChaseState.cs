@@ -10,20 +10,30 @@ public class EChaseState : EnemyState
     public override void EnterState()
     {
         base.EnterState();
+        enemy.EChaseBaseInstance.EnterStateLogic();
     }
 
     public override void ExitState()
     {
         base.ExitState();
+        enemy.EChaseBaseInstance.ExitStateLogic();
     }
 
     public override void FrameUpdate()
     {
         base.FrameUpdate();
+        enemy.EChaseBaseInstance.FrameUpdateLogic();
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+        enemy.EChaseBaseInstance.PhysicsUpdateLogic();
+    }
+
+    public override void AnimationTriggerEvent(Enemy.AnimationTriggerType triggerType)
+    {
+        base.AnimationTriggerEvent(triggerType);
+        enemy.EChaseBaseInstance.AnimationTriggerEventLogic(triggerType);
     }
 }

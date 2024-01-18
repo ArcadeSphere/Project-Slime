@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour, IEnemyMovement, IEnemyFlip
 {
+    [HideInInspector]
+    public Animator Anim;
+
     #region Patrol Variables
     public PlayerDetector PlayerDetector { get; set; }
     public Rigidbody2D RB { get; set; }
@@ -39,23 +43,48 @@ public class Enemy : MonoBehaviour, IEnemyMovement, IEnemyFlip
     public EAttackState AttackState { get; set; }
     #endregion
 
-    public Animator Anim;
+    #region ScriptableObjects variables
+    [field: SerializeField]
+    private EIdleSOBase EnemyIdleBase;
 
+    [field: SerializeField]
+    private EChaseSOBase EnemyChaseBase;
+
+    [field: SerializeField]
+    private EAttackSOBase EnemyAttackBase;
+
+    public EIdleSOBase EIdleBaseInstance { get; set; }
+
+    public EChaseSOBase EChaseBaseInstance { get; set; }
+
+    public EAttackSOBase EAttackBaseInstance { get; set; }
+    #endregion
+
+    #region Debug
     // debug
     [Header("Debug")]
     [SerializeField]
     private GameObject dt;
     private DebugText dbt;
+    private TextMeshPro tmp;
+    #endregion
 
-    // debug
     private void Awake()
     {
+        EIdleBaseInstance = Instantiate(EnemyIdleBase);
+        EChaseBaseInstance = Instantiate(EnemyChaseBase);
+        EAttackBaseInstance = Instantiate(EnemyAttackBase);
+
         StateMachine = gameObject.AddComponent<EStateMachine>();
+
         IdleState = new EIdleState(this, StateMachine);
         ChaseState = new EChaseState(this, StateMachine);
         AttackState = new EAttackState(this, StateMachine);
         // debug
-        dbt = dt.GetComponent<DebugText>();
+        if (dt != null)
+        {
+            dbt = dt.GetComponent<DebugText>();
+        }
         // debug
     }
 
@@ -66,6 +95,11 @@ public class Enemy : MonoBehaviour, IEnemyMovement, IEnemyFlip
         RB = GetComponent<Rigidbody2D>();
         PlayerDetector = GetComponent<PlayerDetector>();
         Anim = GetComponent<Animator>();
+
+        EIdleBaseInstance.Init(gameObject, this);
+        EChaseBaseInstance.Init(gameObject, this);
+        EAttackBaseInstance.Init(gameObject, this);
+
         StateMachine.InitializeState(IdleState);
     }
 
@@ -73,8 +107,11 @@ public class Enemy : MonoBehaviour, IEnemyMovement, IEnemyFlip
     {
         StateMachine.CurrentEnemyState.FrameUpdate();
         // debug
-        dbt.FollowParent(gameObject, SpriteRenderer);
-        dbt.SetText("Current State: ", StateMachine.CurrentEnemyState.ToString());
+        if (dbt != null)
+        {
+            dbt.FollowParent(gameObject, SpriteRenderer);
+            dbt.SetText("Current State: ", StateMachine.CurrentEnemyState.ToString());
+        }
         // debug
     }
 

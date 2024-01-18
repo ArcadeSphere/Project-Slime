@@ -11,26 +11,30 @@ public class EAttackState : EnemyState
     public override void EnterState()
     {
         base.EnterState();
-        enemy.Anim.SetInteger("state", 1);
+        enemy.EAttackBaseInstance.EnterStateLogic();
     }
 
     public override void ExitState()
     {
         base.ExitState();
+        enemy.EAttackBaseInstance.ExitStateLogic();
     }
 
     public override void FrameUpdate()
     {
         base.FrameUpdate();
-        if (!enemy.PlayerDetector.PlayerDetected)
-        {
-            enemy.StateMachine.ChangeState(enemy.IdleState);
-        }
+        enemy.EAttackBaseInstance.FrameUpdateLogic();
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-        enemy.GroundPatrol();
+        enemy.EAttackBaseInstance.PhysicsUpdateLogic();
+    }
+
+    public override void AnimationTriggerEvent(Enemy.AnimationTriggerType triggerType)
+    {
+        base.AnimationTriggerEvent(triggerType);
+        enemy.EAttackBaseInstance.AnimationTriggerEventLogic(triggerType);
     }
 }
