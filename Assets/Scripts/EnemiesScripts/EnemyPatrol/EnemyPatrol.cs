@@ -15,7 +15,7 @@ public class EnemyPatrol : MonoBehaviour
     private EnemyController enemyController;
 
     public GameObject[] patrolPoints;
-    public readonly float moveSpeed = 3f;
+    public float moveSpeed = 3f;
 
     [SerializeField]
     private float turnBackDelay;

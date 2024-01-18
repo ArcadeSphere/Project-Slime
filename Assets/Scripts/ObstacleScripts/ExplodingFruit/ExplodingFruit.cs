@@ -2,22 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
-public class ExplodingFruit : PlayerDetector
+public class ExplodingFruit : MonoBehaviour
 {
+    [Header("Exploding Fruit")]
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] protected float enemyDamage;
     public float fruitgravity;
     public GameObject fruitimpact;
     [SerializeField] private AudioClip explodeSound;
+
+    [Header("References Settings")]
+    [SerializeField] private PlayerDetector playerDector;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        playerDector = GetComponent<PlayerDetector>();
         rb.gravityScale = 0;
     }
     
     private void Update()
     {
-        if (PlayerDetected)
+        if (playerDector.PlayerDetected)
         {
             Playernearfruit();
         }

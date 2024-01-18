@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7754663356008701959}
   - component: {fileID: 7754663356008701958}
   - component: {fileID: 7754663356008701952}
+  - component: {fileID: 1852761863}
   m_Layer: 11
   m_Name: ExplodingFruit 1
   m_TagString: Obstacle
@@ -31,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 7754663356008701961}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6.66, y: 1.61, z: 0}
-  m_LocalScale: {x: 0.9529, y: 1.2047286, z: 1}
+  m_LocalScale: {x: 0.38586313, y: 0.46781647, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -146,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d918b1d8c87db04e846f1bedf8f364a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 2
+  damage: 1
   playerDetector: {fileID: 0}
 --- !u!114 &7754663356008701958
 MonoBehaviour:
@@ -160,21 +161,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3dd9f482ef02e243bc575233dca194f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectorOrigin: {fileID: 7754663356008701955}
-  detectorSize: {x: 2.33, y: 6.84}
-  detectorOriginOffset: {x: -0.01, y: -2.6}
-  detectionDelay: 0.3
-  detectorLayerMask:
-    serializedVersion: 2
-    m_Bits: 1024
-  gizmoIdleColor: {r: 0, g: 1, b: 0, a: 0.4}
-  gizmoDetectedColor: {r: 1, g: 0, b: 0, a: 0.4}
-  showGizmo: 1
   rb: {fileID: 7754663356008701957}
   enemyDamage: 5
   fruitgravity: 3
   fruitimpact: {fileID: 6990528585032415500, guid: dfc8782f8c606744096b7d49a2c616aa, type: 3}
   explodeSound: {fileID: 8300000, guid: bf07b756d9269244caeba85517529b85, type: 3}
+  playerDector: {fileID: 1852761863}
 --- !u!95 &7754663356008701952
 Animator:
   serializedVersion: 3
@@ -194,3 +186,24 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1852761863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7754663356008701961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8519639a07af6ab4b9099879ddffe631, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DetectorShape: 0
+  detectorOrigin: {fileID: 7754663356008701955}
+  detectorSize: {x: 2.24, y: 9.39}
+  detectorRadius: 0
+  detectorOriginOffset: {x: 0.05, y: -5.1}
+  detectionDelay: 0.3
+  gizmoIdleColor: {r: 0, g: 1, b: 0, a: 0.4}
+  gizmoDetectedColor: {r: 1, g: 0, b: 0, a: 0.4}
+  showGizmo: 1

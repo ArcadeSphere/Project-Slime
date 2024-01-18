@@ -17,7 +17,6 @@ public class GobbyAxe : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
 
     [Header("Reference Settings")]
-    [SerializeField] private DetectionIndicator detectionIndicator;
     [SerializeField] private EnemyController characterFlip;
 
     [Header("Goblin ChaseAttack Settings")]
@@ -64,10 +63,6 @@ public class GobbyAxe : MonoBehaviour
             playerTransform = playerObject.transform;
         }
 
-        if (detectionIndicator != null)
-        {
-            detectionIndicator.DeactivateAlert();
-        }
     }
     private void Update()
     {
@@ -98,16 +93,6 @@ public class GobbyAxe : MonoBehaviour
 
     private void Patrol()
     {
-
-        if (IsPlayerInChaseDetectionZone())
-        {
-       
-            detectionIndicator.ActivateAlert();
-        }
-        else
-        {
-            detectionIndicator.DeactivateAlert();
-        }
 
         if (characterFlip.isFacingRight && !isTurning)
         {
@@ -161,7 +146,7 @@ public class GobbyAxe : MonoBehaviour
 
     private void DetectionDelay()
     {
-        detectionIndicator.ActivateAlert();
+  
         detectionDelayTimer -= Time.deltaTime;
 
         if (detectionDelayTimer <= 0f)
@@ -196,7 +181,7 @@ public class GobbyAxe : MonoBehaviour
             Debug.Log("No ground in front, returning to Patrol");
             currentState = GobbyAxeState.Patrol;
             anim.SetFloat("moveSpeed", 0f);
-            detectionIndicator.DeactivateAlert();
+           
 
             return;
         }
@@ -225,7 +210,7 @@ public class GobbyAxe : MonoBehaviour
         else
         {
             // If the player is not in the detection zone, go back to Patrol state
-            detectionIndicator.DeactivateAlert();
+           
             currentState = GobbyAxeState.Patrol;
             anim.SetFloat("moveSpeed", 0f);
 

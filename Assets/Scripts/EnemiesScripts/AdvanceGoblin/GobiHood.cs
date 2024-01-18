@@ -65,8 +65,6 @@ public class GobiHood : MonoBehaviour
     {
         if (playerDetector.PlayerDetected)
         {
-            Vector3 directionToPlayer = playerDetector.Target.transform.position - transform.position;
-            Vector2 velocity = directionToPlayer.normalized;
             currentStates = GobiHoodStates.Detect;
             anim.SetFloat("moveSpeed", 0f);
             Debug.Log("Player detected, transitioning to Detect state");

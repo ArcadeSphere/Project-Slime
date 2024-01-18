@@ -12,7 +12,6 @@ public class Spider : MonoBehaviour
     [SerializeField] private Transform playerTransform;
 
     [Header("Spider Jump Settings")]
-    [SerializeField] private DetectionIndicator detectionIndicator;
     [SerializeField] private float jumpForce = 10f;
     [SerializeField] private float jumpCooldown = 2f;
     [SerializeField] private float SpiderJumpDelay = 1.5f;
@@ -48,7 +47,6 @@ public class Spider : MonoBehaviour
             if (isGround && Time.time >= nextJumpTime && canJump)
             {
                 characterFlip.FlipTowardsTarget(playerTransform.position);
-                detectionIndicator.ActivateAlert();
                 StartCoroutine(DelayedSpiderJump());
                 nextJumpTime = Time.time + jumpCooldown;
             }
@@ -56,7 +54,7 @@ public class Spider : MonoBehaviour
         else
         {
             canJump = false; // Player is not detected, so spider can't jump
-            detectionIndicator.DeactivateAlert();
+           
         }
     }
 
