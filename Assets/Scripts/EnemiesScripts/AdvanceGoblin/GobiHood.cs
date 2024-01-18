@@ -18,10 +18,13 @@ public class GobiHood : MonoBehaviour
     [SerializeField] private float detectionDelayTimer = 0.5f;
     [SerializeField] private float shootCooldownTimer = 0.9f;
     [SerializeField] private Transform firePoint;
+    [SerializeField] private Transform lOS;
     [SerializeField] private Transform player;
+    [SerializeField] private GameObject playerObject;
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private float projectileSpeed = 5f;
-
+    [SerializeField] private float maxLOSRange = 10f;
+    [SerializeField] private float yOffset = 0.5f;
     private enum GobiHoodStates
     {
         Patrol,
@@ -36,12 +39,7 @@ public class GobiHood : MonoBehaviour
         characterFlip = GetComponent<EnemyController>();
         playerDetector = GetComponent<PlayerDetector>();
         anim = GetComponent<Animator>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
 
-        if (player == null)
-        {
-            Debug.LogError("Player not found! Make sure the player has the 'Player' tag.");
-        }
 
     }
 
@@ -74,11 +72,11 @@ public class GobiHood : MonoBehaviour
         {
             currentStates = GobiHoodStates.Detect;
             anim.SetFloat("moveSpeed", 0f);
-            Debug.Log("Player detected, transitioning to Detect state");
+            lOS.gameObject.SetActive(true);
         }
         else
         {
-
+            lOS.gameObject.SetActive(false);
             enemyPatrol.GroundEnemyPatrol();
             anim.SetFloat("moveSpeed", 1f);
         }
@@ -136,26 +134,36 @@ public class GobiHood : MonoBehaviour
     }
     private bool HasLineOfSightToPlayer()
     {
-        RaycastHit2D hit = Physics2D.Raycast(firePoint.position, player.position - firePoint.position, Mathf.Infinity);
+        Vector2 directionToPlayer = playerObject.transform.position - lOS.position;
 
-        if (hit.collider != null)
+        // Use OverlapCircle to check for triggers within the radius
+        Collider2D hitCollider = Physics2D.OverlapCircle(lOS.position, maxLOSRange, LayerMask.GetMask("Player"));
+
+        if (hitCollider != null && hitCollider.CompareTag("Player"))
         {
-            if (hit.collider.CompareTag("Player"))
-            {
-                Debug.Log("Player detected!");
-                return true;
-            }
+            Debug.Log("Player detected with OverlapCircle!");
+            return true;
+        }
+        else
+        {
+            Debug.Log("No trigger detected within the LOS range.");
         }
 
         return false;
     }
+
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.white;
 
-        // Draw the ray in the Scene view
-        Gizmos.DrawLine(firePoint.position, firePoint.position + (player.position - firePoint.position).normalized * Mathf.Infinity);
+        Gizmos.color = Color.white;
+        // Draw the ray in the Scene view with a limited range only when in Detect state
+        if (playerDetector.PlayerDetected)
+        {
+            Gizmos.DrawLine(lOS.position, lOS.position + (playerObject.transform.position - lOS.position).normalized * maxLOSRange);
+        }
+
     }
+
 }
 
 
