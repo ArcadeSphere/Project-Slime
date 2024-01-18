@@ -21,7 +21,7 @@ public class GobiHood : MonoBehaviour
     [SerializeField] private Transform player;
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private float projectileSpeed = 5f;
- 
+
     private enum GobiHoodStates
     {
         Patrol,
@@ -36,6 +36,12 @@ public class GobiHood : MonoBehaviour
         characterFlip = GetComponent<EnemyController>();
         playerDetector = GetComponent<PlayerDetector>();
         anim = GetComponent<Animator>();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+
+        if (player == null)
+        {
+            Debug.LogError("Player not found! Make sure the player has the 'Player' tag.");
+        }
 
     }
 
@@ -72,7 +78,7 @@ public class GobiHood : MonoBehaviour
         }
         else
         {
-    
+
             enemyPatrol.GroundEnemyPatrol();
             anim.SetFloat("moveSpeed", 1f);
         }
@@ -86,7 +92,7 @@ public class GobiHood : MonoBehaviour
         {
             detectionDelayTimer = 0.5f;
             currentStates = GobiHoodStates.Shoot;
-        
+
         }
 
         anim.SetFloat("moveSpeed", 0f);
@@ -118,14 +124,38 @@ public class GobiHood : MonoBehaviour
     //tracks the player
     public void GobiShootAtPlayer()
     {
-        Vector2 directionToPlayer = (player.position - firePoint.position).normalized;
-        GameObject newProjectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
-        EnemyProjectiles enemyProjectile = newProjectile.GetComponent<EnemyProjectiles>();
-        enemyProjectile.SetSpeed(projectileSpeed);
-        enemyProjectile.SetDirection(directionToPlayer);
+        if (HasLineOfSightToPlayer())
+        {
+            Vector2 directionToPlayer = (player.position - firePoint.position).normalized;
+            GameObject newProjectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
+            EnemyProjectiles enemyProjectile = newProjectile.GetComponent<EnemyProjectiles>();
+            enemyProjectile.SetSpeed(projectileSpeed);
+            enemyProjectile.SetDirection(directionToPlayer);
+        }
 
     }
+    private bool HasLineOfSightToPlayer()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(firePoint.position, player.position - firePoint.position, Mathf.Infinity);
 
+        if (hit.collider != null)
+        {
+            if (hit.collider.CompareTag("Player"))
+            {
+                Debug.Log("Player detected!");
+                return true;
+            }
+        }
+
+        return false;
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.white;
+
+        // Draw the ray in the Scene view
+        Gizmos.DrawLine(firePoint.position, firePoint.position + (player.position - firePoint.position).normalized * Mathf.Infinity);
+    }
 }
 
 
