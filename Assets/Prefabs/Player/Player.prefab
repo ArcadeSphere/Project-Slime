@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &706670845
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 706670846}
+  m_Layer: 10
+  m_Name: TargetPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &706670846
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 706670845}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.59, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1525551431722026272}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1525551431695304143
 GameObject:
   m_ObjectHideFlags: 0
@@ -49,6 +79,7 @@ GameObject:
   - component: {fileID: 1525551431722026274}
   - component: {fileID: 3994231868127340124}
   - component: {fileID: 3994231868127340125}
+  - component: {fileID: 714717546}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -70,6 +101,7 @@ Transform:
   - {fileID: 1525551431695304142}
   - {fileID: 2385602948652570948}
   - {fileID: 5457251716814825130}
+  - {fileID: 706670846}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -213,16 +245,16 @@ MonoBehaviour:
   groundCheck: {fileID: 1525551431695304142}
   jumpableLayer:
     serializedVersion: 2
-    m_Bits: 65600
+    m_Bits: 65536
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   animator: {fileID: 1525551431722026278}
   inputManager: {fileID: 0}
   playerBoxCollider: {fileID: 1525551431722026279}
   platformDisableDuration: 0.5
   jumpParticle: {fileID: 792752236188025738}
-  dashParticle: {fileID: 2439748944506739609}
+  dashParticle: {fileID: 0}
   landParticle: {fileID: 792752236188025738}
   prepos: {fileID: 0}
 --- !u!114 &6694672672984949374
@@ -304,6 +336,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
   mappedKeys:
   - 1
   - 2
@@ -311,6 +344,7 @@ MonoBehaviour:
   - 4
   - 5
   - 6
+  - 7
 --- !u!114 &3994231868127340125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,6 +357,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebe1a4193bc3fbc46ba9d6feb3a2d894, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &714717546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525551431722026277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37957fee041f6c243a2e85f8063b5410, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  previousPositionOffset: {x: 1, y: 0}
 --- !u!1 &5876161009511227730
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,11 +493,6 @@ PrefabInstance:
 --- !u!4 &5482462681567796716 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5584538371745647555, guid: 82a5a0c9c58747744903c4444d16a855, type: 3}
-  m_PrefabInstance: {fileID: 114237941439469103}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &2439748944506739609 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 2327904093515435446, guid: 82a5a0c9c58747744903c4444d16a855, type: 3}
   m_PrefabInstance: {fileID: 114237941439469103}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3994231867278551551

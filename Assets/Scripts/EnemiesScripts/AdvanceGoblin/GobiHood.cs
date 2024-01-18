@@ -18,9 +18,10 @@ public class GobiHood : MonoBehaviour
     [SerializeField] private float detectionDelayTimer = 0.5f;
     [SerializeField] private float shootCooldownTimer = 0.9f;
     [SerializeField] private Transform firePoint;
+    [SerializeField] private Transform player;
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private float projectileSpeed = 5f;
-    [SerializeField] private Transform projectileSpawnPoint;
+ 
     private enum GobiHoodStates
     {
         Patrol,
@@ -35,7 +36,7 @@ public class GobiHood : MonoBehaviour
         characterFlip = GetComponent<EnemyController>();
         playerDetector = GetComponent<PlayerDetector>();
         anim = GetComponent<Animator>();
-        projectileSpawnPoint = transform.Find("ProjectileSpawnPoint");
+
     }
 
     // Update is called once per frame
@@ -114,35 +115,15 @@ public class GobiHood : MonoBehaviour
     }
 
 
-
+    //tracks the player
     public void GobiShootAtPlayer()
     {
-        Vector2 shootDirection = firePoint.right;
+        Vector2 directionToPlayer = (player.position - firePoint.position).normalized;
+        GameObject newProjectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
+        EnemyProjectiles enemyProjectile = newProjectile.GetComponent<EnemyProjectiles>();
+        enemyProjectile.SetSpeed(projectileSpeed);
+        enemyProjectile.SetDirection(directionToPlayer);
 
-        // Check the current facing direction dynamically
-        bool isGobiFacingRight = characterFlip.isFacingRight;
-
-        Debug.Log($"Before FlipOnVelocity: isGobiFacingRight: {isGobiFacingRight}, transform.localScale.x: {transform.localScale.x}, firePoint.localScale.x: {firePoint.localScale.x}");
-
-        // Call FlipOnVelocity before adjusting firePoint's scale
-        characterFlip.FlipOnVelocity(GetComponent<Rigidbody2D>());
-
-        if (!isGobiFacingRight)
-        {
-            // Flip the shootDirection if Gobi is not facing right
-            shootDirection = -shootDirection;
-        }
-
-        GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
-        EnemyProjectiles projectileComponent = projectile.GetComponent<EnemyProjectiles>();
-
-        if (projectileComponent != null)
-        {
-            projectileComponent.SetDirection(shootDirection);
-            projectileComponent.SetSpeed(projectileSpeed);
-        }
-
-       
     }
 
 }
