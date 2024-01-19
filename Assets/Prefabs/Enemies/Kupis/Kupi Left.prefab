@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: 3636886527541594590}
   - component: {fileID: 4278227265605176243}
   - component: {fileID: 1567124309}
+  - component: {fileID: 876682173875174748}
+  - component: {fileID: 7916407966103365079}
   m_Layer: 11
   m_Name: Kupi Left
   m_TagString: Enemy
@@ -129,17 +131,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f0cd728379b7549bb530c7f11fbea3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startinglives: 5
-  Framesduration: 0
-  numberOfFlashes: 0
-  behviourcomponents:
-  - {fileID: 3636886527541594151}
-  flashing: {fileID: 3636886527541594146}
-  rb: {fileID: 4278227265605176243}
-  hurtSound: {fileID: 0}
-  deadSound: {fileID: 0}
-  delaySoundInSeconds: 2
+  startingLives: 1
   hitParticle: {fileID: 3429727624085065896}
+  deathHandler: {fileID: 7916407966103365079}
+  damageHandler: {fileID: 876682173875174748}
+  flashing: {fileID: 3636886527541594146}
 --- !u!114 &3636886527541594146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,6 +228,35 @@ MonoBehaviour:
   gizmoIdleColor: {r: 0, g: 1, b: 0, a: 0.4}
   gizmoDetectedColor: {r: 1, g: 0, b: 0, a: 0.4}
   showGizmo: 1
+--- !u!114 &876682173875174748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3636886527541594150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef91ac6e4f29d3c48ac649a1db97f9e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hurtSound: {fileID: 8300000, guid: 892e1a136cbdf864baaa96881a6af31b, type: 3}
+  invincibilityController: {fileID: 0}
+--- !u!114 &7916407966103365079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3636886527541594150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab51e8d41f0728a49a931c7b393fe277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  behaviourComponents: []
+  rb: {fileID: 4278227265605176243}
+  deadSound: {fileID: 8300000, guid: 5dd3d36542528db4aa2f537823bf9291, type: 3}
 --- !u!1 &3636886528337020326
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,9 +14,13 @@ GameObject:
   - component: {fileID: 5505411758264803129}
   - component: {fileID: 5505411758264803078}
   - component: {fileID: 5505411758264803128}
+  - component: {fileID: 1924282957}
+  - component: {fileID: 1924282964}
+  - component: {fileID: 1924282965}
+  - component: {fileID: 1924282966}
   m_Layer: 11
   m_Name: TestDummy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -125,16 +129,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f0cd728379b7549bb530c7f11fbea3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startinglives: 3
-  Framesduration: 0
-  numberOfFlashes: 0
-  behviourcomponents: []
-  flashing: {fileID: 5505411758264803078}
-  rb: {fileID: 0}
-  hurtSound: {fileID: 0}
-  deadSound: {fileID: 0}
-  delaySoundInSeconds: 2
-  hitParticle: {fileID: 0}
+  startingLives: 5
+  hitParticle: {fileID: 7075384483094651087}
+  deathHandler: {fileID: 1924282965}
+  damageHandler: {fileID: 1924282964}
 --- !u!114 &5505411758264803078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,6 +166,73 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!50 &1924282957
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5505411758264803074}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 6200000, guid: 7612ef1708b70c74c9930c8fe0493b2a, type: 2}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!114 &1924282964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5505411758264803074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef91ac6e4f29d3c48ac649a1db97f9e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashing: {fileID: 5505411758264803078}
+  hurtSound: {fileID: 8300000, guid: 5e04b67a7ce55db4aa7086a0d40fe47c, type: 3}
+  hitParticle: {fileID: 0}
+  invincibilityController: {fileID: 1924282966}
+--- !u!114 &1924282965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5505411758264803074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab51e8d41f0728a49a931c7b393fe277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  behaviourComponents: []
+  flashing: {fileID: 5505411758264803078}
+  rb: {fileID: 1924282957}
+  deadSound: {fileID: 8300000, guid: 5e04b67a7ce55db4aa7086a0d40fe47c, type: 3}
+--- !u!114 &1924282966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5505411758264803074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8b091cb2e444c74a8e925bfd209a472, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Framesduration: 0
+  numberOfFlashes: 0
 --- !u!1001 &2096457082139994726
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -228,5 +293,10 @@ PrefabInstance:
 --- !u!4 &4614799284568496462 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6706726140354032424, guid: 49b281e96ed4f8741912ccf97f730bdc, type: 3}
+  m_PrefabInstance: {fileID: 2096457082139994726}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &7075384483094651087 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 9162797916738587305, guid: 49b281e96ed4f8741912ccf97f730bdc, type: 3}
   m_PrefabInstance: {fileID: 2096457082139994726}
   m_PrefabAsset: {fileID: 0}

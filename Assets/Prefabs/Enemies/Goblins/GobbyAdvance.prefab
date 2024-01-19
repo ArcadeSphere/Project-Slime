@@ -137,6 +137,8 @@ GameObject:
   - component: {fileID: 6260551168300002144}
   - component: {fileID: 2832307845290165083}
   - component: {fileID: 2243173873978113750}
+  - component: {fileID: 8784439473425075364}
+  - component: {fileID: 5224140395998119456}
   m_Layer: 11
   m_Name: AdvanceGobby
   m_TagString: Enemy
@@ -326,17 +328,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f0cd728379b7549bb530c7f11fbea3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startinglives: 5
-  Framesduration: 0
-  numberOfFlashes: 0
-  behviourcomponents:
-  - {fileID: 6260551168300002146}
-  flashing: {fileID: 6260551168300002144}
-  rb: {fileID: 6260551168300002148}
-  hurtSound: {fileID: 0}
-  deadSound: {fileID: 0}
-  delaySoundInSeconds: 0.02
+  startingLives: 5
   hitParticle: {fileID: 0}
+  deathHandler: {fileID: 8784439473425075364}
+  damageHandler: {fileID: 5224140395998119456}
+  flashing: {fileID: 6260551168300002144}
 --- !u!114 &6260551168300002144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -384,6 +380,35 @@ MonoBehaviour:
   isFacingRight: 1
   rotateSpeed: 0
   rotationModifier: 0
+--- !u!114 &8784439473425075364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6260551168300002139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab51e8d41f0728a49a931c7b393fe277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  behaviourComponents: []
+  rb: {fileID: 6260551168300002148}
+  deadSound: {fileID: 0}
+--- !u!114 &5224140395998119456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6260551168300002139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef91ac6e4f29d3c48ac649a1db97f9e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hurtSound: {fileID: 0}
+  invincibilityController: {fileID: 0}
 --- !u!1 &6260551168976719403
 GameObject:
   m_ObjectHideFlags: 0

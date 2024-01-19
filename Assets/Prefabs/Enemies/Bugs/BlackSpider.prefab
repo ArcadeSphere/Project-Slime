@@ -49,6 +49,8 @@ GameObject:
   - component: {fileID: 2155681933718817422}
   - component: {fileID: 2851582590311403867}
   - component: {fileID: 165573561}
+  - component: {fileID: 4609789369948410788}
+  - component: {fileID: 7977408217666068554}
   m_Layer: 11
   m_Name: BlackSpider
   m_TagString: Enemy
@@ -242,18 +244,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f0cd728379b7549bb530c7f11fbea3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startinglives: 3
-  Framesduration: 0
-  numberOfFlashes: 0
-  behviourcomponents:
-  - {fileID: 2155681933718817416}
-  - {fileID: 2155681933718817422}
-  flashing: {fileID: 2155681933718817422}
-  rb: {fileID: 2155681933718817419}
-  hurtSound: {fileID: 0}
-  deadSound: {fileID: 0}
-  delaySoundInSeconds: 2
+  startingLives: 0
   hitParticle: {fileID: 7116331057902895517}
+  deathHandler: {fileID: 4609789369948410788}
+  damageHandler: {fileID: 7977408217666068554}
+  flashing: {fileID: 2155681933718817422}
 --- !u!114 &2155681933718817422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,6 +302,35 @@ MonoBehaviour:
   gizmoIdleColor: {r: 0, g: 1, b: 0, a: 0.4}
   gizmoDetectedColor: {r: 1, g: 0, b: 0, a: 0.4}
   showGizmo: 1
+--- !u!114 &4609789369948410788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2155681933718817423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab51e8d41f0728a49a931c7b393fe277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  behaviourComponents: []
+  rb: {fileID: 2155681933718817419}
+  deadSound: {fileID: 0}
+--- !u!114 &7977408217666068554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2155681933718817423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef91ac6e4f29d3c48ac649a1db97f9e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hurtSound: {fileID: 0}
+  invincibilityController: {fileID: 0}
 --- !u!1 &2155681934122555519
 GameObject:
   m_ObjectHideFlags: 0

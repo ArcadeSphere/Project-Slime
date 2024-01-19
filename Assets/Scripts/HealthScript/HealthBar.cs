@@ -10,12 +10,12 @@ public class HealthBar : MonoBehaviour
 
     void Start()
     {
-        health_bar.maxValue = healthscript.currenthealth;
+        health_bar.maxValue = healthscript.CurrentHealth;
     }
 
     // Update is called once per frame
     void Update()
     {
-        health_bar.value = healthscript.currenthealth;
+        health_bar.value = healthscript.CurrentHealth;
     }
 }

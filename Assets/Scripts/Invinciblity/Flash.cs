@@ -17,7 +17,7 @@ public class Flash : MonoBehaviour
     }
 
 
-    public void flash_time()
+    public void FlashTime()
     {
       
         if (flashRoutine != null)
@@ -25,11 +25,11 @@ public class Flash : MonoBehaviour
             StopCoroutine(flashRoutine);
         }
 
-        flashRoutine = StartCoroutine(flashing_routine());
+        flashRoutine = StartCoroutine(FlashRoutine());
     }
 
 
-    private IEnumerator flashing_routine()
+    private IEnumerator FlashRoutine()
     {
   
         sr.material = flashmat;

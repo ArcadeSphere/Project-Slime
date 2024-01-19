@@ -10646,6 +10646,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 1525551431722026285, guid: 84d23ad09710da14cbcb306a9f179d81, type: 3}
+      propertyPath: flashing
+      value: 
+      objectReference: {fileID: 1108969226}
+    - target: {fileID: 1525551431722026285, guid: 84d23ad09710da14cbcb306a9f179d81, type: 3}
+      propertyPath: startingLives
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3994231868127340124, guid: 84d23ad09710da14cbcb306a9f179d81, type: 3}
       propertyPath: playerPositions.Array.data[0]
       value: 
@@ -10678,6 +10686,26 @@ PrefabInstance:
       propertyPath: inputManager
       value: 
       objectReference: {fileID: 631872787}
+    - target: {fileID: 8197888409835970824, guid: 84d23ad09710da14cbcb306a9f179d81, type: 3}
+      propertyPath: behaviourComponents.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8197888409835970824, guid: 84d23ad09710da14cbcb306a9f179d81, type: 3}
+      propertyPath: behaviourComponents.Array.data[0]
+      value: 
+      objectReference: {fileID: 1108969227}
+    - target: {fileID: 8197888409835970824, guid: 84d23ad09710da14cbcb306a9f179d81, type: 3}
+      propertyPath: behaviourComponents.Array.data[1]
+      value: 
+      objectReference: {fileID: 714717533}
+    - target: {fileID: 8197888409835970824, guid: 84d23ad09710da14cbcb306a9f179d81, type: 3}
+      propertyPath: behaviourComponents.Array.data[2]
+      value: 
+      objectReference: {fileID: 714717536}
+    - target: {fileID: 8197888409835970824, guid: 84d23ad09710da14cbcb306a9f179d81, type: 3}
+      propertyPath: behaviourComponents.Array.data[3]
+      value: 
+      objectReference: {fileID: 1108969228}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84d23ad09710da14cbcb306a9f179d81, type: 3}
 --- !u!114 &714717533 stripped
@@ -12187,6 +12215,39 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1525551431722026277, guid: 84d23ad09710da14cbcb306a9f179d81, type: 3}
   m_PrefabInstance: {fileID: 714717532}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1108969226 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1525551431722026274, guid: 84d23ad09710da14cbcb306a9f179d81, type: 3}
+  m_PrefabInstance: {fileID: 714717532}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1108969222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b9d9732d53df364294b91ab45daca5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1108969227 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3994231868127340124, guid: 84d23ad09710da14cbcb306a9f179d81, type: 3}
+  m_PrefabInstance: {fileID: 714717532}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1108969222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b091ee8f6c202458f41190640d907f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1108969228 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 714717546, guid: 84d23ad09710da14cbcb306a9f179d81, type: 3}
+  m_PrefabInstance: {fileID: 714717532}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1108969222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37957fee041f6c243a2e85f8063b5410, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1131098849
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12586,6 +12647,8 @@ GameObject:
   - component: {fileID: 1196831702}
   - component: {fileID: 1196831709}
   - component: {fileID: 1196831708}
+  - component: {fileID: 1196831711}
+  - component: {fileID: 1196831710}
   m_Layer: 11
   m_Name: GobiHood
   m_TagString: Enemy
@@ -12832,16 +12895,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f0cd728379b7549bb530c7f11fbea3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startinglives: 3
-  Framesduration: 0
-  numberOfFlashes: 0
-  behviourcomponents: []
+  startingLives: 2
+  hitParticle: {fileID: 714717535}
+  deathHandler: {fileID: 1196831710}
+  damageHandler: {fileID: 1196831711}
   flashing: {fileID: 1196831708}
-  rb: {fileID: 0}
-  hurtSound: {fileID: 0}
+--- !u!114 &1196831710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196831698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab51e8d41f0728a49a931c7b393fe277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  behaviourComponents:
+  - {fileID: 1196831704}
+  - {fileID: 1196831705}
+  rb: {fileID: 1196831706}
   deadSound: {fileID: 0}
-  delaySoundInSeconds: 2
-  hitParticle: {fileID: 1500042407}
+--- !u!114 &1196831711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196831698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef91ac6e4f29d3c48ac649a1db97f9e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hurtSound: {fileID: 0}
+  invincibilityController: {fileID: 0}
 --- !u!1001 &1207924109
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13888,11 +13977,6 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 8543598026118306108, guid: 9924ca6fb0940564388c21a9ee255e98, type: 3}
   m_PrefabInstance: {fileID: 2028879514}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &1500042407 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 7116331057902895517, guid: 6548630cb8c72224a814803c4e4095e6, type: 3}
-  m_PrefabInstance: {fileID: 846772456}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1510571381
 PrefabInstance:
@@ -15339,17 +15423,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1924282964, guid: d20b8043e26daf144ae2b85a5112f5c7, type: 3}
+      propertyPath: hitParticle
+      value: 
+      objectReference: {fileID: 1924282955}
     - target: {fileID: 5505411758264803074, guid: d20b8043e26daf144ae2b85a5112f5c7, type: 3}
       propertyPath: m_Name
       value: TestDummy
-      objectReference: {fileID: 0}
-    - target: {fileID: 5505411758264803074, guid: d20b8043e26daf144ae2b85a5112f5c7, type: 3}
-      propertyPath: m_TagString
-      value: Enemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 5505411758264803077, guid: d20b8043e26daf144ae2b85a5112f5c7, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5505411758264803079, guid: d20b8043e26daf144ae2b85a5112f5c7, type: 3}
       propertyPath: m_RootOrder
@@ -15396,23 +15476,11 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5505411758264803129, guid: d20b8043e26daf144ae2b85a5112f5c7, type: 3}
-      propertyPath: rb
+      propertyPath: flashing
       value: 
-      objectReference: {fileID: 1924282957}
-    - target: {fileID: 5505411758264803129, guid: d20b8043e26daf144ae2b85a5112f5c7, type: 3}
-      propertyPath: deadSound
-      value: 
-      objectReference: {fileID: 8300000, guid: 5e04b67a7ce55db4aa7086a0d40fe47c, type: 3}
-    - target: {fileID: 5505411758264803129, guid: d20b8043e26daf144ae2b85a5112f5c7, type: 3}
-      propertyPath: hurtSound
-      value: 
-      objectReference: {fileID: 8300000, guid: 5e04b67a7ce55db4aa7086a0d40fe47c, type: 3}
-    - target: {fileID: 5505411758264803129, guid: d20b8043e26daf144ae2b85a5112f5c7, type: 3}
-      propertyPath: hitParticle
-      value: 
-      objectReference: {fileID: 1924282955}
+      objectReference: {fileID: 1924282959}
     m_RemovedComponents:
-    - {fileID: 6680874693623956286, guid: d20b8043e26daf144ae2b85a5112f5c7, type: 3}
+    - {fileID: 1924282964, guid: d20b8043e26daf144ae2b85a5112f5c7, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d20b8043e26daf144ae2b85a5112f5c7, type: 3}
 --- !u!198 &1924282955 stripped
 ParticleSystem:
@@ -15424,27 +15492,31 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5505411758264803074, guid: d20b8043e26daf144ae2b85a5112f5c7, type: 3}
   m_PrefabInstance: {fileID: 1924282954}
   m_PrefabAsset: {fileID: 0}
---- !u!50 &1924282957
-Rigidbody2D:
-  serializedVersion: 4
+--- !u!114 &1924282959 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5505411758264803078, guid: d20b8043e26daf144ae2b85a5112f5c7, type: 3}
+  m_PrefabInstance: {fileID: 1924282954}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1924282956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b9d9732d53df364294b91ab45daca5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1924282964
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1924282956}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 6200000, guid: 7612ef1708b70c74c9930c8fe0493b2a, type: 2}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef91ac6e4f29d3c48ac649a1db97f9e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hurtSound: {fileID: 8300000, guid: 5e04b67a7ce55db4aa7086a0d40fe47c, type: 3}
+  invincibilityController: {fileID: 0}
 --- !u!224 &1977970930 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6128215028376200870, guid: 240a533e1d58acc468e361ba686989f0, type: 3}

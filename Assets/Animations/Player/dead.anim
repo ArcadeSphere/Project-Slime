@@ -175,7 +175,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.9166667
-    functionName: camera_shake_dead
+    functionName: DeathCameraShake
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

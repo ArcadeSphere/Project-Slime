@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GiveDamage : MonoBehaviour
 {
-    //Made this script because in the takingDamage script will get many errors use this script for taking damage from enemies attack..Use Animation events
+  
     [Header("Attack Detection Settings")]
     [SerializeField] private Transform attackDetectionZoneOrigin;
     [SerializeField] private float attackDetectionRange;

@@ -47,6 +47,8 @@ GameObject:
   - component: {fileID: 7125063384546372504}
   - component: {fileID: 7766122640385485301}
   - component: {fileID: 7564577851673351297}
+  - component: {fileID: 134287674}
+  - component: {fileID: 134287675}
   m_Layer: 11
   m_Name: Kupi Right
   m_TagString: Enemy
@@ -159,17 +161,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f0cd728379b7549bb530c7f11fbea3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startinglives: 5
-  Framesduration: 0
-  numberOfFlashes: 0
-  behviourcomponents:
-  - {fileID: 7125063384546372193}
-  flashing: {fileID: 7125063384546372196}
-  rb: {fileID: 7766122640385485301}
-  hurtSound: {fileID: 0}
-  deadSound: {fileID: 0}
-  delaySoundInSeconds: 2
+  startingLives: 1
   hitParticle: {fileID: 4291459341119245468}
+  deathHandler: {fileID: 134287674}
+  damageHandler: {fileID: 134287675}
+  flashing: {fileID: 7125063384546372196}
 --- !u!114 &7125063384546372196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,6 +258,35 @@ MonoBehaviour:
   gizmoIdleColor: {r: 0, g: 1, b: 0, a: 0.4}
   gizmoDetectedColor: {r: 1, g: 0, b: 0, a: 0.4}
   showGizmo: 1
+--- !u!114 &134287674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7125063384546372192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab51e8d41f0728a49a931c7b393fe277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  behaviourComponents: []
+  rb: {fileID: 7766122640385485301}
+  deadSound: {fileID: 0}
+--- !u!114 &134287675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7125063384546372192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef91ac6e4f29d3c48ac649a1db97f9e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hurtSound: {fileID: 0}
+  invincibilityController: {fileID: 0}
 --- !u!1001 &4946816750333543989
 PrefabInstance:
   m_ObjectHideFlags: 0
