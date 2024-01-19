@@ -7,12 +7,13 @@ public class Kupiscript : MonoBehaviour
     [Header("Kupis Settings")]
     public Transform firePoint;
     public GameObject projectilePrefab;
-    private Animator anim;
     public float projectileSpeed = 5f;
     [SerializeField] private AudioClip spitSound;
 
     [Header("References Settings")]
     [SerializeField] private PlayerDetector playerDetector;
+
+    private Animator anim;
 
     private void Awake()
     {
@@ -22,33 +23,41 @@ public class Kupiscript : MonoBehaviour
 
     private void Update()
     {
-        if (playerDetector.PlayerDetected)
-        {
-            OnPlayerIsIn();
-        }
-        else
-        {
-            OnPlayerIsOut();
-        }
+        UpdateAnimatorState();
     }
 
-    public void OnPlayerIsIn()
+    private void UpdateAnimatorState()
     {
-        anim.SetBool("IsShooting", true);
-       
+        int newState = playerDetector.PlayerDetected ? 1 : 0;
+        SetAnimatorState(newState);
     }
 
-    public void OnPlayerIsOut()
+    private void SetAnimatorState(int state)
     {
-        anim.SetBool("IsShooting", false);
+        anim.SetInteger("state", state);
     }
 
     public void ShootPlayer()
     {
-        AudioManager.instance.PlaySoundEffects(spitSound);
-        Vector2 shootDirection = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
+        PlaySpitSound();
+        Vector2 shootDirection = GetShootDirection();
 
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
+        ConfigureProjectile(projectile, shootDirection);
+    }
+
+    private void PlaySpitSound()
+    {
+        AudioManager.instance.PlaySoundEffects(spitSound);
+    }
+
+    private Vector2 GetShootDirection()
+    {
+        return transform.localScale.x > 0 ? Vector2.right : Vector2.left;
+    }
+
+    private void ConfigureProjectile(GameObject projectile, Vector2 shootDirection)
+    {
         EnemyProjectiles projectileComponent = projectile.GetComponent<EnemyProjectiles>();
 
         if (projectileComponent != null)

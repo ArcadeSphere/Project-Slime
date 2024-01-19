@@ -69,14 +69,14 @@ public class GobiHood : MonoBehaviour
         if (playerDetector.PlayerDetected)
         {
             currentState = GobiHoodStates.Detect;
-            anim.SetFloat("moveSpeed", 0f);
+            anim.SetInteger("state", 0);
             lineOfSight.gameObject.SetActive(true);
         }
         else
         {
             lineOfSight.gameObject.SetActive(false);
             enemyPatrol.GroundEnemyPatrol();
-            anim.SetFloat("moveSpeed", 1f);
+            anim.SetInteger("state", 1);
         }
     }
 
@@ -90,7 +90,7 @@ public class GobiHood : MonoBehaviour
             currentState = GobiHoodStates.Shoot;
         }
 
-        anim.SetFloat("moveSpeed", 0f);
+        anim.SetInteger("state", 0);
         enemyPatrol.StopPatrol();
     }
 

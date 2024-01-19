@@ -137,7 +137,7 @@ public class GobbyAxe : MonoBehaviour
 
     private IEnumerator TurnDelay()
     {
-        anim.SetFloat("moveSpeed", 1f);
+        anim.SetInteger("state", 1);
         yield return new WaitForSeconds(patrolStopDuration);
         isTurning = false;
         characterFlip.Flip();
@@ -145,7 +145,7 @@ public class GobbyAxe : MonoBehaviour
 
     private void HandleTurning()
     {
-        anim.SetFloat("moveSpeed", 0f);
+        anim.SetInteger("state", 0);
         if (!IsPlayerInChaseDetectionZone())
         {
             currentState = GobbyAxeState.Patrol;
@@ -157,12 +157,12 @@ public class GobbyAxe : MonoBehaviour
         if (IsPlayerInChaseDetectionZone())
         {
             currentState = GobbyAxeState.DetectionDelay;
-            anim.SetFloat("moveSpeed", 0f);
+            anim.SetInteger("state", 0);
             detectionDelayTimer = detectionDelayDuration;
         }
         else
         {
-            anim.SetFloat("moveSpeed", 1f);
+            anim.SetInteger("state", 1);
         }
     }
 
@@ -187,7 +187,7 @@ public class GobbyAxe : MonoBehaviour
         if (IsNoGroundInFront())
         {
             currentState = GobbyAxeState.Patrol;
-            anim.SetFloat("moveSpeed", 0f);
+            anim.SetInteger("state", 0);
             return;
         }
 
@@ -196,11 +196,11 @@ public class GobbyAxe : MonoBehaviour
             if (distanceToPlayer > stopDistance)
             {
                 MoveTowardsPlayer(directionToPlayer);
-                anim.SetFloat("moveSpeed", 1f);
+                anim.SetInteger("state", 1);
             }
             else if (distanceToPlayer <= stopDistance && !IsPlayerInAttackRange(distanceToPlayer))
             {
-                anim.SetFloat("moveSpeed", 1f);
+                anim.SetInteger("state", 1);
             }
 
             if (IsPlayerInAttackRange(distanceToPlayer))
@@ -212,7 +212,7 @@ public class GobbyAxe : MonoBehaviour
         else
         {
             currentState = GobbyAxeState.Patrol;
-            anim.SetFloat("moveSpeed", 0f);
+            anim.SetInteger("state", 0);
         }
     }
 
@@ -230,7 +230,7 @@ public class GobbyAxe : MonoBehaviour
 
     private void StopAndAttack()
     {
-        anim.SetFloat("moveSpeed", 0f);
+        anim.SetInteger("state", 0);
         transform.Translate(Vector2.zero);
         currentState = GobbyAxeState.Attack;
     }
