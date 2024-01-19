@@ -15,9 +15,8 @@ GameObject:
   - component: {fileID: 5505411758264803078}
   - component: {fileID: 5505411758264803128}
   - component: {fileID: 1924282957}
-  - component: {fileID: 1924282964}
   - component: {fileID: 1924282965}
-  - component: {fileID: 1924282966}
+  - component: {fileID: 1924282964}
   m_Layer: 11
   m_Name: TestDummy
   m_TagString: Enemy
@@ -80,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 5508725064705088119, guid: eefd33d422ad16240a0f45c980f751fb, type: 3}
+  m_Sprite: {fileID: 3062261668580730629, guid: c4544ed5ca4aa1248a9cf594fe1316e9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -104,18 +103,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0026772022, y: 0.016131341}
+  m_Offset: {x: 0.055637598, y: -1.0038185}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.74375, y: 1.24375}
+    oldSize: {x: 4, y: 4}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.7483506, y: 1.1591476}
+  m_Size: {x: 0.90614367, y: 1.947721}
   m_EdgeRadius: 0
 --- !u!114 &5505411758264803129
 MonoBehaviour:
@@ -133,6 +132,7 @@ MonoBehaviour:
   hitParticle: {fileID: 7075384483094651087}
   deathHandler: {fileID: 1924282965}
   damageHandler: {fileID: 1924282964}
+  flashing: {fileID: 5505411758264803078}
 --- !u!114 &5505411758264803078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,22 +187,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &1924282964
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5505411758264803074}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef91ac6e4f29d3c48ac649a1db97f9e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flashing: {fileID: 5505411758264803078}
-  hurtSound: {fileID: 8300000, guid: 5e04b67a7ce55db4aa7086a0d40fe47c, type: 3}
-  hitParticle: {fileID: 0}
-  invincibilityController: {fileID: 1924282966}
 --- !u!114 &1924282965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,10 +200,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   behaviourComponents: []
-  flashing: {fileID: 5505411758264803078}
   rb: {fileID: 1924282957}
   deadSound: {fileID: 8300000, guid: 5e04b67a7ce55db4aa7086a0d40fe47c, type: 3}
---- !u!114 &1924282966
+--- !u!114 &1924282964
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -228,11 +211,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5505411758264803074}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8b091cb2e444c74a8e925bfd209a472, type: 3}
+  m_Script: {fileID: 11500000, guid: ef91ac6e4f29d3c48ac649a1db97f9e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Framesduration: 0
-  numberOfFlashes: 0
+  hurtSound: {fileID: 8300000, guid: 5e04b67a7ce55db4aa7086a0d40fe47c, type: 3}
+  invincibilityController: {fileID: 0}
 --- !u!1001 &2096457082139994726
 PrefabInstance:
   m_ObjectHideFlags: 0

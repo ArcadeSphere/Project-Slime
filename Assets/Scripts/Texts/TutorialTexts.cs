@@ -4,6 +4,14 @@ using UnityEngine;
 using TMPro;
 public class TutorialTexts : MonoBehaviour
 {
+  
+
+    [SerializeField] private InputManager inputManager;
+    [SerializeField] private TextMeshPro textMeshPro;
+    [TextArea] public string customMessage;
+ 
+    [Header("GIVE A FUNCTION")]
+    public DisplayFunction displayFunction = DisplayFunction.MoveKeys;
     public enum DisplayFunction
     {
         MoveKeys,
@@ -11,17 +19,9 @@ public class TutorialTexts : MonoBehaviour
         Jump,
         Dash,
         Messages
-        
-          
+
+
     }
-
-    [SerializeField] private InputManager inputManager;
-    [SerializeField] private TextMeshPro textMeshPro;
-    [TextArea] public string customMessage;
-    //[SerializeField] private 
-    [Header("GIVE A FUNCTION")]
-    public DisplayFunction displayFunction = DisplayFunction.MoveKeys;
-
     private void Start()
     {
         if (inputManager == null)
@@ -69,8 +69,8 @@ public class TutorialTexts : MonoBehaviour
     {
         if (inputManager != null && textMeshPro != null)
         {
-            string moveLeftText = $"Move Left: {inputManager.moveLeftKey}";
-            string moveRightText = $"Move Right: {inputManager.moveRightKey}";
+            string moveLeftText = $"Move Left:  <color=green> {inputManager.moveLeftKey}</color>";
+            string moveRightText = $"Move Right: <color=green> {inputManager.moveRightKey}";
 
             textMeshPro.text = $"{moveLeftText}\n{moveRightText}";
         }
@@ -80,7 +80,7 @@ public class TutorialTexts : MonoBehaviour
     {
         if (inputManager != null && textMeshPro != null)
         {
-            string playerAttackText = $"Attack: {inputManager.playerAttackKey}";
+            string playerAttackText = $"Attack:<color=green> {inputManager.playerAttackKey}";
 
             textMeshPro.text = playerAttackText;
         }
@@ -90,7 +90,7 @@ public class TutorialTexts : MonoBehaviour
     {
         if (inputManager != null && textMeshPro != null)
         {
-            string jumpText = $"Jump: {inputManager.jumpKey}";
+            string jumpText = $"Jump: <color=green> {inputManager.jumpKey}";
 
             textMeshPro.text = jumpText;
         }
@@ -100,7 +100,7 @@ public class TutorialTexts : MonoBehaviour
     {
         if (inputManager != null && textMeshPro != null)
         {
-            string dashText = $"Dash: {inputManager.dashKey}";
+            string dashText = $"Dash: <color=green> {inputManager.dashKey}";
 
             textMeshPro.text = dashText;
         }
