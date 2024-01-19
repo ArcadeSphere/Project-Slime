@@ -4,24 +4,25 @@ using UnityEngine;
 using UnityEngine.Serialization;
 public class GobiHood : MonoBehaviour
 {
-    [Header("Reference settings")]
+    [Header("Reference Settings")]
     [SerializeField] private PlayerDetector playerDetector;
-    [SerializeField] private EnemyController characterFlip;
+    [SerializeField] private EnemyController characterController;
     [SerializeField] private EnemyPatrol enemyPatrol;
 
-    [Header("GobiHood settings")]
+    [Header("GobiHood Settings")]
     private Animator anim;
     private bool isCooldown = false;
 
-
-    [Header("GobiHood Shooting settings")]
+    [Header("GobiHood Shooting Settings")]
     [SerializeField] private float detectionDelayTimer = 0.5f;
     [SerializeField] private float shootCooldownTimer = 0.9f;
     [SerializeField] private Transform firePoint;
+    [SerializeField] private Transform lineOfSight;
     [SerializeField] private Transform player;
+    [SerializeField] private GameObject playerObject;
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private float projectileSpeed = 5f;
- 
+
     private enum GobiHoodStates
     {
         Patrol,
@@ -30,19 +31,20 @@ public class GobiHood : MonoBehaviour
         Cooldown,
     }
 
-    private GobiHoodStates currentStates = GobiHoodStates.Patrol;
+    private GobiHoodStates currentState = GobiHoodStates.Patrol;
+
     private void Awake()
     {
-        characterFlip = GetComponent<EnemyController>();
+       
+        characterController = GetComponent<EnemyController>();
         playerDetector = GetComponent<PlayerDetector>();
         anim = GetComponent<Animator>();
-
     }
 
-    // Update is called once per frame
     private void Update()
     {
-        switch (currentStates)
+    
+        switch (currentState)
         {
             case GobiHoodStates.Patrol:
                 Patrol();
@@ -66,13 +68,13 @@ public class GobiHood : MonoBehaviour
     {
         if (playerDetector.PlayerDetected)
         {
-            currentStates = GobiHoodStates.Detect;
+            currentState = GobiHoodStates.Detect;
             anim.SetFloat("moveSpeed", 0f);
-            Debug.Log("Player detected, transitioning to Detect state");
+            lineOfSight.gameObject.SetActive(true);
         }
         else
         {
-    
+            lineOfSight.gameObject.SetActive(false);
             enemyPatrol.GroundEnemyPatrol();
             anim.SetFloat("moveSpeed", 1f);
         }
@@ -85,8 +87,7 @@ public class GobiHood : MonoBehaviour
         if (detectionDelayTimer <= 0f)
         {
             detectionDelayTimer = 0.5f;
-            currentStates = GobiHoodStates.Shoot;
-        
+            currentState = GobiHoodStates.Shoot;
         }
 
         anim.SetFloat("moveSpeed", 0f);
@@ -96,7 +97,7 @@ public class GobiHood : MonoBehaviour
     private void ShootAttack()
     {
         anim.SetTrigger("Shoot");
-        currentStates = GobiHoodStates.Cooldown;
+        currentState = GobiHoodStates.Cooldown;
         isCooldown = true;
         Invoke("EndCooldown", shootCooldownTimer);
     }
@@ -105,29 +106,41 @@ public class GobiHood : MonoBehaviour
     {
         if (!isCooldown)
         {
-            currentStates = GobiHoodStates.Patrol;
-
+            currentState = GobiHoodStates.Patrol;
         }
     }
+
     private void EndCooldown()
     {
         isCooldown = false;
     }
 
-
-    //tracks the player
     public void GobiShootAtPlayer()
     {
         Vector2 directionToPlayer = (player.position - firePoint.position).normalized;
+
+        float dotProduct = Vector2.Dot(directionToPlayer, lineOfSight.right);
+
+        //arrow track the player
+        if ((dotProduct > 0 && characterController.isFacingRight) || (dotProduct < 0 && !characterController.isFacingRight))
+        {
+            CreateProjectile(directionToPlayer);
+        }
+        //doesnt track the player
+        else
+        {
+            CreateProjectile(characterController.isFacingRight ? Vector2.right : Vector2.left);
+        }
+    }
+
+    private void CreateProjectile(Vector2 direction)
+    {
         GameObject newProjectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
         EnemyProjectiles enemyProjectile = newProjectile.GetComponent<EnemyProjectiles>();
         enemyProjectile.SetSpeed(projectileSpeed);
-        enemyProjectile.SetDirection(directionToPlayer);
-
+        enemyProjectile.SetDirection(direction);
     }
-
 }
-
 
 
 
