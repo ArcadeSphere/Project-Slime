@@ -26,7 +26,15 @@ public class IdleGroundPatrol : EIdleSOBase
     {
         base.FrameUpdateLogic();
         if (enemy.PlayerDetector.PlayerDetected && !enemy.OnEdge)
+        {
             enemy.StateMachine.ChangeState(enemy.AttackState);
+            return;
+        }
+
+        if (enemy.OnEdge)
+            enemy.Anim.SetInteger("state", 0);
+        else
+            enemy.Anim.SetInteger("state", 1);
     }
 
     public override void PhysicsUpdateLogic()

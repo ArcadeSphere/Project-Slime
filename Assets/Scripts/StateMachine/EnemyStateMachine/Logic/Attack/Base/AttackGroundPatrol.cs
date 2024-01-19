@@ -13,7 +13,7 @@ public class AttackGroundPatrol : EAttackSOBase
     public override void EnterStateLogic()
     {
         base.EnterStateLogic();
-        enemy.Anim.SetInteger("state", 1);
+        enemy.Anim.SetInteger("state", 2);
     }
 
     public override void ExitStateLogic()
