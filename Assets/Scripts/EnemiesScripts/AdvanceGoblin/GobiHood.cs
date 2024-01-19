@@ -64,6 +64,7 @@ public class GobiHood : MonoBehaviour
                 Cooldown();
                 break;
         }
+
     }
 
     private void Patrol()
@@ -122,47 +123,21 @@ public class GobiHood : MonoBehaviour
     //tracks the player
     public void GobiShootAtPlayer()
     {
-        if (HasLineOfSightToPlayer())
+        Vector2 directionToPlayer = (player.position - firePoint.position).normalized;
+
+        // Check if the player is in front of the detection zone based on Gobi's facing direction
+        float dotProduct = Vector2.Dot(directionToPlayer, lOS.right);
+
+        if ((dotProduct > 0 && characterFlip.isFacingRight) || (dotProduct < 0 && !characterFlip.isFacingRight))
         {
-            Vector2 directionToPlayer = (player.position - firePoint.position).normalized;
             GameObject newProjectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
             EnemyProjectiles enemyProjectile = newProjectile.GetComponent<EnemyProjectiles>();
             enemyProjectile.SetSpeed(projectileSpeed);
             enemyProjectile.SetDirection(directionToPlayer);
         }
-
-    }
-    private bool HasLineOfSightToPlayer()
-    {
-        Vector2 directionToPlayer = playerObject.transform.position - lOS.position;
-
-        // Use OverlapCircle to check for triggers within the radius
-        Collider2D hitCollider = Physics2D.OverlapCircle(lOS.position, maxLOSRange, LayerMask.GetMask("Player"));
-
-        if (hitCollider != null && hitCollider.CompareTag("Player"))
-        {
-            Debug.Log("Player detected with OverlapCircle!");
-            return true;
-        }
-        else
-        {
-            Debug.Log("No trigger detected within the LOS range.");
-        }
-
-        return false;
+        
     }
 
-    private void OnDrawGizmos()
-    {
-
-        Gizmos.color = Color.white;
-        // Draw the ray in the Scene view with a limited range only when in Detect state
-        if (playerDetector.PlayerDetected)
-        {
-            Gizmos.DrawLine(lOS.position, lOS.position + (playerObject.transform.position - lOS.position).normalized * maxLOSRange);
-        }
-
-    }
 
 }
 
