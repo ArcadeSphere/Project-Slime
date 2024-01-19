@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyDelay: 2
-  explodeanimation: {fileID: 6043239981226233226, guid: fe378f201d544844eb57f61f754a84f8, type: 3}
+  explodeAnimation: {fileID: 6043239981226233226, guid: fe378f201d544844eb57f61f754a84f8, type: 3}
   enemyDamage: 2
   explodeSound: {fileID: 8300000, guid: d4aaebe5c698a5642873ad2b3bae0bdb, type: 3}
 --- !u!114 &3777764678429059815

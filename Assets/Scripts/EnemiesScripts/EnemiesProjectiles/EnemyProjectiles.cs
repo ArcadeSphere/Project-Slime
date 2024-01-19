@@ -10,6 +10,7 @@ public class EnemyProjectiles : MonoBehaviour
     [SerializeField] protected float enemyDamage;
     [SerializeField] private AudioClip explodeSound;
 
+    [Header("Projectiles Speed and Directions Settings")]
     private float speed;
     private Vector2 direction;
 
@@ -68,6 +69,7 @@ public class EnemyProjectiles : MonoBehaviour
 
             if (other.CompareTag("Player"))
             {
+
                 HandlePlayerCollision(other);
             }
         }
@@ -78,11 +80,12 @@ public class EnemyProjectiles : MonoBehaviour
         if (other.CompareTag("Ground"))
         {
             DisableArrowPhysics();
+            SetSpeed(0f);
         }
 
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Arrow hit the player");
+           
             HandlePlayerCollision(other);
         }
     }
@@ -102,10 +105,7 @@ public class EnemyProjectiles : MonoBehaviour
 
         AudioManager.instance.PlaySoundEffects(explodeSound);
         SetSpeed(0f);
-
         DisableArrowPhysics();
-
-        // Attach the arrow to the player
         transform.parent = playerCollider.transform;
     }
 
