@@ -4,27 +4,25 @@ using UnityEngine;
 using UnityEngine.Serialization;
 public class GobiHood : MonoBehaviour
 {
-    [Header("Reference settings")]
+    [Header("Reference Settings")]
     [SerializeField] private PlayerDetector playerDetector;
-    [SerializeField] private EnemyController characterFlip;
+    [SerializeField] private EnemyController characterController;
     [SerializeField] private EnemyPatrol enemyPatrol;
 
-    [Header("GobiHood settings")]
+    [Header("GobiHood Settings")]
     private Animator anim;
     private bool isCooldown = false;
 
-
-    [Header("GobiHood Shooting settings")]
+    [Header("GobiHood Shooting Settings")]
     [SerializeField] private float detectionDelayTimer = 0.5f;
     [SerializeField] private float shootCooldownTimer = 0.9f;
     [SerializeField] private Transform firePoint;
-    [SerializeField] private Transform lOS;
+    [SerializeField] private Transform lineOfSight;
     [SerializeField] private Transform player;
     [SerializeField] private GameObject playerObject;
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private float projectileSpeed = 5f;
-    [SerializeField] private float maxLOSRange = 10f;
-    [SerializeField] private float yOffset = 0.5f;
+
     private enum GobiHoodStates
     {
         Patrol,
@@ -33,20 +31,20 @@ public class GobiHood : MonoBehaviour
         Cooldown,
     }
 
-    private GobiHoodStates currentStates = GobiHoodStates.Patrol;
+    private GobiHoodStates currentState = GobiHoodStates.Patrol;
+
     private void Awake()
     {
-        characterFlip = GetComponent<EnemyController>();
+       
+        characterController = GetComponent<EnemyController>();
         playerDetector = GetComponent<PlayerDetector>();
         anim = GetComponent<Animator>();
-
-
     }
 
-    // Update is called once per frame
     private void Update()
     {
-        switch (currentStates)
+    
+        switch (currentState)
         {
             case GobiHoodStates.Patrol:
                 Patrol();
@@ -64,20 +62,19 @@ public class GobiHood : MonoBehaviour
                 Cooldown();
                 break;
         }
-
     }
 
     private void Patrol()
     {
         if (playerDetector.PlayerDetected)
         {
-            currentStates = GobiHoodStates.Detect;
+            currentState = GobiHoodStates.Detect;
             anim.SetFloat("moveSpeed", 0f);
-            lOS.gameObject.SetActive(true);
+            lineOfSight.gameObject.SetActive(true);
         }
         else
         {
-            lOS.gameObject.SetActive(false);
+            lineOfSight.gameObject.SetActive(false);
             enemyPatrol.GroundEnemyPatrol();
             anim.SetFloat("moveSpeed", 1f);
         }
@@ -90,8 +87,7 @@ public class GobiHood : MonoBehaviour
         if (detectionDelayTimer <= 0f)
         {
             detectionDelayTimer = 0.5f;
-            currentStates = GobiHoodStates.Shoot;
-
+            currentState = GobiHoodStates.Shoot;
         }
 
         anim.SetFloat("moveSpeed", 0f);
@@ -101,7 +97,7 @@ public class GobiHood : MonoBehaviour
     private void ShootAttack()
     {
         anim.SetTrigger("Shoot");
-        currentStates = GobiHoodStates.Cooldown;
+        currentState = GobiHoodStates.Cooldown;
         isCooldown = true;
         Invoke("EndCooldown", shootCooldownTimer);
     }
@@ -110,37 +106,41 @@ public class GobiHood : MonoBehaviour
     {
         if (!isCooldown)
         {
-            currentStates = GobiHoodStates.Patrol;
-
+            currentState = GobiHoodStates.Patrol;
         }
     }
+
     private void EndCooldown()
     {
         isCooldown = false;
     }
 
-
-    //tracks the player
     public void GobiShootAtPlayer()
     {
         Vector2 directionToPlayer = (player.position - firePoint.position).normalized;
 
-        // Check if the player is in front of the detection zone based on Gobi's facing direction
-        float dotProduct = Vector2.Dot(directionToPlayer, lOS.right);
+        float dotProduct = Vector2.Dot(directionToPlayer, lineOfSight.right);
 
-        if ((dotProduct > 0 && characterFlip.isFacingRight) || (dotProduct < 0 && !characterFlip.isFacingRight))
+        //arrow track the player
+        if ((dotProduct > 0 && characterController.isFacingRight) || (dotProduct < 0 && !characterController.isFacingRight))
         {
-            GameObject newProjectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
-            EnemyProjectiles enemyProjectile = newProjectile.GetComponent<EnemyProjectiles>();
-            enemyProjectile.SetSpeed(projectileSpeed);
-            enemyProjectile.SetDirection(directionToPlayer);
+            CreateProjectile(directionToPlayer);
         }
-        
+        //doesnt track the player
+        else
+        {
+            CreateProjectile(characterController.isFacingRight ? Vector2.right : Vector2.left);
+        }
     }
 
-
+    private void CreateProjectile(Vector2 direction)
+    {
+        GameObject newProjectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
+        EnemyProjectiles enemyProjectile = newProjectile.GetComponent<EnemyProjectiles>();
+        enemyProjectile.SetSpeed(projectileSpeed);
+        enemyProjectile.SetDirection(direction);
+    }
 }
-
 
 
 
