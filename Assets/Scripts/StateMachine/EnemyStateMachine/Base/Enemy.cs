@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Enemy : MonoBehaviour, IEnemyMovement, IEnemyFlip
+public class Enemy : MonoBehaviour, IEnemyPatrol, IEnemyFlip
 {
     [HideInInspector]
     public Animator Anim;
@@ -13,18 +14,19 @@ public class Enemy : MonoBehaviour, IEnemyMovement, IEnemyFlip
     public PlayerDetector PlayerDetector { get; set; }
     public Rigidbody2D RB { get; set; }
 
+    [field: Header("Patrol")]
     [field: SerializeField]
     public GameObject[] PatrolPoints { get; set; }
-    public int CurrentPoint { get; set; }
-
-    [field: SerializeField]
-    public float TurnBackDelay { get; set; }
 
     [field: SerializeField]
     public float MoveSpeed { get; set; }
 
     [field: SerializeField]
+    public float TurnBackDelay { get; set; }
+
+    [field: SerializeField]
     public bool FlipDetectorAfterTurn { get; set; }
+    public int CurrentPoint { get; set; }
     public bool OnEdge { get; set; }
     #endregion
 
@@ -32,6 +34,7 @@ public class Enemy : MonoBehaviour, IEnemyMovement, IEnemyFlip
     public GameObject Player { get; set; }
     public SpriteRenderer SpriteRenderer { get; set; }
 
+    [field: Header("Flip")]
     [field: SerializeField]
     public bool IsFacingRight { get; set; }
     #endregion
@@ -44,13 +47,14 @@ public class Enemy : MonoBehaviour, IEnemyMovement, IEnemyFlip
     #endregion
 
     #region ScriptableObjects variables
-    [field: SerializeField]
+    [Header("Behaviours / States")]
+    [SerializeField]
     private EIdleSOBase EnemyIdleBase;
 
-    [field: SerializeField]
+    [SerializeField]
     private EChaseSOBase EnemyChaseBase;
 
-    [field: SerializeField]
+    [SerializeField]
     private EAttackSOBase EnemyAttackBase;
 
     public EIdleSOBase EIdleBaseInstance { get; set; }
@@ -66,7 +70,6 @@ public class Enemy : MonoBehaviour, IEnemyMovement, IEnemyFlip
     [SerializeField]
     private GameObject dt;
     private DebugText dbt;
-    private TextMeshPro tmp;
     #endregion
 
     private void Awake()
@@ -123,14 +126,23 @@ public class Enemy : MonoBehaviour, IEnemyMovement, IEnemyFlip
     #region Animation Trigger
     public enum AnimationTriggerType
     {
-        EnemyHurt,
-        EnemyAttack,
-        EnemyDie
+        zero,
+        one,
+        two,
+        three,
+        four,
+        five,
+        six
     }
 
     private void AnimationTriggerEvent(AnimationTriggerType triggerType)
     {
         StateMachine.CurrentEnemyState.AnimationTriggerEvent(triggerType);
+    }
+
+    private void AnimationEventTrigger(AnimationTriggerType triggerType)
+    {
+        Anim.SetInteger("state", (int)triggerType);
     }
     #endregion
 

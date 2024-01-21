@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IEnemyMovement
+public interface IEnemyPatrol
 {
     PlayerDetector PlayerDetector { get; set; }
     Rigidbody2D RB { get; set; }
