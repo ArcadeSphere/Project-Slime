@@ -50,14 +50,6 @@ public class Enemy : MonoBehaviour, IEnemyFlip
     public EAttackSOBase EAttackBaseInstance { get; set; }
     #endregion
 
-    #region Debug
-    // debug
-    [Header("Debug")]
-    [SerializeField]
-    private GameObject dt;
-    private DebugText dbt;
-    #endregion
-
     private void Awake()
     {
         // instancing
@@ -70,11 +62,6 @@ public class Enemy : MonoBehaviour, IEnemyFlip
         IdleState = new EIdleState(this, StateMachine);
         ChaseState = new EChaseState(this, StateMachine);
         AttackState = new EAttackState(this, StateMachine);
-        // debug
-        if (dt != null)
-        {
-            dbt = dt.GetComponent<DebugText>();
-        }
     }
 
     private void Start()
@@ -96,17 +83,16 @@ public class Enemy : MonoBehaviour, IEnemyFlip
     private void Update()
     {
         StateMachine.CurrentEnemyState.FrameUpdate();
-        // debug
-        if (dbt != null)
-        {
-            dbt.FollowParent(gameObject, SpriteRenderer);
-            dbt.SetText("Current State: ", StateMachine.CurrentEnemyState.ToString());
-        }
     }
 
     private void FixedUpdate()
     {
         StateMachine.CurrentEnemyState.PhysicsUpdate();
+    }
+
+    public void SetAnim(int animHashCode)
+    {
+        Animator.SetInteger("state", animHashCode);
     }
 
     #region Animation Trigger

@@ -7,19 +7,39 @@ using UnityEngine;
 
 public class DebugText : MonoBehaviour
 {
+    private Enemy enemy;
+
+    [SerializeField]
+    private GameObject parent;
+
+    [SerializeField]
+    private float yOffset = 0;
+
+    [SerializeField]
+    private bool showState = true;
+    private SpriteRenderer sr;
     private RectTransform rt;
 
-    [HideInInspector]
     private TextMeshPro tmp;
+
     private const float OffsetMultiplier = 0.4f;
 
     private void Start()
     {
         rt = GetComponent<RectTransform>();
+        sr = parent.GetComponent<SpriteRenderer>();
         tmp = GetComponent<TextMeshPro>();
+        enemy = parent.GetComponent<Enemy>();
     }
 
-    public void FollowParent(GameObject parent, SpriteRenderer sr, float yOffset = 0)
+    private void Update()
+    {
+        FollowParent();
+
+        ShowState();
+    }
+
+    public void FollowParent()
     {
         rt.position =
             parent.transform.position
@@ -30,8 +50,11 @@ public class DebugText : MonoBehaviour
             );
     }
 
-    public void SetText(String infoName, String value)
+    public void ShowState()
     {
-        tmp.text = infoName + value;
+        if (showState)
+            tmp.text = "Current State: " + enemy.StateMachine.CurrentEnemyState.ToString();
+        else
+            tmp.text = "";
     }
 }

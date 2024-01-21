@@ -1,17 +1,11 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "AttackGroundPatrol", menuName = "SOLogic/Attack/AttackGroundPatrol")]
-public class AttackGroundPatrol : EAttackSOBase
+[CreateAssetMenu(fileName = "IdleFlyPatrol", menuName = "SOLogic/Idle/IdleFlyPatrol")]
+public class IdleFlyPatrol : EIdleSOBase
 {
     private Patrol patrol;
-
-    private readonly float initialSpeed = 2f;
-
-    [SerializeField]
-    private float speed;
 
     public override void Init(GameObject gameObject, Enemy enemy)
     {
@@ -22,7 +16,7 @@ public class AttackGroundPatrol : EAttackSOBase
     public override void EnterStateLogic()
     {
         base.EnterStateLogic();
-        enemy.Animator.SetInteger("state", Armadillo.Anim.Curl.GetHashCode());
+        enemy.SetAnim(0);
     }
 
     public override void ExitStateLogic()
@@ -34,33 +28,23 @@ public class AttackGroundPatrol : EAttackSOBase
     public override void FrameUpdateLogic()
     {
         base.FrameUpdateLogic();
-        AnimatorStateInfo currentAnim = enemy.Animator.GetCurrentAnimatorStateInfo(0);
-        if (!currentAnim.IsName("curl") && currentAnim.normalizedTime > 1f)
-            patrol.PatrolSpeed = speed;
-        if (patrol.OnEdge)
-        {
-            enemy.Animator.SetInteger("state", Armadillo.Anim.Uncurl.GetHashCode());
-        }
+        if (enemy.PlayerDetector.PlayerDetected)
+            enemy.StateMachine.ChangeState(enemy.ChaseState);
     }
 
     public override void PhysicsUpdateLogic()
     {
         base.PhysicsUpdateLogic();
-        patrol.GroundPatrol();
+        patrol.FlyPatrol();
     }
 
     public override void AnimationTriggerEventLogic(Enemy.AnimationTriggerType triggerType)
     {
         base.AnimationTriggerEventLogic(triggerType);
-        if (triggerType == Enemy.AnimationTriggerType.changeState)
-        {
-            enemy.StateMachine.ChangeState(enemy.IdleState);
-        }
     }
 
     public override void ResetValues()
     {
         base.ResetValues();
-        patrol.PatrolSpeed = initialSpeed;
     }
 }
