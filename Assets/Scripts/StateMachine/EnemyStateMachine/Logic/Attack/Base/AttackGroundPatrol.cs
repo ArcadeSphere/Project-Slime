@@ -26,13 +26,9 @@ public class AttackGroundPatrol : EAttackSOBase
     public override void FrameUpdateLogic()
     {
         base.FrameUpdateLogic();
-        if (
-            !enemy.Animator.GetCurrentAnimatorStateInfo(0).IsName("curl")
-            && enemy.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1f
-        )
-        {
+        AnimatorStateInfo currentAnim = enemy.Animator.GetCurrentAnimatorStateInfo(0);
+        if (!currentAnim.IsName("curl") && currentAnim.normalizedTime > 1f)
             enemy.MoveSpeed = 5f;
-        }
         if (enemy.OnEdge)
         {
             enemy.Animator.SetInteger("state", Armadillo.Anim.Uncurl.GetHashCode());
