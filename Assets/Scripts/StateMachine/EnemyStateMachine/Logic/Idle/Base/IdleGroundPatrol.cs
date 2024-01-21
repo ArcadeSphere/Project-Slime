@@ -13,7 +13,8 @@ public class IdleGroundPatrol : EIdleSOBase
     public override void EnterStateLogic()
     {
         base.EnterStateLogic();
-        enemy.Anim.SetInteger("state", 0);
+        enemy.Animator.SetInteger("state", Armadillo.Anim.Idle.GetHashCode());
+        enemy.MoveSpeed = 2f;
     }
 
     public override void ExitStateLogic()
@@ -32,9 +33,9 @@ public class IdleGroundPatrol : EIdleSOBase
         }
 
         if (enemy.OnEdge)
-            enemy.Anim.SetInteger("state", 0);
+            enemy.Animator.SetInteger("state", Armadillo.Anim.Idle.GetHashCode());
         else
-            enemy.Anim.SetInteger("state", 1);
+            enemy.Animator.SetInteger("state", Armadillo.Anim.Walk.GetHashCode());
     }
 
     public override void PhysicsUpdateLogic()

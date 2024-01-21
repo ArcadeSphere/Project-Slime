@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class Enemy : MonoBehaviour, IEnemyPatrol, IEnemyFlip
 {
     [HideInInspector]
-    public Animator Anim;
+    public Animator Animator;
 
     #region Patrol Variables
     public PlayerDetector PlayerDetector { get; set; }
@@ -74,12 +74,13 @@ public class Enemy : MonoBehaviour, IEnemyPatrol, IEnemyFlip
 
     private void Awake()
     {
+        // instancing
         EIdleBaseInstance = Instantiate(EnemyIdleBase);
         EChaseBaseInstance = Instantiate(EnemyChaseBase);
         EAttackBaseInstance = Instantiate(EnemyAttackBase);
-
+        // adding component state machine
         StateMachine = gameObject.AddComponent<EStateMachine>();
-
+        // creating instances
         IdleState = new EIdleState(this, StateMachine);
         ChaseState = new EChaseState(this, StateMachine);
         AttackState = new EAttackState(this, StateMachine);
@@ -88,21 +89,21 @@ public class Enemy : MonoBehaviour, IEnemyPatrol, IEnemyFlip
         {
             dbt = dt.GetComponent<DebugText>();
         }
-        // debug
     }
 
     private void Start()
     {
+        // getting components
         Player = GameObject.FindGameObjectWithTag("Player");
         SpriteRenderer = GetComponent<SpriteRenderer>();
         RB = GetComponent<Rigidbody2D>();
         PlayerDetector = GetComponent<PlayerDetector>();
-        Anim = GetComponent<Animator>();
-
+        Animator = GetComponent<Animator>();
+        // initializing behaviours
         EIdleBaseInstance.Init(gameObject, this);
         EChaseBaseInstance.Init(gameObject, this);
         EAttackBaseInstance.Init(gameObject, this);
-
+        // initializing start state
         StateMachine.InitializeState(IdleState);
     }
 
@@ -115,7 +116,6 @@ public class Enemy : MonoBehaviour, IEnemyPatrol, IEnemyFlip
             dbt.FollowParent(gameObject, SpriteRenderer);
             dbt.SetText("Current State: ", StateMachine.CurrentEnemyState.ToString());
         }
-        // debug
     }
 
     private void FixedUpdate()
@@ -132,17 +132,20 @@ public class Enemy : MonoBehaviour, IEnemyPatrol, IEnemyFlip
         three,
         four,
         five,
-        six
+        six,
+        changeState
     }
 
+    // useful when changing states or applying extra logic
     private void AnimationTriggerEvent(AnimationTriggerType triggerType)
     {
         StateMachine.CurrentEnemyState.AnimationTriggerEvent(triggerType);
     }
 
-    private void AnimationEventTrigger(AnimationTriggerType triggerType)
+    // useful when changing animation
+    private void ChangeAnimationEventTrigger(AnimationTriggerType triggerType)
     {
-        Anim.SetInteger("state", (int)triggerType);
+        Animator.SetInteger("state", (int)triggerType);
     }
     #endregion
 

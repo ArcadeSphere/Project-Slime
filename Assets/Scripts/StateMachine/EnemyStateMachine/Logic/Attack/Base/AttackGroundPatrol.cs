@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +14,7 @@ public class AttackGroundPatrol : EAttackSOBase
     public override void EnterStateLogic()
     {
         base.EnterStateLogic();
-        enemy.Anim.SetInteger("state", 2);
+        enemy.Animator.SetInteger("state", Armadillo.Anim.Curl.GetHashCode());
     }
 
     public override void ExitStateLogic()
@@ -25,8 +26,17 @@ public class AttackGroundPatrol : EAttackSOBase
     public override void FrameUpdateLogic()
     {
         base.FrameUpdateLogic();
-        if (!enemy.PlayerDetector.PlayerDetected && enemy.OnEdge)
-            enemy.StateMachine.ChangeState(enemy.IdleState);
+        if (
+            !enemy.Animator.GetCurrentAnimatorStateInfo(0).IsName("curl")
+            && enemy.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1f
+        )
+        {
+            enemy.MoveSpeed = 5f;
+        }
+        if (enemy.OnEdge)
+        {
+            enemy.Animator.SetInteger("state", Armadillo.Anim.Uncurl.GetHashCode());
+        }
     }
 
     public override void PhysicsUpdateLogic()
@@ -38,6 +48,10 @@ public class AttackGroundPatrol : EAttackSOBase
     public override void AnimationTriggerEventLogic(Enemy.AnimationTriggerType triggerType)
     {
         base.AnimationTriggerEventLogic(triggerType);
+        if (triggerType == Enemy.AnimationTriggerType.changeState)
+        {
+            enemy.StateMachine.ChangeState(enemy.IdleState);
+        }
     }
 
     public override void ResetValues()
