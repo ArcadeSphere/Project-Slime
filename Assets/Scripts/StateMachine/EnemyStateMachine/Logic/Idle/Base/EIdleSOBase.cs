@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "IdleNull", menuName = "SOLogic/Idle/IdleNull")]
 public class EIdleSOBase : ScriptableObject
 {
     protected Enemy enemy;

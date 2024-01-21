@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "ChaseNull", menuName = "SOLogic/Chase/ChaseNull")]
 public class EChaseSOBase : ScriptableObject
 {
     protected Enemy enemy;

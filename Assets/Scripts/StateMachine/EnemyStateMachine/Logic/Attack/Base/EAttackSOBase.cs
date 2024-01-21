@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "AttackNull", menuName = "SOLogic/Attack/AttackNull")]
 public class EAttackSOBase : ScriptableObject
 {
     protected Enemy enemy;

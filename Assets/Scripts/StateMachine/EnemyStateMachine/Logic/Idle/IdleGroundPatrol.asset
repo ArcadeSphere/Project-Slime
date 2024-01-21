@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d45cc548746e189498925e32a3430eef, type: 3}
   m_Name: IdleGroundPatrol
   m_EditorClassIdentifier: 
+  moveSpeed: 5

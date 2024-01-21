@@ -6,9 +6,17 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "AttackGroundPatrol", menuName = "SOLogic/Attack/AttackGroundPatrol")]
 public class AttackGroundPatrol : EAttackSOBase
 {
+    private Patrol patrol;
+
+    private readonly float initialSpeed = 2f;
+
+    [SerializeField]
+    private float speed;
+
     public override void Init(GameObject gameObject, Enemy enemy)
     {
         base.Init(gameObject, enemy);
+        patrol = enemy.GetComponent<Patrol>();
     }
 
     public override void EnterStateLogic()
@@ -28,8 +36,8 @@ public class AttackGroundPatrol : EAttackSOBase
         base.FrameUpdateLogic();
         AnimatorStateInfo currentAnim = enemy.Animator.GetCurrentAnimatorStateInfo(0);
         if (!currentAnim.IsName("curl") && currentAnim.normalizedTime > 1f)
-            enemy.MoveSpeed = 5f;
-        if (enemy.OnEdge)
+            patrol.PatrolSpeed = speed;
+        if (patrol.OnEdge)
         {
             enemy.Animator.SetInteger("state", Armadillo.Anim.Uncurl.GetHashCode());
         }
@@ -38,7 +46,7 @@ public class AttackGroundPatrol : EAttackSOBase
     public override void PhysicsUpdateLogic()
     {
         base.PhysicsUpdateLogic();
-        enemy.GroundPatrol();
+        patrol.GroundPatrol();
     }
 
     public override void AnimationTriggerEventLogic(Enemy.AnimationTriggerType triggerType)
@@ -53,5 +61,6 @@ public class AttackGroundPatrol : EAttackSOBase
     public override void ResetValues()
     {
         base.ResetValues();
+        patrol.PatrolSpeed = initialSpeed;
     }
 }

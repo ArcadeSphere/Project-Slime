@@ -5,30 +5,16 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Enemy : MonoBehaviour, IEnemyPatrol, IEnemyFlip
+public class Enemy : MonoBehaviour, IEnemyFlip
 {
     [HideInInspector]
     public Animator Animator;
 
-    #region Patrol Variables
-    public PlayerDetector PlayerDetector { get; set; }
-    public Rigidbody2D RB { get; set; }
+    [HideInInspector]
+    public Rigidbody2D RB;
 
-    [field: Header("Patrol")]
-    [field: SerializeField]
-    public GameObject[] PatrolPoints { get; set; }
-
-    [field: SerializeField]
-    public float MoveSpeed { get; set; }
-
-    [field: SerializeField]
-    public float TurnBackDelay { get; set; }
-
-    [field: SerializeField]
-    public bool FlipDetectorAfterTurn { get; set; }
-    public int CurrentPoint { get; set; }
-    public bool OnEdge { get; set; }
-    #endregion
+    [HideInInspector]
+    public PlayerDetector PlayerDetector;
 
     #region Flip Variables
     public GameObject Player { get; set; }
@@ -207,91 +193,6 @@ public class Enemy : MonoBehaviour, IEnemyPatrol, IEnemyFlip
             scale.x = Mathf.Abs(scale.x) * (SpriteRenderer.flipX ? -1 : 1);
         }
         transform.localScale = scale;
-    }
-    #endregion
-
-    #region Patrol Functions
-    public void FlyPatrol()
-    {
-        if (!OnEdge)
-        {
-            StartCoroutine(
-                UpdatePatrolPoints(
-                    PatrolPoints[CurrentPoint].transform.position,
-                    transform.position
-                )
-            );
-            Vector2 direction = PatrolPoints[CurrentPoint].transform.position - transform.position;
-            RB.velocity = direction.normalized * MoveSpeed;
-        }
-        else
-        {
-            RB.velocity = Vector2.zero;
-            StartCoroutine(PatrolEdgeDelay());
-        }
-    }
-
-    public void GroundPatrol()
-    {
-        if (!OnEdge)
-        {
-            StartCoroutine(
-                UpdatePatrolPoints(
-                    new Vector2(
-                        PatrolPoints[CurrentPoint].transform.position.x,
-                        transform.position.y
-                    ),
-                    transform.position
-                )
-            );
-            Vector3 targetPosition = new Vector3(
-                PatrolPoints[CurrentPoint].transform.position.x,
-                transform.position.y,
-                transform.position.z
-            );
-            RB.velocity = (targetPosition - transform.position).normalized * MoveSpeed;
-        }
-        else
-            StartCoroutine(PatrolEdgeDelay());
-    }
-
-    public IEnumerator PatrolEdgeDelay()
-    {
-        if (OnEdge)
-        {
-            yield return new WaitForSeconds(TurnBackDelay);
-            OnEdge = false;
-        }
-    }
-
-    public void StopPatrol()
-    {
-        StopAllCoroutines();
-        RB.velocity = Vector2.zero;
-        OnEdge = false;
-    }
-
-    public IEnumerator UpdatePatrolPoints(Vector2 pointA, Vector2 pointB)
-    {
-        if (Vector2.Distance(pointA, pointB) < 0.1f)
-        {
-            CurrentPoint++;
-            if (CurrentPoint >= PatrolPoints.Length)
-            {
-                CurrentPoint = 0;
-            }
-            // flip sprite if its the first and last point
-            if (CurrentPoint <= 1 || CurrentPoint >= PatrolPoints.Length)
-            {
-                OnEdge = true;
-                if (!FlipDetectorAfterTurn)
-                    PlayerDetector.FlipDetector();
-                yield return new WaitForSeconds(TurnBackDelay);
-                if (FlipDetectorAfterTurn)
-                    PlayerDetector.FlipDetector();
-                Flip();
-            }
-        }
     }
     #endregion
 }
