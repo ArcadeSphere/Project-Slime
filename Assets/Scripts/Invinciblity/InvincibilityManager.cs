@@ -5,8 +5,12 @@ using UnityEngine;
 public class InvincibilityManager : MonoBehaviour
 {
     private bool invulnerable;
-    [SerializeField] private float Framesduration;
-    [SerializeField] private int numberOfFlashes;
+
+    [SerializeField]
+    private float Framesduration;
+
+    [SerializeField]
+    private int numberOfFlashes;
     private SpriteRenderer sr;
 
     private void Awake()
