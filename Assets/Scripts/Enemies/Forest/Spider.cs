@@ -25,7 +25,7 @@ public class Spider : MonoBehaviour
     [SerializeField] private PlayerDetector playerDetector;
     [SerializeField] private EnemyController characterFlip;
 
-    private bool canJump = true; // Added variable to control jumping
+    private bool canJump = true;
 
     private void Awake()
     {
@@ -43,7 +43,7 @@ public class Spider : MonoBehaviour
 
         if (playerDetector.PlayerDetected)
         {
-            canJump = true; // Player is detected, so spider can jump
+           
             if (isGround && Time.time >= nextJumpTime && canJump)
             {
                 characterFlip.FlipTowardsTarget(playerTransform.position);
@@ -51,11 +51,7 @@ public class Spider : MonoBehaviour
                 nextJumpTime = Time.time + jumpCooldown;
             }
         }
-        else
-        {
-            canJump = false; // Player is not detected, so spider can't jump
-           
-        }
+      
     }
 
     // adds a delay for the first jump
