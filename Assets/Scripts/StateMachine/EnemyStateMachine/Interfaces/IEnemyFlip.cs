@@ -13,4 +13,6 @@ public interface IEnemyFlip
     void FlipTowardsPlayer();
     void FlipTowards(Vector2 targetPosition);
     void FlipOnVelocity();
+    float RightX(Vector2 scale);
+    float LeftX(Vector2 scale);
 }

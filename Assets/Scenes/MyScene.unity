@@ -16400,7 +16400,7 @@ MonoBehaviour:
   <IsFacingRight>k__BackingField: 0
   EnemyIdleBase: {fileID: 11400000, guid: bf990aa1810a64f49b323f493b25a45c, type: 2}
   EnemyChaseBase: {fileID: 11400000, guid: bc5ae0f84747ad94ebe95106e378e12f, type: 2}
-  EnemyAttackBase: {fileID: 11400000, guid: c45a97c68b5f9344298b7726318b7aab, type: 2}
+  EnemyAttackBase: {fileID: 11400000, guid: 4fc6db8fdbd038746a9ffdfc8c98994c, type: 2}
 --- !u!95 &68720917208498740
 Animator:
   serializedVersion: 3
@@ -16436,20 +16436,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.005091667}
   serializedVersion: 2
   m_Radius: 0.16782808
---- !u!114 &68720917474666145
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 68720917474666146}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d918b1d8c87db04e846f1bedf8f364a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 1
-  playerDetector: {fileID: 0}
 --- !u!1 &68720917474666146
 GameObject:
   m_ObjectHideFlags: 0
@@ -16459,7 +16445,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 68720917474666147}
-  - component: {fileID: 68720917474666145}
   - component: {fileID: 68720917474666144}
   m_Layer: 11
   m_Name: AttackPoint
