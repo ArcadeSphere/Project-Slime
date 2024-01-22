@@ -69,8 +69,8 @@ public class TutorialTexts : MonoBehaviour
     {
         if (inputManager != null && textMeshPro != null)
         {
-            string moveLeftText = $"Move Left:  <color=green> {inputManager.moveLeftKey}</color>";
-            string moveRightText = $"Move Right: <color=green> {inputManager.moveRightKey}";
+            string moveLeftText = $"Move Left:  <color=green><uppercase> {inputManager.moveLeftKey}</uppercase></color>";
+            string moveRightText = $"Move Right: <color=green> <uppercase>{inputManager.moveRightKey}</uppercase>";
 
             textMeshPro.text = $"{moveLeftText}\n{moveRightText}";
         }
@@ -80,7 +80,7 @@ public class TutorialTexts : MonoBehaviour
     {
         if (inputManager != null && textMeshPro != null)
         {
-            string playerAttackText = $"Attack:<color=green> {inputManager.playerAttackKey}";
+            string playerAttackText = $"Attack:<color=green> <uppercase> {inputManager.playerAttackKey}</uppercase> ";
 
             textMeshPro.text = playerAttackText;
         }
@@ -90,7 +90,7 @@ public class TutorialTexts : MonoBehaviour
     {
         if (inputManager != null && textMeshPro != null)
         {
-            string jumpText = $"Jump: <color=green> {inputManager.jumpKey}";
+            string jumpText = $"Jump: <color=green><uppercase> {inputManager.jumpKey}</uppercase>";
 
             textMeshPro.text = jumpText;
         }
@@ -100,7 +100,7 @@ public class TutorialTexts : MonoBehaviour
     {
         if (inputManager != null && textMeshPro != null)
         {
-            string dashText = $"Dash: <color=green> {inputManager.dashKey}";
+            string dashText = $"Dash: <color=green><uppercase> {inputManager.dashKey} </uppercase> ";
 
             textMeshPro.text = dashText;
         }
