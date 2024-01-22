@@ -29,7 +29,7 @@ public class IdleFlyPatrol : EIdleSOBase
     {
         base.FrameUpdateLogic();
         if (enemy.PlayerDetector.PlayerDetected)
-            enemy.StateMachine.ChangeState(enemy.ChaseState);
+            enemy.StateMachine.ChangeState(enemy.AttackState);
     }
 
     public override void PhysicsUpdateLogic()

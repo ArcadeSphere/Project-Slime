@@ -133,17 +133,13 @@ public class Enemy : MonoBehaviour, IEnemyFlip
     public void FlipOnVelocity()
     {
         Vector2 scale = transform.localScale;
-        if (RB.velocity.x < 0f)
+        if (RB.velocity.x < 0.1f)
         {
-            scale.x = 1;
+            scale.x = LeftX(scale);
         }
-        else if (RB.velocity.x > 0f)
+        else if (RB.velocity.x > 0.1f)
         {
-            scale.x = -1;
-        }
-        else
-        {
-            scale.x *= 1;
+            scale.x = RightX(scale);
         }
         transform.localScale = scale;
     }
@@ -172,13 +168,24 @@ public class Enemy : MonoBehaviour, IEnemyFlip
         Vector2 scale = transform.localScale;
         if (Player.transform.position.x > transform.position.x)
         {
-            scale.x = Mathf.Abs(scale.x) * -1 * (SpriteRenderer.flipX ? -1 : 1);
+            scale.x = RightX(scale);
         }
         else
         {
-            scale.x = Mathf.Abs(scale.x) * (SpriteRenderer.flipX ? -1 : 1);
+            scale.x = LeftX(scale);
         }
         transform.localScale = scale;
     }
+
+    public float RightX(Vector2 scale)
+    {
+        return Mathf.Abs(scale.x) * -1 * (SpriteRenderer.flipX ? -1 : 1);
+    }
+
+    public float LeftX(Vector2 scale)
+    {
+        return Mathf.Abs(scale.x) * (SpriteRenderer.flipX ? -1 : 1);
+    }
+
     #endregion
 }
