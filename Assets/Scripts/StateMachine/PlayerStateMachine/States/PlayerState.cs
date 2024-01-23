@@ -20,12 +20,14 @@ public class PlayerState
 
     public virtual void PlayerEnterState()
     {
+        Debug.Log("Player has enter the game");
         CheckForSomething();
+        player.playerAnim.SetBool(animBoolName, true);
         startTime = Time.time;
     }
     public virtual void PLayerExitState()
     {
-
+        player.playerAnim.SetBool(animBoolName, false);
     }
     public virtual void PLayerLogic()
     {
