@@ -16220,6 +16220,14 @@ PrefabInstance:
       value: 5.25
       objectReference: {fileID: 0}
     - target: {fileID: 165573561, guid: 6548630cb8c72224a814803c4e4095e6, type: 3}
+      propertyPath: gizmoIdleColor.a
+      value: 0.11764706
+      objectReference: {fileID: 0}
+    - target: {fileID: 165573561, guid: 6548630cb8c72224a814803c4e4095e6, type: 3}
+      propertyPath: gizmoDetectedColor.a
+      value: 0.11764706
+      objectReference: {fileID: 0}
+    - target: {fileID: 165573561, guid: 6548630cb8c72224a814803c4e4095e6, type: 3}
       propertyPath: detectorOriginOffset.x
       value: 0.9
       objectReference: {fileID: 0}
@@ -16230,6 +16238,10 @@ PrefabInstance:
     - target: {fileID: 2155681933718817415, guid: 6548630cb8c72224a814803c4e4095e6, type: 3}
       propertyPath: m_RootOrder
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2155681933718817415, guid: 6548630cb8c72224a814803c4e4095e6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.32
       objectReference: {fileID: 0}
     - target: {fileID: 2155681933718817415, guid: 6548630cb8c72224a814803c4e4095e6, type: 3}
       propertyPath: m_LocalRotation.x

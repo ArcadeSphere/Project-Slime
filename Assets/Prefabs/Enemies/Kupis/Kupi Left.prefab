@@ -132,10 +132,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingLives: 1
+  rb: {fileID: 0}
   hitParticle: {fileID: 3429727624085065896}
-  deathHandler: {fileID: 7916407966103365079}
-  damageHandler: {fileID: 876682173875174748}
+  hurtSound: {fileID: 0}
   flashing: {fileID: 3636886527541594146}
+  deadSound: {fileID: 0}
+  behaviourComponents: []
+  invincibilityController: {fileID: 0}
 --- !u!114 &3636886527541594146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,8 +228,8 @@ MonoBehaviour:
   detectorRadius: 0
   detectorOriginOffset: {x: -4.56, y: -0.14}
   detectionDelay: 0.3
-  gizmoIdleColor: {r: 0, g: 1, b: 0, a: 0.4}
-  gizmoDetectedColor: {r: 1, g: 0, b: 0, a: 0.4}
+  gizmoIdleColor: {r: 0, g: 1, b: 0, a: 0.15686275}
+  gizmoDetectedColor: {r: 1, g: 0, b: 0, a: 0.15686275}
   showGizmo: 1
 --- !u!114 &876682173875174748
 MonoBehaviour:
@@ -240,8 +243,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef91ac6e4f29d3c48ac649a1db97f9e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hurtSound: {fileID: 8300000, guid: 892e1a136cbdf864baaa96881a6af31b, type: 3}
-  invincibilityController: {fileID: 0}
 --- !u!114 &7916407966103365079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,9 +255,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab51e8d41f0728a49a931c7b393fe277, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  behaviourComponents: []
-  rb: {fileID: 4278227265605176243}
-  deadSound: {fileID: 8300000, guid: 5dd3d36542528db4aa2f537823bf9291, type: 3}
 --- !u!1 &3636886528337020326
 GameObject:
   m_ObjectHideFlags: 0
