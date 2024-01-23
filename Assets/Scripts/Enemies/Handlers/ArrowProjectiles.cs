@@ -33,7 +33,7 @@ public class ArrowProjectiles : MonoBehaviour
 
         if (other.CompareTag("Enemy"))
         {
-            other.GetComponent<Health>().TakeDamage(enemyDamage);
+            other.GetComponent<Health>().DamageCharacter(enemyDamage);
             Instantiate(explodeArrowanimation, transform.position, Quaternion.identity);
             Destroy(gameObject);
 

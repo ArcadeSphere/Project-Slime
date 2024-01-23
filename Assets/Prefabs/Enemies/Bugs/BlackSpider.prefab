@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2155681933698449779}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.067, y: -0.946, z: 0}
+  m_LocalPosition: {x: -0.067, y: -1.051, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2155681933718817415}
@@ -49,8 +49,6 @@ GameObject:
   - component: {fileID: 2155681933718817422}
   - component: {fileID: 2851582590311403867}
   - component: {fileID: 165573561}
-  - component: {fileID: 4609789369948410788}
-  - component: {fileID: 7977408217666068554}
   m_Layer: 11
   m_Name: BlackSpider
   m_TagString: Enemy
@@ -116,7 +114,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 4589206096619185185, guid: 162bde4c5d82d624e87c40189dc671b9, type: 3}
+  m_Sprite: {fileID: 4589206096619185185, guid: 3177fe973484f9d4db1b1842970259c4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -159,18 +157,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.04221344, y: -0.2811829}
+  m_Offset: {x: -0.07288742, y: -0.67990243}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2}
+    oldSize: {x: 4, y: 4}
     newSize: {x: 1.4419999, y: 1.3}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.3634186, y: 1.4553845}
+  m_Size: {x: 0.8522415, y: 0.6579454}
   m_EdgeRadius: 0
 --- !u!50 &2155681933718817419
 Rigidbody2D:
@@ -245,10 +243,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingLives: 0
+  rb: {fileID: 0}
   hitParticle: {fileID: 7116331057902895517}
-  deathHandler: {fileID: 4609789369948410788}
-  damageHandler: {fileID: 7977408217666068554}
+  hurtSound: {fileID: 0}
   flashing: {fileID: 2155681933718817422}
+  deadSound: {fileID: 0}
+  behaviourComponents: []
+  invincibilityController: {fileID: 0}
 --- !u!114 &2155681933718817422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,7 +277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDetectionZoneOrigin: {fileID: 2155681934122555518}
-  attackDetectionRange: 0.95
+  attackDetectionRange: 0.42
   attackDamage: 1
   playerLayer:
     serializedVersion: 2
@@ -302,35 +303,6 @@ MonoBehaviour:
   gizmoIdleColor: {r: 0, g: 1, b: 0, a: 0.4}
   gizmoDetectedColor: {r: 1, g: 0, b: 0, a: 0.4}
   showGizmo: 1
---- !u!114 &4609789369948410788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2155681933718817423}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab51e8d41f0728a49a931c7b393fe277, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  behaviourComponents: []
-  rb: {fileID: 2155681933718817419}
-  deadSound: {fileID: 0}
---- !u!114 &7977408217666068554
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2155681933718817423}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef91ac6e4f29d3c48ac649a1db97f9e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hurtSound: {fileID: 0}
-  invincibilityController: {fileID: 0}
 --- !u!1 &2155681934122555519
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,7 +327,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2155681934122555519}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.045, y: -0.374, z: 0}
+  m_LocalPosition: {x: -0.045, y: -0.729, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2155681933718817415}
@@ -405,7 +377,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.04221344, y: -0.2811829}
+  m_Offset: {x: -0.07507324, y: -0.6191051}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -416,7 +388,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.3634186, y: 1.4553845}
+  m_Size: {x: 0.97862244, y: 0.77954006}
   m_EdgeRadius: 0
 --- !u!1001 &2155681934012140340
 PrefabInstance:
