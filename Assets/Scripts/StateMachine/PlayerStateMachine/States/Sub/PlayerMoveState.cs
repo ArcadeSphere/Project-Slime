@@ -29,7 +29,7 @@ public class PlayerMoveState : PlayerGroundState
         base.PLayerLogic();
         float targetVelocity = input * playerCore.AccelerationSpeed;
         player.currentVelocity = Mathf.MoveTowards(player.currentVelocity, targetVelocity, Mathf.Abs(playerCore.AccelerationSpeed) * Time.deltaTime);
-        player.setVelocity(player.currentVelocity);
+        player.SetVelocity(player.currentVelocity);
 
         if (input == 0f)
         {

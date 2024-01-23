@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerGroundState : PlayerState
 {
     protected float input;
+    private bool jumpInput;
     public PlayerGroundState(Player player, PlayerSateMachine stateMachine, PlayerCore playerCore, string animBoolName) : base(player, stateMachine, playerCore, animBoolName)
     {
     }
@@ -28,6 +29,14 @@ public class PlayerGroundState : PlayerState
     {
         base.PLayerLogic();
         input = player.playerinput.horizontalInput;
+        jumpInput = player.playerinput.jumpInput;
+
+        if (jumpInput)
+        {
+            Debug.Log("Jump detected!");
+            player.playerinput.UseJumpInput();
+            stateMachine.PlayerChangeState(player.jumpState);
+        }
     }
 
 

@@ -14,3 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MovementSpeed: 2
   AccelerationSpeed: 8
+  JumpVelocity: 15
+  GroundCheckRadius: 0.2
+  GroundLayer:
+    serializedVersion: 2
+    m_Bits: 64
