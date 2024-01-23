@@ -11,7 +11,7 @@ public class PlayerLandState : PlayerGroundState
     public override void PLayerLogic()
     {
         base.PLayerLogic();
-        if (input != 0f)
+        if (xinput != 0)
         {
             stateMachine.PlayerChangeState(player.moveState);
         }

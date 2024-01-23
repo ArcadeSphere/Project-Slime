@@ -16,7 +16,7 @@ public class PlayerMoveState : PlayerGroundState
     public override void PlayerEnterState()
     {
         base.PlayerEnterState();
-        player.currentVelocity = playerCore.MovementSpeed * input;
+       
     }
 
     public override void PLayerExitState()
@@ -27,19 +27,19 @@ public class PlayerMoveState : PlayerGroundState
     public override void PLayerLogic()
     {
         base.PLayerLogic();
-        float targetVelocity = input * playerCore.AccelerationSpeed;
-        player.currentVelocity = Mathf.MoveTowards(player.currentVelocity, targetVelocity, Mathf.Abs(playerCore.AccelerationSpeed) * Time.deltaTime);
-        player.SetVelocity(player.currentVelocity);
 
-        if (input == 0f)
+
+        player.SetVelocity(playerCore.MovementSpeed * xinput);
+
+        if (xinput == 0)
         {
          
             stateMachine.PlayerChangeState(player.idleState);
         }
         else
         {
-          
-            player.Playerflip();
+
+            player.PlayerShouldFlip(xinput);
         }
     }
     

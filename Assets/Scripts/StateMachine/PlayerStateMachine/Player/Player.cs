@@ -13,7 +13,9 @@ public class Player : MonoBehaviour
     public PlayerLandState landState { get; private set; }
     public Animator playerAnim { get; private set; }
     public Rigidbody2D playerRb { get; private set; }
-    public bool facingDirection { get; private set; }
+
+    public int FlipDirection { get; private set; } 
+
     public PlayerInputHandler playerinput { get; private set; }
     public float currentVelocity { get; set; }
 
@@ -44,6 +46,7 @@ public class Player : MonoBehaviour
         playerinput = GetComponent<PlayerInputHandler>();
         playerRb = GetComponent<Rigidbody2D>();
         stateMachine.PlayerInitialize(idleState);
+        FlipDirection = 1;
 
     }
 
@@ -75,17 +78,23 @@ public class Player : MonoBehaviour
     {
         return Physics2D.OverlapCircle(groundCheck.position, playerCore.GroundCheckRadius, playerCore.GroundLayer);
     }
-    public void Playerflip()
+    private void Playerflip()
     {
-        if ((facingDirection && currentVelocity > 0f) || (!facingDirection && currentVelocity < 0f))
-        {
-            Vector3 localScale = transform.localScale;
-            facingDirection = !facingDirection;
-            localScale.x *= -1f;
-            transform.localScale = localScale;
-        }
-    }
+        FlipDirection *= -1;
 
+        Vector3 newScale = transform.localScale;
+        newScale.x *= -1; 
+
+        transform.localScale = newScale;
+    }
+    public void PlayerShouldFlip(int xInput)
+    {
+        if(xInput != 0 && xInput != FlipDirection)
+        {
+            Playerflip();
+        }
+        
+    }
     private void AnimationTriggerFunction()
     {
         stateMachine.CurrentState.AnimationTrigger();

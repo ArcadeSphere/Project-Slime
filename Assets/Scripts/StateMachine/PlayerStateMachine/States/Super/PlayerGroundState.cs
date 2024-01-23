@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerGroundState : PlayerState
 {
-    protected float input;
+    protected int xinput;
     private bool jumpInput;
     public PlayerGroundState(Player player, PlayerSateMachine stateMachine, PlayerCore playerCore, string animBoolName) : base(player, stateMachine, playerCore, animBoolName)
     {
@@ -28,7 +28,7 @@ public class PlayerGroundState : PlayerState
     public override void PLayerLogic()
     {
         base.PLayerLogic();
-        input = player.playerinput.horizontalInput;
+        xinput = player.playerinput.normalizeInputX;
         jumpInput = player.playerinput.jumpInput;
 
         if (jumpInput)

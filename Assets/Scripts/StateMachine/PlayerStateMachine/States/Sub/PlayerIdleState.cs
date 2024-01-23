@@ -27,7 +27,7 @@ public class PlayerIdleState : PlayerGroundState
     public override void PLayerLogic()
     {
         base.PLayerLogic();
-        if(input != 0)
+        if(xinput != 0)
         {
             Debug.Log("player move");
             stateMachine.PlayerChangeState(player.moveState);

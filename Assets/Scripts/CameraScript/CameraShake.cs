@@ -13,6 +13,7 @@ public class CameraShake : MonoBehaviour
         StopShake();
     }
 
+
     void Awake() {
         Instance = this;
         cinemachineVirtualCamera = GetComponent<CinemachineVirtualCamera>();

@@ -7,7 +7,7 @@ public class PlayerCore : ScriptableObject
 {
     [Header("Movement State")]
     public float MovementSpeed = 5f;
-    public float AccelerationSpeed = 10f;
+
 
     [Header("Jump State")]
     public float JumpVelocity = 15f;

@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerAirState : PlayerState
 {
     public bool isGrounded;
-    private float input;
+    private int input;
     public PlayerAirState(Player player, PlayerSateMachine stateMachine, PlayerCore playerCore, string animBoolName) : base(player, stateMachine, playerCore, animBoolName)
     {
     }
@@ -29,7 +29,7 @@ public class PlayerAirState : PlayerState
     public override void PLayerLogic()
     {
         base.PLayerLogic();
-        input = player.playerinput.horizontalInput;
+        input = player.playerinput.normalizeInputX;
 
         if (isGrounded && player.playerRb.velocity.y < 0.01f)
         {
@@ -38,9 +38,10 @@ public class PlayerAirState : PlayerState
         }
         else
         { 
-            player.Playerflip();
-            player.SetVelocity(playerCore.AccelerationSpeed * input);
-        
+           
+            player.SetVelocity(playerCore.MovementSpeed * input);
+            player.PlayerShouldFlip(input);
+
         }
     }
     public override void PLayerPhysics()
