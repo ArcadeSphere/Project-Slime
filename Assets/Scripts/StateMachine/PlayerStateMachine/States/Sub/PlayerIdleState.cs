@@ -16,6 +16,7 @@ public class PlayerIdleState : PlayerGroundState
     public override void PlayerEnterState()
     {
         base.PlayerEnterState();
+        player.setVelocity(0f);
     }
 
     public override void PLayerExitState()

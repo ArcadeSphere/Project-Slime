@@ -26,7 +26,10 @@ public class PlayerMoveState : PlayerGroundState
     public override void PLayerLogic()
     {
         base.PLayerLogic();
-        if(input == 0f)
+        player.PlayerShouldFlip(input);
+        float horizontalVelocity = input * playerCore.MovementSpeed;
+        player.setVelocity(horizontalVelocity);
+        if (input == 0f)
         {
             stateMachine.PlayerChangeState(player.idleState);
         }
