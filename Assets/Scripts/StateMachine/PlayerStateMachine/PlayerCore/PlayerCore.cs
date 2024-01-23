@@ -6,5 +6,7 @@ using UnityEngine;
 public class PlayerCore : ScriptableObject
 {
     [Header("Movement State")]
-    public float MovementSpeed = 10f;
+    public float MovementSpeed = 5f;
+    public float AccelerationSpeed = 10f;
+  
 }
