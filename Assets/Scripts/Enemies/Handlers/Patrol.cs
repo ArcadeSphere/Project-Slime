@@ -11,8 +11,7 @@ public class Patrol : MonoBehaviour
     public bool OnEdge;
     public float PatrolSpeed;
 
-    [SerializeField]
-    private GameObject[] patrolPoints;
+    public GameObject[] PatrolPoints;
 
     [SerializeField]
     private float turnBackDelay;
@@ -32,11 +31,11 @@ public class Patrol : MonoBehaviour
         {
             StartCoroutine(
                 UpdatePatrolPoints(
-                    patrolPoints[currentPoint].transform.position,
+                    PatrolPoints[currentPoint].transform.position,
                     transform.position
                 )
             );
-            Vector2 direction = patrolPoints[currentPoint].transform.position - transform.position;
+            Vector2 direction = PatrolPoints[currentPoint].transform.position - transform.position;
             enemy.RB.velocity = direction.normalized * PatrolSpeed;
         }
         else
@@ -53,14 +52,14 @@ public class Patrol : MonoBehaviour
             StartCoroutine(
                 UpdatePatrolPoints(
                     new Vector2(
-                        patrolPoints[currentPoint].transform.position.x,
+                        PatrolPoints[currentPoint].transform.position.x,
                         transform.position.y
                     ),
                     transform.position
                 )
             );
             Vector3 targetPosition = new Vector3(
-                patrolPoints[currentPoint].transform.position.x,
+                PatrolPoints[currentPoint].transform.position.x,
                 transform.position.y,
                 transform.position.z
             );
@@ -91,12 +90,12 @@ public class Patrol : MonoBehaviour
         if (Vector2.Distance(pointA, pointB) < 0.1f)
         {
             currentPoint++;
-            if (currentPoint >= patrolPoints.Length)
+            if (currentPoint >= PatrolPoints.Length)
             {
                 currentPoint = 0;
             }
             // flip sprite if its the first and last point
-            if (currentPoint <= 1 || currentPoint >= patrolPoints.Length)
+            if (currentPoint <= 1 || currentPoint >= PatrolPoints.Length)
             {
                 OnEdge = true;
                 if (!flipDetectorAfterTurn)

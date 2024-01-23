@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8482e633c9a8fd340b9f9177c222c3b6, type: 3}
-  m_Name: Dive
+  m_Name: Charge
   m_EditorClassIdentifier: 
   attackDelay: 2
   chargeSpeed: 6
