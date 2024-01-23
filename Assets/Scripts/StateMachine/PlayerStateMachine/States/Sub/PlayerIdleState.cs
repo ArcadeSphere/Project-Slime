@@ -8,5 +8,33 @@ public class PlayerIdleState : PlayerGroundState
     {
     }
 
-  
+    public override void CheckForSomething()
+    {
+        base.CheckForSomething();
+    }
+
+    public override void PlayerEnterState()
+    {
+        base.PlayerEnterState();
+    }
+
+    public override void PLayerExitState()
+    {
+        base.PLayerExitState();
+    }
+
+    public override void PLayerLogic()
+    {
+        base.PLayerLogic();
+        if(input != 0)
+        {
+            Debug.Log("player move");
+            stateMachine.PlayerChangeState(player.moveState);
+        }
+    }
+
+    public override void PLayerPhysics()
+    {
+        base.PLayerPhysics();
+    }
 }

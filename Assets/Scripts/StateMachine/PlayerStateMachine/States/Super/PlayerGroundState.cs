@@ -4,19 +4,35 @@ using UnityEngine;
 
 public class PlayerGroundState : PlayerState
 {
+    protected float input;
     public PlayerGroundState(Player player, PlayerSateMachine stateMachine, PlayerCore playerCore, string animBoolName) : base(player, stateMachine, playerCore, animBoolName)
     {
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public override void CheckForSomething()
     {
-        
+        base.CheckForSomething();
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void PlayerEnterState()
     {
-        
+        base.PlayerEnterState();
+    }
+
+    public override void PLayerExitState()
+    {
+        base.PLayerExitState();
+    }
+
+    public override void PLayerLogic()
+    {
+        base.PLayerLogic();
+        input = player.playerinput.horizontalInput;
+    }
+
+
+    public override void PLayerPhysics()
+    {
+        base.PLayerPhysics();
     }
 }

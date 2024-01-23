@@ -20,7 +20,7 @@ public class PlayerState
 
     public virtual void PlayerEnterState()
     {
-        Debug.Log("Player has enter the game");
+        Debug.Log("Player idle");
         CheckForSomething();
         player.playerAnim.SetBool(animBoolName, true);
         startTime = Time.time;

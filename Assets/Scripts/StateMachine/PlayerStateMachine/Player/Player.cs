@@ -12,7 +12,10 @@ public class Player : MonoBehaviour
 
 
     public Animator playerAnim { get; private set; }
-    [SerializeField] private PlayerCore playerCore;
+
+    public PlayerInputHandler playerinput { get; private set; }
+
+   [SerializeField] private PlayerCore playerCore;
     private void Awake()
     {
         stateMachine = new PlayerSateMachine();
@@ -25,10 +28,12 @@ public class Player : MonoBehaviour
     private void Start()
     {
         playerAnim = GetComponent<Animator>();
+        playerinput = GetComponent<PlayerInputHandler>();
         stateMachine.PlayerInitialize(idleState);
     }
     private void Update()
     {
+        playerinput.OnMoveInput();
         stateMachine.CurrentState.PLayerLogic();
     }
     private void FixedUpdate()
