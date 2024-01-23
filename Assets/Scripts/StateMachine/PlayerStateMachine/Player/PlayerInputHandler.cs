@@ -13,6 +13,8 @@ public class PlayerInputHandler : MonoBehaviour
 
     public bool jumpInput { get; private set; }
 
+    public bool jumpInputStop { get; private set; }
+
     [SerializeField] private float inputHoldtime = 0.2f;
 
     private float jumpInputStartTime;
@@ -41,7 +43,12 @@ public class PlayerInputHandler : MonoBehaviour
         {
 
             jumpInput = true;
+            jumpInputStop = false;
             jumpInputStartTime = Time.time;
+        }
+        if (inputManager.GetJumpInputUp())
+        {
+            jumpInputStop = true;
         }
     }
     public void UseJumpInput()

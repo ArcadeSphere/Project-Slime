@@ -11,6 +11,9 @@ public class PlayerCore : ScriptableObject
 
     [Header("Jump State")]
     public float JumpVelocity = 15f;
+    public float jumpHeightMultiplier = 0.5f;
+    public int AmountOfJumps = 1;
+    public float coyoteTime = 0.2f;
     public float GroundCheckRadius = 0.2f;
     public LayerMask GroundLayer;
 

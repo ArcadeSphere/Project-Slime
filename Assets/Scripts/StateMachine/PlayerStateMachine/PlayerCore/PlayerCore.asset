@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: PlayerCore
   m_EditorClassIdentifier: 
   MovementSpeed: 6
-  JumpVelocity: 15
+  JumpVelocity: 20
+  jumpHeightMultiplier: 0.5
+  AmountOfJumps: 1
+  coyoteTime: 0.2
   GroundCheckRadius: 0.2
   GroundLayer:
     serializedVersion: 2
