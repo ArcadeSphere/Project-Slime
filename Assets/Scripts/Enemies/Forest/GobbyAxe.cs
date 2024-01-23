@@ -8,31 +8,53 @@ public class GobbyAxe : MonoBehaviour
     [Header("Goblin Detection Settings")]
     private Animator anim;
     private Transform playerTransform;
-    [SerializeField] private Vector2 chaseDetectorSize = Vector2.one;
+
+    [SerializeField]
+    private Vector2 chaseDetectorSize = Vector2.one;
     public Vector2 chaseDetectorOriginOffset = Vector2.zero;
     public float attackDetectionRange = 1.5f;
     public Transform chaseDetectionZoneOrigin;
-    [SerializeField] private float detectionDelayDuration = 1.0f;
+
+    [SerializeField]
+    private float detectionDelayDuration = 1.0f;
     private float detectionDelayTimer;
-    [SerializeField] private LayerMask groundLayer;
+
+    [SerializeField]
+    private LayerMask groundLayer;
 
     [Header("Reference Settings")]
-    [SerializeField] private EnemyController characterFlip;
+    [SerializeField]
+    private EnemyController characterFlip;
 
     [Header("Goblin ChaseAttack Settings")]
-    [SerializeField] private float chaseSpeed = 5f;
-    [SerializeField] private float stopDistance = 1.5f;
-    [SerializeField] private LayerMask playerLayer;
-    [SerializeField] private AudioClip attackSound;
-    [SerializeField] private float attackCooldown = 2f;
+    [SerializeField]
+    private float chaseSpeed = 5f;
+
+    [SerializeField]
+    private float stopDistance = 1.5f;
+
+    [SerializeField]
+    private LayerMask playerLayer;
+
+    [SerializeField]
+    private AudioClip attackSound;
+
+    [SerializeField]
+    private float attackCooldown = 2f;
     private bool isCooldown = false;
-    [SerializeField] private Transform attackRangeTransform;
+
+    [SerializeField]
+    private Transform attackRangeTransform;
 
     [Header("Goblin Patrol Settings")]
     public Transform patrolPoint1;
     public Transform patrolPoint2;
-    [SerializeField] private float patrolSpeed = 3f;
-    [SerializeField] private float patrolStopDuration = 2f;
+
+    [SerializeField]
+    private float patrolSpeed = 3f;
+
+    [SerializeField]
+    private float patrolStopDuration = 2f;
     private bool isTurning = false;
 
     [Header("Edge Detection Settings")]
@@ -125,8 +147,8 @@ public class GobbyAxe : MonoBehaviour
 
     private bool ShouldTurn(float targetPointX)
     {
-        return (characterFlip.isFacingRight && transform.position.x > targetPointX) ||
-               (!characterFlip.isFacingRight && transform.position.x < targetPointX);
+        return (characterFlip.isFacingRight && transform.position.x > targetPointX)
+            || (!characterFlip.isFacingRight && transform.position.x < targetPointX);
     }
 
     private void StartTurnDelay()
@@ -171,7 +193,9 @@ public class GobbyAxe : MonoBehaviour
         detectionDelayTimer -= Time.deltaTime;
         if (detectionDelayTimer <= 0f)
         {
-            currentState = IsPlayerInChaseDetectionZone() ? GobbyAxeState.Chase : GobbyAxeState.Patrol;
+            currentState = IsPlayerInChaseDetectionZone()
+                ? GobbyAxeState.Chase
+                : GobbyAxeState.Patrol;
             detectionDelayTimer = 0f;
         }
     }
@@ -219,7 +243,12 @@ public class GobbyAxe : MonoBehaviour
     private bool IsNoGroundInFront()
     {
         Vector2 rayDirection = Vector2.down;
-        RaycastHit2D hit = Physics2D.Raycast(edgeDetector.position, rayDirection, edgeDetectionDistance, groundLayer);
+        RaycastHit2D hit = Physics2D.Raycast(
+            edgeDetector.position,
+            rayDirection,
+            edgeDetectionDistance,
+            groundLayer
+        );
         return hit.collider == null;
     }
 
@@ -264,9 +293,16 @@ public class GobbyAxe : MonoBehaviour
 
     private bool IsPlayerInChaseDetectionZone()
     {
-        Vector2 offset = characterFlip.isFacingRight ? chaseDetectorOriginOffset : new Vector2(-chaseDetectorOriginOffset.x, chaseDetectorOriginOffset.y);
+        Vector2 offset = characterFlip.isFacingRight
+            ? chaseDetectorOriginOffset
+            : new Vector2(-chaseDetectorOriginOffset.x, chaseDetectorOriginOffset.y);
         Vector2 detectionZonePosition = (Vector2)chaseDetectionZoneOrigin.position + offset;
-        Collider2D collider = Physics2D.OverlapBox(detectionZonePosition, chaseDetectorSize, 0f, playerLayer);
+        Collider2D collider = Physics2D.OverlapBox(
+            detectionZonePosition,
+            chaseDetectorSize,
+            0f,
+            playerLayer
+        );
         bool noGroundInFront = IsNoGroundInFront();
         return collider != null && !noGroundInFront;
     }
@@ -281,8 +317,17 @@ public class GobbyAxe : MonoBehaviour
     private void DrawChaseDetectionZone()
     {
         Gizmos.color = Color.red;
-        Vector3 offset = characterFlip.isFacingRight ? chaseDetectorOriginOffset : new Vector2(-chaseDetectorOriginOffset.x, chaseDetectorOriginOffset.y);
-        Gizmos.DrawWireCube(chaseDetectionZoneOrigin.position + offset, new Vector3(chaseDetectorSize.x * (characterFlip.isFacingRight ? 1 : -1), chaseDetectorSize.y, 1f));
+        Vector3 offset = characterFlip.isFacingRight
+            ? chaseDetectorOriginOffset
+            : new Vector2(-chaseDetectorOriginOffset.x, chaseDetectorOriginOffset.y);
+        Gizmos.DrawWireCube(
+            chaseDetectionZoneOrigin.position + offset,
+            new Vector3(
+                chaseDetectorSize.x * (characterFlip.isFacingRight ? 1 : -1),
+                chaseDetectorSize.y,
+                1f
+            )
+        );
     }
 
     private void DrawEdgeDetectionRay()

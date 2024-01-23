@@ -12728,6 +12728,14 @@ PrefabInstance:
       propertyPath: PatrolPoints.Array.data[1]
       value: 
       objectReference: {fileID: 1682577572}
+    - target: {fileID: 6767245993083512373, guid: d234e614d29b2d84ea1d0ed2b904e908, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6767245993083512382, guid: d234e614d29b2d84ea1d0ed2b904e908, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6767245993788726759, guid: d234e614d29b2d84ea1d0ed2b904e908, type: 3}
       propertyPath: parent
       value: 
@@ -14173,6 +14181,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 746747504}
     m_Modifications:
+    - target: {fileID: 6260551167701502659, guid: 42b6c7b777ed8624988c2f88bab86d50, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6260551168300002146, guid: 42b6c7b777ed8624988c2f88bab86d50, type: 3}
       propertyPath: detectionIndicator
       value: 
@@ -16925,6 +16937,10 @@ PrefabInstance:
       propertyPath: PatrolPoints.Array.data[1]
       value: 
       objectReference: {fileID: 104115380}
+    - target: {fileID: 6767245993083512382, guid: d234e614d29b2d84ea1d0ed2b904e908, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6767245993788726759, guid: d234e614d29b2d84ea1d0ed2b904e908, type: 3}
       propertyPath: parent
       value: 

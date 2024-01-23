@@ -1,7 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,23 +7,30 @@ using Random = UnityEngine.Random;
 public class Charge : EAttackSOBase
 {
     private Patrol patrol;
-    private event Action OnAttack;
 
     [SerializeField]
     private float attackDelay = 1f;
 
     [SerializeField]
     private float chargeSpeed = 4f;
+
+    [Header("⚠️ Increase min distance if charge speed is increased")]
+    [SerializeField]
+    private float minDistance = 0.3f;
     private GameObject attackPoint;
-    private Vector2 playerLastPosition = Vector2.zero;
-    private Vector2 directionToPlayerLastPosition = Vector2.zero;
-    private int randomPatrolPoint = 0;
+    private Transform patrolPointTransform;
+    private Vector2 playerLastPosition;
+    private Vector2 directionToPlayerLastPosition;
+    private Vector2 directionToRandomPoint;
+    private int randomPatrolPoint;
+
+    private bool isCharging = false;
+    private bool isRepositioning = false;
 
     public override void Init(GameObject gameObject, Enemy enemy)
     {
         base.Init(gameObject, enemy);
         patrol = enemy.GetComponent<Patrol>();
-        OnAttack += Attack;
         if (transform.GetChild(0).TryGetComponent<Transform>(out var attackPointTransform))
             attackPoint = attackPointTransform.gameObject;
     }
@@ -33,7 +38,7 @@ public class Charge : EAttackSOBase
     public override void EnterStateLogic()
     {
         base.EnterStateLogic();
-        enemy.RB.velocity = Vector2.zero;
+        SetVelocity(Vector2.zero);
         attackPoint.SetActive(true);
         enemy.StartCoroutine(AttackDelayCoroutine());
     }
@@ -47,10 +52,17 @@ public class Charge : EAttackSOBase
     public override void FrameUpdateLogic()
     {
         base.FrameUpdateLogic();
-        if (!enemy.PlayerDetector.PlayerDetected)
-            enemy.StateMachine.ChangeState(enemy.IdleState);
-
-        DistanceCheck();
+        // distance checks
+        if (isCharging)
+        {
+            if (Vector2.Distance(playerLastPosition, transform.position) < minDistance)
+                Reposition();
+        }
+        else if (isRepositioning)
+        {
+            if (Vector2.Distance(patrolPointTransform.position, transform.position) < minDistance)
+                enemy.StateMachine.ChangeState(enemy.IdleState);
+        }
     }
 
     public override void PhysicsUpdateLogic()
@@ -69,42 +81,50 @@ public class Charge : EAttackSOBase
         base.ResetValues();
         playerLastPosition = Vector2.zero;
         directionToPlayerLastPosition = Vector2.zero;
+        isCharging = false;
+        isRepositioning = false;
+        randomPatrolPoint = 0;
     }
 
     private IEnumerator AttackDelayCoroutine()
     {
         yield return new WaitForSeconds(attackDelay);
-        OnAttack?.Invoke();
+        ChargeTowardsPlayer();
     }
 
-    private void Attack()
+    private void ChargeTowardsPlayer()
     {
+        isCharging = true;
+        // set player last position and get direction
         if (playerLastPosition == Vector2.zero)
         {
             playerLastPosition = playerTransform.position;
-            GameObject temp = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            temp.transform.position = playerLastPosition;
+            directionToPlayerLastPosition = (
+                playerLastPosition - (Vector2)transform.position
+            ).normalized;
         }
-        directionToPlayerLastPosition = playerLastPosition - (Vector2)transform.position;
-
-        enemy.RB.velocity = directionToPlayerLastPosition.normalized * chargeSpeed;
-    }
-
-    private void DistanceCheck()
-    {
-        if (Vector2.Distance(playerLastPosition, transform.position) < 0.1f)
-        {
-            enemy.RB.velocity = Vector2.zero;
-            Reposition();
-        }
+        SetVelocity(chargeSpeed * directionToPlayerLastPosition);
     }
 
     private void Reposition()
     {
+        isCharging = false;
+        isRepositioning = true;
+        // get random point from patrol points and set direction to the point
         if (randomPatrolPoint == 0)
         {
             randomPatrolPoint = Random.Range(0, patrol.PatrolPoints.Length);
-            Logger.Log(randomPatrolPoint.ToString());
+            patrolPointTransform = patrol.PatrolPoints[randomPatrolPoint].transform;
+            directionToRandomPoint = (
+                (Vector2)patrolPointTransform.position - (Vector2)transform.position
+            ).normalized;
         }
+        SetVelocity(chargeSpeed * directionToRandomPoint);
+    }
+
+    // move towards the velocity vector supplied / can be Vector2.zero to stop in position
+    private void SetVelocity(Vector2 velocity)
+    {
+        enemy.RB.velocity = velocity;
     }
 }

@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Charge
   m_EditorClassIdentifier: 
   attackDelay: 2
-  chargeSpeed: 6
+  chargeSpeed: 20
+  detectionExtent: 0.3
