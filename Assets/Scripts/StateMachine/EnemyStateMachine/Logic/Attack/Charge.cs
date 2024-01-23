@@ -6,8 +6,10 @@ using Random = UnityEngine.Random;
 [CreateAssetMenu(fileName = "Charge", menuName = "SOLogic/Attack/Charge")]
 public class Charge : EAttackSOBase
 {
+    #region Dependencies
     private Patrol patrol;
-
+    #endregion
+    #region Charge variables
     [SerializeField]
     private float attackDelay = 1f;
 
@@ -17,16 +19,19 @@ public class Charge : EAttackSOBase
     [Header("⚠️ Increase min distance if charge speed is increased")]
     [SerializeField]
     private float minDistance = 0.3f;
+    #endregion
+    #region Class variables
     private GameObject attackPoint;
     private Transform patrolPointTransform;
     private Vector2 playerLastPosition;
     private Vector2 directionToPlayerLastPosition;
     private Vector2 directionToRandomPoint;
     private int randomPatrolPoint;
-
     private bool isCharging = false;
     private bool isRepositioning = false;
+    #endregion
 
+    #region AttackBase Functions
     public override void Init(GameObject gameObject, Enemy enemy)
     {
         base.Init(gameObject, enemy);
@@ -85,6 +90,7 @@ public class Charge : EAttackSOBase
         isRepositioning = false;
         randomPatrolPoint = 0;
     }
+    #endregion
 
     private IEnumerator AttackDelayCoroutine()
     {
