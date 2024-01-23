@@ -17,7 +17,7 @@ public class GiveDamage : MonoBehaviour
 
         foreach (Collider2D target in hitTargets)
         {
-            target.GetComponent<Health>().TakeDamage(attackDamage);
+            target.GetComponent<Health>().DamageCharacter(attackDamage);
         }
 
     }

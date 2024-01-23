@@ -55,7 +55,7 @@ public class PlayerCombat : MonoBehaviour
 
         foreach (Collider2D target in hittarget) {
 
-            target.GetComponent<Health>().TakeDamage(damageAmount);
+            target.GetComponent<Health>().DamageCharacter(damageAmount);
         }
     }
 

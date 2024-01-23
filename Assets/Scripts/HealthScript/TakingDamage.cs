@@ -17,7 +17,7 @@ public class TakingDamage : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            collision.GetComponent<Health>().TakeDamage(damage);
+            collision.GetComponent<Health>().DamageCharacter(damage);
             CameraShake.Instance.ShakeCamera(2f, 0.2f);
         }
     }
@@ -26,7 +26,7 @@ public class TakingDamage : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") && playerDetector.PlayerDetected)
         {
-            collision.gameObject.GetComponent<Health>().TakeDamage(damage);
+            collision.gameObject.GetComponent<Health>().DamageCharacter(damage);
             CameraShake.Instance.ShakeCamera(2f, 0.2f);
         }
     }

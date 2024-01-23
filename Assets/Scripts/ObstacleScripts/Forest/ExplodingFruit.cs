@@ -41,7 +41,7 @@ public class ExplodingFruit : MonoBehaviour
         if (collision.CompareTag("Enemy"))
         {
             AudioManager.instance.PlaySoundEffects(explodeSound);
-            collision.GetComponent<Health>().TakeDamage(enemyDamage);
+            collision.GetComponent<Health>().DamageCharacter(enemyDamage);
             Instantiate(fruitimpact, transform.position, Quaternion.identity);
             Destroy(gameObject);
 
