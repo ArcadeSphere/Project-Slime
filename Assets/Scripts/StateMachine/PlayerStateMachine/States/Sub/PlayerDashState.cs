@@ -6,7 +6,6 @@ public class PlayerDashState : PlayerAbilityStates
 {
     public bool canDash { get; private set; }
     private float lastDashTime;
-    private float DashTime;
     private float originalGravityScale;
 
     public PlayerDashState(Player player, PlayerSateMachine stateMachine, PlayerCore playerCore, string animBoolName) : base(player, stateMachine, playerCore, animBoolName)

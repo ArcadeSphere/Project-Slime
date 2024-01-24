@@ -24,6 +24,8 @@ public class PlayerInputHandler : MonoBehaviour
     #region Dash
     public bool dashInput { get; private set; }
 
+    public bool dashInputStop { get; private set; }
+
     private float dashInputStartTime;
 
     #endregion
@@ -33,6 +35,7 @@ public class PlayerInputHandler : MonoBehaviour
     private void Update()
     {
         CheckForHoldJumpTime();
+        CheckForHoldDashTime();
     }
     public void OnMoveInput()
     {
@@ -75,6 +78,7 @@ public class PlayerInputHandler : MonoBehaviour
         if (inputManager.GetDashInputDown())
         {
             dashInput = true;
+            dashInputStop = false;
             dashInputStartTime = Time.time;
         }
     }
@@ -83,7 +87,13 @@ public class PlayerInputHandler : MonoBehaviour
     {
         dashInput = false;
     }
-
+    private void CheckForHoldDashTime()
+    {
+        if (Time.time >= dashInputStartTime + inputHoldtime)
+        {
+            dashInput = false;
+        }
+    }
 }
 
 

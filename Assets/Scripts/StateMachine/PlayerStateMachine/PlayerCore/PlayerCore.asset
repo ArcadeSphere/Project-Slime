@@ -21,6 +21,6 @@ MonoBehaviour:
   GroundLayer:
     serializedVersion: 2
     m_Bits: 64
-  DashCooldown: 0.2
+  DashCooldown: 1
   DashSpeed: 30
   DashTime: 0.2
