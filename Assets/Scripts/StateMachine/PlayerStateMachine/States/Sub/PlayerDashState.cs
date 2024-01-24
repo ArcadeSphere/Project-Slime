@@ -6,6 +6,8 @@ public class PlayerDashState : PlayerAbilityStates
 {
     public bool canDash { get; private set; }
     private float lastDashTime;
+    private float DashTime;
+    private float originalGravityScale;
 
     public PlayerDashState(Player player, PlayerSateMachine stateMachine, PlayerCore playerCore, string animBoolName) : base(player, stateMachine, playerCore, animBoolName)
     {
@@ -24,6 +26,8 @@ public class PlayerDashState : PlayerAbilityStates
     {
         base.PlayerEnterState();
         canDash = false;
+        originalGravityScale = player.playerRb.gravityScale;
+        player.playerRb.gravityScale = 0f;
         player.playerinput.UseDashInput();
 
     }
@@ -31,22 +35,39 @@ public class PlayerDashState : PlayerAbilityStates
     public override void PLayerExitState()
     {
         base.PLayerExitState();
+        player.playerRb.gravityScale = originalGravityScale;
+
     }
 
     public override void PLayerLogic()
     {
         base.PLayerLogic();
+
         if (lastDashTime > 0)
         {
+            float dashVelocity = playerCore.DashSpeed * Mathf.Sign(player.transform.localScale.x);
+            Vector2 dashVelocityVector = new Vector2(dashVelocity, 0f);
+            player.SetDashVelocity(dashVelocityVector);
 
-            Vector2 dashVelocity = new Vector2(playerCore.DashSpeed * player.FlipDirection, player.playerRb.velocity.y);
-            player.SetDashVelocity(dashVelocity);
             lastDashTime -= Time.deltaTime;
+
+            Debug.Log("Dash Velocity: " + dashVelocity);
         }
-        else
+        else if (lastDashTime <= 0 && !isAbilityFinish)
         {
+        
             lastDashTime = playerCore.DashTime;
             isAbilityFinish = true;
+            Debug.Log("Dash finished.");
+
+            if (isGrounded)
+            {
+                stateMachine.PlayerChangeState(player.idleState);
+            }
+            else
+            {
+                stateMachine.PlayerChangeState(player.airState);
+            }
         }
     }
 }

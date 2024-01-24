@@ -39,7 +39,7 @@ public class PlayerGroundState : PlayerState
 
         if (jumpInput && player.jumpState.CanJump())
         {
-    
+
             player.playerinput.UseJumpInput();
             stateMachine.PlayerChangeState(player.jumpState);
         }
@@ -51,7 +51,6 @@ public class PlayerGroundState : PlayerState
 
         if (dashInput && player.dashState.CheckIfCanDash())
         {
-            Debug.Log("dash");
             stateMachine.PlayerChangeState(player.dashState);
         }
     }

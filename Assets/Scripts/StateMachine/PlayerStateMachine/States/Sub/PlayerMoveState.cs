@@ -29,19 +29,27 @@ public class PlayerMoveState : PlayerGroundState
         base.PLayerLogic();
 
 
+        
+
+        if (stateMachine.CurrentState == player.dashState)
+        {
+            Debug.Log("Velocity reset after dash. Current state: " + stateMachine.CurrentState);
+            player.SetVelocity(0f);
+            return;
+        }
+
         player.SetVelocity(playerCore.MovementSpeed * xinput);
 
         if (xinput == 0)
         {
-         
             stateMachine.PlayerChangeState(player.idleState);
         }
         else
         {
-
             player.PlayerShouldFlip(xinput);
         }
     }
+    
     
 
     public override void PLayerPhysics()

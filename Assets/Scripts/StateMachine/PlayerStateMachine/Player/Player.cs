@@ -89,20 +89,18 @@ public class Player : MonoBehaviour
     }
     private void Playerflip()
     {
-        FlipDirection *= -1;
-
         Vector3 newScale = transform.localScale;
-        newScale.x *= -1; 
+        newScale.x *= -1;
 
         transform.localScale = newScale;
     }
     public void PlayerShouldFlip(int xInput)
     {
-        if(xInput != 0 && xInput != FlipDirection)
+         if (xInput != 0 && Mathf.Sign(xInput) != Mathf.Sign(transform.localScale.x))
         {
             Playerflip();
         }
-        
+
     }
     private void AnimationTriggerFunction()
     {

@@ -17,6 +17,8 @@ public class PlayerIdleState : PlayerGroundState
     {
         base.PlayerEnterState();
         player.SetVelocity(0f);
+
+        player.SetDashVelocity(Vector2.zero);
     }
 
     public override void PLayerExitState()
@@ -27,7 +29,7 @@ public class PlayerIdleState : PlayerGroundState
     public override void PLayerLogic()
     {
         base.PLayerLogic();
-        if(xinput != 0)
+        if(xinput != 0 )
         {
             Debug.Log("player move");
             stateMachine.PlayerChangeState(player.moveState);
