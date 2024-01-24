@@ -17,4 +17,8 @@ public class PlayerCore : ScriptableObject
     public float GroundCheckRadius = 0.2f;
     public LayerMask GroundLayer;
 
+    [Header("Dash State")]
+    public float DashCooldown = 0.2f;
+    public float DashSpeed = 24f;
+    public float DashTime = 0.2f;
 }

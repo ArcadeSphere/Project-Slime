@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     public PlayerJumpState jumpState { get; private set; }
     public PlayerAirState airState { get; private set; }
     public PlayerLandState landState { get; private set; }
+    public PlayerDashState dashState { get; private set; }
     public Animator playerAnim { get; private set; }
     public Rigidbody2D playerRb { get; private set; }
 
@@ -35,8 +36,9 @@ public class Player : MonoBehaviour
         idleState = new PlayerIdleState(this, stateMachine, playerCore, "idle");
         moveState = new PlayerMoveState(this, stateMachine, playerCore, "move");
         jumpState = new PlayerJumpState(this, stateMachine, playerCore, "air");
-        airState = new PlayerAirState(this, stateMachine, playerCore, "air");
+        airState =  new PlayerAirState(this, stateMachine, playerCore, "air");
         landState = new PlayerLandState(this, stateMachine, playerCore, "land");
+        dashState = new PlayerDashState(this, stateMachine, playerCore, "dash");
 
     }
 
@@ -54,6 +56,7 @@ public class Player : MonoBehaviour
     {
         playerinput.OnMoveInput();
         playerinput.OnJumpInput();
+        playerinput.OnDashInput();
         stateMachine.CurrentState.PLayerLogic();
     }
 

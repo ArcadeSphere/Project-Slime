@@ -10,6 +10,7 @@ public class PlayerAirState : PlayerState
     private bool coyoteTime;
     private bool isJumping;
     private bool jumpInputStop;
+    private bool dashInput;
     public PlayerAirState(Player player, PlayerSateMachine stateMachine, PlayerCore playerCore, string animBoolName) : base(player, stateMachine, playerCore, animBoolName)
     {
     }
@@ -37,6 +38,7 @@ public class PlayerAirState : PlayerState
         input = player.playerinput.normalizeInputX;
         jumpInput = player.playerinput.jumpInput;
         jumpInputStop = player.playerinput.jumpInputStop;
+        dashInput = player.playerinput.dashInput;
         CheckForJumpMultiplyer();
 
         if (isGrounded && player.playerRb.velocity.y < 0.01f)
@@ -55,6 +57,12 @@ public class PlayerAirState : PlayerState
             player.PlayerShouldFlip(input);
 
         }
+
+        if(dashInput && player.dashState.CheckIfCanDash())
+        {
+            stateMachine.PlayerChangeState(player.dashState);
+        }
+
     }
     public override void PLayerPhysics()
     {

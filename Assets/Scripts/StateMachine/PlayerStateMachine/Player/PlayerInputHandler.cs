@@ -1,24 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Serialization;
 public class PlayerInputHandler : MonoBehaviour
 {
    public InputManager inputManager;
-   
+
+    #region Horizonatal
     public float horizontalInput { get; private set; }
 
     public int normalizeInputX { get; private set; }
     public int normalizeInputY { get; private set; }
 
-    public bool jumpInput { get; private set; }
+    #endregion
 
+    #region Jump
+    public bool jumpInput { get; private set; }
     public bool jumpInputStop { get; private set; }
 
-    [SerializeField] private float inputHoldtime = 0.2f;
-
     private float jumpInputStartTime;
+    #endregion
 
+    #region Dash
+    public bool dashInput { get; private set; }
+
+    private float dashInputStartTime;
+
+    #endregion
+
+
+    [SerializeField] private float inputHoldtime = 0.2f;
     private void Update()
     {
         CheckForHoldJumpTime();
@@ -30,11 +41,7 @@ public class PlayerInputHandler : MonoBehaviour
             horizontalInput = inputManager.GetHorizontalInput();
             normalizeInputX = (int)(horizontalInput * Vector2.right).normalized.x;
             normalizeInputX = (int)(horizontalInput * Vector2.up).normalized.y;
-        }
-        else
-        {
-            Debug.LogError("InputManager is not assigned to PlayerInputHandler.");
-        }
+        } 
     }
 
     public void OnJumpInput()
@@ -61,6 +68,20 @@ public class PlayerInputHandler : MonoBehaviour
         {
             jumpInput = false;
         }
+    }
+
+    public void OnDashInput()
+    {
+        if (inputManager.GetDashInputDown())
+        {
+            dashInput = true;
+            dashInputStartTime = Time.time;
+        }
+    }
+
+    public void UseDashInput()
+    {
+        dashInput = false;
     }
 
 }
