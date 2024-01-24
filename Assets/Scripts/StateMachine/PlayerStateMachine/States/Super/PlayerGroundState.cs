@@ -51,6 +51,7 @@ public class PlayerGroundState : PlayerState
 
         if (dashInput && player.dashState.CheckIfCanDash())
         {
+            Debug.Log("dash");
             stateMachine.PlayerChangeState(player.dashState);
         }
     }

@@ -23,6 +23,9 @@ public class PlayerDashState : PlayerAbilityStates
     public override void PlayerEnterState()
     {
         base.PlayerEnterState();
+        canDash = false;
+        player.playerinput.UseDashInput();
+
     }
 
     public override void PLayerExitState()
@@ -33,5 +36,18 @@ public class PlayerDashState : PlayerAbilityStates
     public override void PLayerLogic()
     {
         base.PLayerLogic();
+        if (lastDashTime > 0)
+        {
+            player.SetDashVelocity(playerCore.DashSpeed);
+            lastDashTime -= Time.deltaTime; 
+        }
+        else
+        {
+            
+            lastDashTime = playerCore.DashTime;
+            isAbilityFinish = true;
+       
+        }
     }
 }
+

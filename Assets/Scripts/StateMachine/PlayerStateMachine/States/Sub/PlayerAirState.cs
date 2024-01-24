@@ -24,6 +24,7 @@ public class PlayerAirState : PlayerState
     public override void PlayerEnterState()
     {
         base.PlayerEnterState();
+
     }
 
     public override void PLayerExitState()

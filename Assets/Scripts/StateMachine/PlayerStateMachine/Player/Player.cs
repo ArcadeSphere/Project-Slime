@@ -71,6 +71,11 @@ public class Player : MonoBehaviour
         workSpace.Set(velocity, playerRb.velocity.y);
         playerRb.velocity = workSpace;
     }
+    public void SetDashVelocity(float velocity)
+    {
+        workSpace.Set(velocity, playerRb.velocity.y);
+        playerRb.velocity = workSpace;
+    }
     public void SetJumpVelocity(float velocity)
     {
         workSpace.Set(playerRb.velocity.x, velocity);
