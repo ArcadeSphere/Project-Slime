@@ -36,7 +36,7 @@ public class PlayerGroundState : PlayerState
 
         if (jumpInput && player.jumpState.CanJump())
         {
-            Debug.Log("Jump detected!");
+    
             player.playerinput.UseJumpInput();
             stateMachine.PlayerChangeState(player.jumpState);
         }

@@ -34,14 +34,14 @@ public class PlayerAirState : PlayerState
     {
         base.PLayerLogic();
         CheckForCoyoteTime();
-        CheckForJumpMultiplyer();
         input = player.playerinput.normalizeInputX;
         jumpInput = player.playerinput.jumpInput;
         jumpInputStop = player.playerinput.jumpInputStop;
-       
+        CheckForJumpMultiplyer();
+
         if (isGrounded && player.playerRb.velocity.y < 0.01f)
         {
-            Debug.Log("Landed");
+        
             stateMachine.PlayerChangeState(player.landState);
         }
         else if(jumpInput && player.jumpState.CanJump())
