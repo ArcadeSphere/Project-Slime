@@ -10,7 +10,7 @@ public class PlayerDashState : PlayerAbilityStates
     public PlayerDashState(Player player, PlayerSateMachine stateMachine, PlayerCore playerCore, string animBoolName) : base(player, stateMachine, playerCore, animBoolName)
     {
     }
-    
+
     public bool CheckIfCanDash()
     {
         return canDash && Time.time >= lastDashTime + playerCore.DashCooldown;
@@ -38,16 +38,15 @@ public class PlayerDashState : PlayerAbilityStates
         base.PLayerLogic();
         if (lastDashTime > 0)
         {
-            player.SetDashVelocity(playerCore.DashSpeed);
-            lastDashTime -= Time.deltaTime; 
+
+            Vector2 dashVelocity = new Vector2(playerCore.DashSpeed * player.FlipDirection, player.playerRb.velocity.y);
+            player.SetDashVelocity(dashVelocity);
+            lastDashTime -= Time.deltaTime;
         }
         else
         {
-            
             lastDashTime = playerCore.DashTime;
             isAbilityFinish = true;
-       
         }
     }
 }
-

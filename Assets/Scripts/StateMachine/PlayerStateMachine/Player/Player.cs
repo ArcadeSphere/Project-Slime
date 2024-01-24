@@ -71,15 +71,16 @@ public class Player : MonoBehaviour
         workSpace.Set(velocity, playerRb.velocity.y);
         playerRb.velocity = workSpace;
     }
-    public void SetDashVelocity(float velocity)
-    {
-        workSpace.Set(velocity, playerRb.velocity.y);
-        playerRb.velocity = workSpace;
-    }
+  
     public void SetJumpVelocity(float velocity)
     {
         workSpace.Set(playerRb.velocity.x, velocity);
         playerRb.velocity = workSpace;
+    }
+
+    public void SetDashVelocity(Vector2 velocity)
+    {
+        playerRb.velocity = velocity;
     }
 
     public bool CheckForGround()
