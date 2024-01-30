@@ -47,6 +47,7 @@ public class Charge : EAttackSOBase
     {
         base.ExitStateLogic();
         ResetValues();
+        attackPoint.SetActive(false);
     }
 
     public override void FrameUpdateLogic()
