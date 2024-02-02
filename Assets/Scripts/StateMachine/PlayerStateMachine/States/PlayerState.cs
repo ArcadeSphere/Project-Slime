@@ -21,7 +21,6 @@ public class PlayerState
 
     public virtual void PlayerEnterState()
     {
-        player.SetVelocity(0f);
         Debug.Log("Player idle");
         CheckForSomething();
         player.playerAnim.SetBool(animBoolName, true);

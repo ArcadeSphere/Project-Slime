@@ -47,18 +47,13 @@ public class PlayerDashState : PlayerAbilityStates
             float dashVelocity = playerCore.DashSpeed * Mathf.Sign(player.transform.localScale.x);
             Vector2 dashVelocityVector = new Vector2(dashVelocity, 0f);
             player.SetDashVelocity(dashVelocityVector);
-
             lastDashTime -= Time.deltaTime;
-
-            Debug.Log("Dash Velocity: " + dashVelocity);
         }
+
         else if (lastDashTime <= 0 && !isAbilityFinish)
         {
-        
             lastDashTime = playerCore.DashTime;
             isAbilityFinish = true;
-            Debug.Log("Dash finished.");
-
             if (isGrounded)
             {
                 stateMachine.PlayerChangeState(player.idleState);
