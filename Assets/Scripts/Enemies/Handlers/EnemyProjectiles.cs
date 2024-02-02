@@ -87,20 +87,25 @@ public class EnemyProjectiles : MonoBehaviour
         {
            
             HandlePlayerCollision(other);
+            SetSpeed(0f);
         }
     }
 
     private void HandlePlayerCollision(Collider2D playerCollider)
     {
-        Vector3 hitDirection = playerCollider.transform.position - transform.position;
+         Health healthComponent = playerCollider.GetComponent<Health>();
+        if (healthComponent != null && healthComponent.Instance != null)
+        {
+            Vector3 hitDirection = playerCollider.transform.position - transform.position;
 
-        if (hitDirection.x < 0)
-        {
-            playerCollider.GetComponent<Health>().Instance.PlayHitParticleRight();
-        }
-        else
-        {
-            playerCollider.GetComponent<Health>().Instance.PlayHitParticleLeft();
+            if (hitDirection.x < 0)
+            {
+                healthComponent.Instance.PlayHitParticleRight();
+            }
+            else
+            {
+                healthComponent.Instance.PlayHitParticleLeft();
+            }
         }
 
         AudioManager.instance.PlaySoundEffects(explodeSound);
@@ -109,7 +114,7 @@ public class EnemyProjectiles : MonoBehaviour
         transform.parent = playerCollider.transform;
     }
 
-    private void DisableArrowPhysics()
+        private void DisableArrowPhysics()
     {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null)
