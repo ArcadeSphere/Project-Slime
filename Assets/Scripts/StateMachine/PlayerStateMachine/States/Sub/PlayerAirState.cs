@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerAirState : PlayerState
 {
     public bool isGrounded;
+    private bool isWalled;
     private int input;
     private bool jumpInput;
     private bool coyoteTime;
@@ -19,6 +20,7 @@ public class PlayerAirState : PlayerState
     {
         base.CheckForSomething();
         isGrounded = player.CheckForGround();
+        isWalled = player.CheckForWalls();
     }
 
     public override void PlayerEnterState()
@@ -47,9 +49,18 @@ public class PlayerAirState : PlayerState
         
             stateMachine.PlayerChangeState(player.landState);
         }
+        else if(jumpInput && isWalled)
+        {
+            stateMachine.PlayerChangeState(player.wallJumpState);
+        }
         else if(jumpInput && player.jumpState.CanJump())
         {
+            player.playerinput.UseJumpInput();
             stateMachine.PlayerChangeState(player.jumpState);
+        }
+        else if (isWalled && Mathf.Sign(input) == Mathf.Sign(player.transform.localScale.x) && player.playerRb.velocity.y <= 0) 
+        {
+            stateMachine.PlayerChangeState(player.wallSlideState);
         }
         else
         { 

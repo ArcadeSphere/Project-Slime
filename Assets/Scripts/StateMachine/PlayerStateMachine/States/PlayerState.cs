@@ -9,7 +9,9 @@ public class PlayerState
     protected PlayerCore playerCore;
     protected bool isAnimFinish;
     protected float startTime;
+    protected bool isExitState;
     private string animBoolName;
+
 
     public PlayerState(Player player, PlayerSateMachine stateMachine ,PlayerCore playerCore, string animBoolName)
     {
@@ -26,10 +28,12 @@ public class PlayerState
         player.playerAnim.SetBool(animBoolName, true);
         startTime = Time.time;
         isAnimFinish = false;
+        isExitState = false;
     }
     public virtual void PLayerExitState()
     {
         player.playerAnim.SetBool(animBoolName, false);
+        isExitState = true;
     }
     public virtual void PLayerLogic()
     {
@@ -51,5 +55,6 @@ public class PlayerState
     public virtual void AnimationFinish()
     {
         isAnimFinish = true;
+
     }
 }

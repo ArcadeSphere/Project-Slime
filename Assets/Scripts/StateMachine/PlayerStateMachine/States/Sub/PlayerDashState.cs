@@ -58,6 +58,10 @@ public class PlayerDashState : PlayerAbilityStates
             {
                 stateMachine.PlayerChangeState(player.idleState);
             }
+           else if (isWalled)
+            {
+                stateMachine.PlayerChangeState(player.wallSlideState);
+            }
             else
             {
                 stateMachine.PlayerChangeState(player.airState);

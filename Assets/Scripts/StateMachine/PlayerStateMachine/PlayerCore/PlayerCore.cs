@@ -17,6 +17,11 @@ public class PlayerCore : ScriptableObject
     public float GroundCheckRadius = 0.2f;
     public LayerMask GroundLayer;
 
+    [Header("Wall State")]
+    public LayerMask WallLayer;
+    public float WallCheckRadius = 0.4f;
+    public float wallSlideForce = 3f;
+
     [Header("Dash State")]
     public float DashCooldown = 0.2f;
     public float DashSpeed = 24f;

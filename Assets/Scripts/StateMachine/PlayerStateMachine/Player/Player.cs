@@ -12,6 +12,10 @@ public class Player : MonoBehaviour
     public PlayerAirState airState { get; private set; }
     public PlayerLandState landState { get; private set; }
     public PlayerDashState dashState { get; private set; }
+    public PlayerWallSlideState wallSlideState { get; private set; }
+    public PlayerWallJump wallJumpState { get; private set; }
+
+
     public Animator playerAnim { get; private set; }
     public Rigidbody2D playerRb { get; private set; }
 
@@ -27,7 +31,7 @@ public class Player : MonoBehaviour
 
     private Vector2 workSpace;
     [SerializeField] private Transform groundCheck;
-
+    [SerializeField] private Transform wallCheck;
 
     #region Awake Start Updates
     private void Awake()
@@ -39,6 +43,8 @@ public class Player : MonoBehaviour
         airState =  new PlayerAirState(this, stateMachine, playerCore, "air");
         landState = new PlayerLandState(this, stateMachine, playerCore, "land");
         dashState = new PlayerDashState(this, stateMachine, playerCore, "dash");
+        wallSlideState = new PlayerWallSlideState(this, stateMachine, playerCore, "wallslide");
+        wallJumpState = new PlayerWallJump(this, stateMachine, playerCore, "air");
 
     }
 
@@ -86,6 +92,10 @@ public class Player : MonoBehaviour
     public bool CheckForGround()
     {
         return Physics2D.OverlapCircle(groundCheck.position, playerCore.GroundCheckRadius, playerCore.GroundLayer);
+    }
+    public bool CheckForWalls()
+    {
+        return Physics2D.OverlapCircle(wallCheck.position, playerCore.WallCheckRadius, playerCore.WallLayer);
     }
     private void Playerflip()
     {
