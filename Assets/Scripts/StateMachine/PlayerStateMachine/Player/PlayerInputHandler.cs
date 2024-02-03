@@ -43,8 +43,8 @@ public class PlayerInputHandler : MonoBehaviour
         {
             horizontalInput = inputManager.GetHorizontalInput();
             normalizeInputX = (int)(horizontalInput * Vector2.right).normalized.x;
-            normalizeInputX = (int)(horizontalInput * Vector2.up).normalized.y;
-        } 
+            normalizeInputY = (int)(horizontalInput * Vector2.up).normalized.y;
+        }
     }
 
     public void OnJumpInput()

@@ -71,7 +71,7 @@ public class PlayerAirState : PlayerState
             player.PlayerShouldFlip(input);
         }
 
-        if(dashInput && player.dashState.CheckIfCanDash())
+        if(dashInput && player.dashState.CheckIfCanDash() && ((input > 0 && player.transform.localScale.x > 0) || (input < 0 && player.transform.localScale.x < 0)))
         {
             stateMachine.PlayerChangeState(player.dashState);
         }
