@@ -40,6 +40,7 @@ public class PlayerDashState : PlayerAbilityStates
 
     public override void PLayerLogic()
     {
+
         base.PLayerLogic();
 
         if (lastDashTime > 0)
@@ -49,23 +50,36 @@ public class PlayerDashState : PlayerAbilityStates
             player.SetDashVelocity(dashVelocityVector);
             lastDashTime -= Time.deltaTime;
         }
-
         else if (lastDashTime <= 0 && !isAbilityFinish)
         {
             lastDashTime = playerCore.DashTime;
             isAbilityFinish = true;
-            if (isGrounded)
+
+            // Check if the dash input matches the direction the player is facing
+            bool isDashInputValid = (player.playerinput.normalizeInputX > 0 && player.transform.localScale.x > 0) ||
+                                    (player.playerinput.normalizeInputX < 0 && player.transform.localScale.x < 0);
+
+            // Check if both dash key and directional input are pressed
+            if (isDashInputValid && (player.playerinput.normalizeInputX != 0 || player.playerinput.jumpInput))
             {
-                stateMachine.PlayerChangeState(player.idleState);
-            }
-           else if (isWalled)
-            {
-                stateMachine.PlayerChangeState(player.wallSlideState);
+                if (isWalled)
+                {
+                    stateMachine.PlayerChangeState(player.wallSlideState);
+                }
+                else if (isGrounded)
+                {
+                    stateMachine.PlayerChangeState(player.idleState);
+                }
+                else
+                {
+                    stateMachine.PlayerChangeState(player.airState);
+                }
             }
             else
             {
-                stateMachine.PlayerChangeState(player.airState);
+                // If dash input is not valid, reset the dash ability
+                RestDash();
             }
         }
     }
-}
+    }

@@ -49,7 +49,7 @@ public class PlayerGroundState : PlayerState
             stateMachine.PlayerChangeState(player.airState);
         }
 
-        if (dashInput && player.dashState.CheckIfCanDash())
+        if (dashInput && player.dashState.CheckIfCanDash() && ((xinput > 0 && player.transform.localScale.x > 0) || (xinput < 0 && player.transform.localScale.x < 0)))
         {
             stateMachine.PlayerChangeState(player.dashState);
         }
