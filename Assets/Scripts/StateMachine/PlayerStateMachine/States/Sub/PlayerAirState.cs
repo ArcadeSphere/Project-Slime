@@ -60,16 +60,15 @@ public class PlayerAirState : PlayerState
       
             stateMachine.PlayerChangeState(player.jumpState);
         }
-        else if (isWalled && input == Mathf.Sign(player.transform.localScale.x) && player.playerRb.velocity.y <= 0)
+        else if (isWalled && input != Mathf.Sign(player.transform.localScale.x) && player.playerRb.velocity.y <= 0)
         {
+             player.PlayerShouldFlip(input);
             stateMachine.PlayerChangeState(player.wallSlideState);
         }
         else
-        { 
-           
+        {   
             player.SetVelocity(playerCore.MovementSpeed * input);
             player.PlayerShouldFlip(input);
-
         }
 
         if(dashInput && player.dashState.CheckIfCanDash())
