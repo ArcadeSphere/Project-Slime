@@ -88,14 +88,32 @@ public class Player : MonoBehaviour
     {
         playerRb.velocity = velocity;
     }
-
+    public void WallJumpVelocity(float velocity, Vector2 angle)
+    {
+        angle.Normalize();
+        int wallJumpDirection = -(int)Mathf.Sign(transform.localScale.x);
+        workSpace.Set(angle.x * velocity * wallJumpDirection, angle.y * velocity);
+        playerRb.velocity = workSpace;
+    }
     public bool CheckForGround()
     {
         return Physics2D.OverlapCircle(groundCheck.position, playerCore.GroundCheckRadius, playerCore.GroundLayer);
     }
     public bool CheckForWalls()
     {
-        return Physics2D.OverlapCircle(wallCheck.position, playerCore.WallCheckRadius, playerCore.WallLayer);
+        int facingDirection = (int)Mathf.Sign(transform.localScale.x);
+        Vector2 castDirection = new Vector2(facingDirection, 0);
+        RaycastHit2D hit = Physics2D.Raycast(wallCheck.position, castDirection, playerCore.WallCheckRadius, playerCore.WallLayer);
+
+        return hit.collider != null;
+    }
+    public bool CheckForWallBack()
+    {
+        int facingDirection = -(int)Mathf.Sign(transform.localScale.x);
+        Vector2 castDirection = new Vector2(facingDirection, 0);
+        RaycastHit2D hit = Physics2D.Raycast(wallCheck.position, castDirection, playerCore.WallCheckRadius, playerCore.WallLayer);
+
+        return hit.collider != null;
     }
     private void Playerflip()
     {

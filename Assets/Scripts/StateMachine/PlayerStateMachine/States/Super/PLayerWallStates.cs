@@ -6,6 +6,7 @@ public class PLayerWallStates : PlayerState
 {
     protected bool isGrounded;
     protected bool isWalled;
+    protected bool jumpInput;
     protected int xInput;
     public PLayerWallStates(Player player, PlayerSateMachine stateMachine, PlayerCore playerCore, string animBoolName) : base(player, stateMachine, playerCore, animBoolName)
     {
@@ -42,7 +43,12 @@ public class PLayerWallStates : PlayerState
     {
         base.PLayerLogic();
         xInput = player.playerinput.normalizeInputX;
-        if (isGrounded)
+        jumpInput = player.playerinput.jumpInput;
+        if (jumpInput)
+        {
+            stateMachine.PlayerChangeState(player.wallJumpState);
+        }
+        else if (isGrounded)
         {
             stateMachine.PlayerChangeState(player.idleState);
         }

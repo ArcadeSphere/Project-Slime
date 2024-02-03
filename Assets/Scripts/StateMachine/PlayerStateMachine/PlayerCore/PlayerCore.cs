@@ -21,6 +21,9 @@ public class PlayerCore : ScriptableObject
     public LayerMask WallLayer;
     public float WallCheckRadius = 0.4f;
     public float wallSlideForce = 3f;
+    public float WallJumpPower = 20f;
+    public float WallJumpTimer = 0.4f;
+    public Vector2 WallJumpAnlge = new Vector2(1f, 1.5f);
 
     [Header("Dash State")]
     public float DashCooldown = 0.2f;

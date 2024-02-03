@@ -26,6 +26,9 @@ MonoBehaviour:
     m_Bits: 524288
   WallCheckRadius: 0.4
   wallSlideForce: 3
+  WallJumpPower: 20
+  WallJumpTimer: 0.4
+  WallJumpAnlge: {x: 1, y: 2}
   DashCooldown: 1
   DashSpeed: 30
   DashTime: 0.2
