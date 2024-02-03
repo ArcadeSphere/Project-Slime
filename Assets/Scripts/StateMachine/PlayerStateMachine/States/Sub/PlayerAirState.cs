@@ -60,7 +60,7 @@ public class PlayerAirState : PlayerState
       
             stateMachine.PlayerChangeState(player.jumpState);
         }
-        else if (isWalled && Mathf.Sign(input) == Mathf.Sign(player.transform.localScale.x) && player.playerRb.velocity.y <= 0) 
+        else if (isWalled && input == Mathf.Sign(player.transform.localScale.x) && player.playerRb.velocity.y <= 0)
         {
             stateMachine.PlayerChangeState(player.wallSlideState);
         }
