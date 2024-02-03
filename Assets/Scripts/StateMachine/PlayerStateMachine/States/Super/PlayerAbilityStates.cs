@@ -6,6 +6,7 @@ public class PlayerAbilityStates : PlayerState
 {
     protected bool isAbilityFinish;
     protected bool isGrounded;
+    protected bool isWalled;
     public PlayerAbilityStates(Player player, PlayerSateMachine stateMachine, PlayerCore playerCore, string animBoolName) : base(player, stateMachine, playerCore, animBoolName)
     {
     }
@@ -14,6 +15,7 @@ public class PlayerAbilityStates : PlayerState
     {
         base.CheckForSomething();
         isGrounded = player.CheckForGround();
+        isWalled = player.CheckForWalls();
     }
 
     public override void PlayerEnterState()

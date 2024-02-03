@@ -40,7 +40,7 @@ public class PlayerMoveState : PlayerGroundState
 
         player.SetVelocity(playerCore.MovementSpeed * xinput);
 
-        if (xinput == 0)
+        if (xinput == 0 && !isExitState)
         {
             stateMachine.PlayerChangeState(player.idleState);
         }

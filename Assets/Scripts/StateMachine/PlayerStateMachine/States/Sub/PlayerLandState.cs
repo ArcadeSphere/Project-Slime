@@ -11,13 +11,17 @@ public class PlayerLandState : PlayerGroundState
     public override void PLayerLogic()
     {
         base.PLayerLogic();
-        if (xinput != 0)
+        if (!isExitState)
         {
-            stateMachine.PlayerChangeState(player.moveState);
-        }
-        else if (isAnimFinish)
-        {
-            stateMachine.PlayerChangeState(player.idleState);
+            if (xinput != 0)
+            {
+                stateMachine.PlayerChangeState(player.moveState);
+            }
+            else if (isAnimFinish)
+            {
+                stateMachine.PlayerChangeState(player.idleState);
+            }
         }
     }
+      
 }
