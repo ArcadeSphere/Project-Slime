@@ -28,7 +28,7 @@ MonoBehaviour:
   wallSlideForce: 3
   WallJumpPower: 20
   WallJumpTimer: 0.4
-  WallJumpAnlge: {x: 1, y: 2}
+  WallJumpAnlge: {x: 8, y: 12}
   DashCooldown: 1
   DashSpeed: 30
   DashTime: 0.2
